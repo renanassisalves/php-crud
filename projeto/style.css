@@ -1,0 +1,112 @@
+body {
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin: 0px;
+}
+
+ul {
+    width: auto;
+    margin: 0px;
+    background-color: #0057ff;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+li {
+    display: inline;
+    padding: 5px;
+}
+
+li a {
+    text-decoration: solid;
+    color: #000000;
+    padding: 10px;
+    background-color: #04B4FF;
+    border-radius: 10px;
+}
+
+ul li a {
+    display: inline-block;
+}
+
+li a:hover {
+    background-color: aqua;
+}
+
+li a:active{
+    background-color: #0000FF;
+    color: white;
+}
+
+li .active {
+    background-color: #2c2cfd;
+    color: white;
+}
+.logo {
+    background-color: white;
+    width: 65px;
+    height: 60px;
+    border-radius: 30px;
+}
+
+.loginStatus {
+    text-decoration: solid;
+    color: white;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.voltar {
+    border-radius: 30px;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.label input {
+    display: block;
+}
+
+input {
+    width: 300px;
+    padding: 10px;
+    margin: 10px;
+}
+
+
+
+form div {
+    display: flex;
+}
+
+form {
+    padding-left: 15px;
+}
+
+.btnEnviar {
+    margin-top: 20px;
+    color: #000000;
+    background-color: #04FFA5;
+    font-weight: bold;
+    font-size: 20px;
+    border-color: #04FFA5;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.btnAzul {
+    background-color: #04B4FF;
+    border-color: #04B4FF;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    height: 40px;
+    margin: 10px;
+    margin-top: 33px;
+}
+h1 {
+    text-align: center;
+}
+

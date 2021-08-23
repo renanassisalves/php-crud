@@ -1,0 +1,74 @@
+use estagio;
+ 
+CREATE TABLE IF NOT EXISTS usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    login VARCHAR(15) NOT NULL,
+    senha VARCHAR(20) NOT NULL,
+    nivel_de_acesso INT not NULL
+);
+ 
+CREATE TABLE IF NOT EXISTS produto (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    preco FLOAT NOT NULL,
+    quantidade INT NOT NULL,
+    lucro_liquido float NOT NULL
+);
+ 
+CREATE TABLE IF NOT EXISTS entrada (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    data_entrada date NOT NULL,
+    quantidade INT NOT NULL,
+    lista_produtos VARCHAR(255) NOT NULL
+);
+ 
+CREATE TABLE IF NOT EXISTS venda (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    data_venda date NOT NULL,
+    quantidade INT NOT NULL,
+    lista_produtos VARCHAR(255) NOT NULL
+);
+ 
+CREATE TABLE IF NOT EXISTS devolucao (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    data_devolucao date NOT NULL,
+    quantidade INT NOT NULL,
+    lista_produtos VARCHAR(255) NOT NULL
+);
+ 
+CREATE TABLE IF NOT EXISTS entrada_produto (
+    id_produto INT,
+    id_entrada INT,
+    PRIMARY KEY (id_produto, id_entrada),
+    FOREIGN KEY (id_produto) REFERENCES produto (id),
+    FOREIGN KEY (id_entrada) REFERENCES entrada (id)
+);
+ 
+CREATE TABLE IF NOT EXISTS venda_produto (
+    id_produto INT,
+    id_venda INT,
+    PRIMARY KEY (id_produto, id_venda),
+    FOREIGN KEY (id_produto) REFERENCES produto (id),
+    FOREIGN KEY (id_venda) REFERENCES venda (id)
+);
+ 
+CREATE TABLE IF NOT EXISTS devolucao_produto (
+    id_produto INT,
+    id_devolucao INT,
+    PRIMARY KEY (id_produto, id_devolucao),
+    FOREIGN KEY (id_produto) REFERENCES produto (id),
+    FOREIGN KEY (id_devolucao) REFERENCES devolucao (id)
+);
+ 
+CREATE TABLE IF NOT EXISTS fornecedor (
+    id INT,
+    nome varchar(255),
+    responsavel varchar(255),
+    tel_responsavel varchar(50)
+);
+ 
+CREATE TABLE IF NOT EXISTS categoria (
+    id INT,
+    nome varchar(255)
+);
