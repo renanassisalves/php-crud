@@ -1,45 +1,76 @@
+drop database estagio;
+create database estagio;
 use estagio;
  
 CREATE TABLE IF NOT EXISTS usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     login VARCHAR(15) NOT NULL,
-    senha VARCHAR(20) NOT NULL,
-    nivel_de_acesso INT not NULL
+    senha VARCHAR(65535) NOT NULL,
+    nivel_de_acesso INT not NULL,
+    inativado boolean
+);
+ 
+ CREATE TABLE IF NOT EXISTS categoria (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome varchar(255),
+    inativado boolean
+);
+ 
+  CREATE TABLE IF NOT EXISTS endereco(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    longradouro varchar(50) not null,
+    bairro varchar(100) not null, 
+    numero int not null,
+    inativado boolean,
+    cep varchar(10) not null
+); 
+ 
+ CREATE TABLE IF NOT EXISTS fornecedor (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome varchar(255) not null,
+    responsavel varchar(255) not null,
+    tel_responsavel varchar(50) not null,
+    id_endereco int not null,
+    inativado boolean,
+    FOREIGN KEY (id_endereco) references endereco(id)
 );
  
 CREATE TABLE IF NOT EXISTS produto (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
-    preco FLOAT NOT NULL,
+    preco DECIMAL(10,2) NOT NULL,
     quantidade INT NOT NULL,
-    lucro_liquido float NOT NULL
+    lucro_liquido float NOT NULL,
+    id_categoria int not null,
+    id_fornecedor int not null,
+    inativado boolean,
+    FOREIGN KEY (id_categoria) references categoria(id),
+    FOREIGN KEY (id_fornecedor) references fornecedor(id)
 );
  
 CREATE TABLE IF NOT EXISTS entrada (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    data_entrada date NOT NULL,
-    quantidade INT NOT NULL,
-    lista_produtos VARCHAR(255) NOT NULL
+    data_entrada datetime NOT NULL,
+    inativado boolean
 );
  
 CREATE TABLE IF NOT EXISTS venda (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    data_venda date NOT NULL,
-    quantidade INT NOT NULL,
-    lista_produtos VARCHAR(255) NOT NULL
+    data_venda datetime NOT NULL,
+    inativado boolean
 );
  
 CREATE TABLE IF NOT EXISTS devolucao (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    data_devolucao date NOT NULL,
-    quantidade INT NOT NULL,
-    lista_produtos VARCHAR(255) NOT NULL
+    data_devolucao datetime NOT NULL,
+    inativado boolean
 );
  
 CREATE TABLE IF NOT EXISTS entrada_produto (
     id_produto INT,
     id_entrada INT,
+    quantidade INT NOT NULL,
     PRIMARY KEY (id_produto, id_entrada),
     FOREIGN KEY (id_produto) REFERENCES produto (id),
     FOREIGN KEY (id_entrada) REFERENCES entrada (id)
@@ -48,6 +79,7 @@ CREATE TABLE IF NOT EXISTS entrada_produto (
 CREATE TABLE IF NOT EXISTS venda_produto (
     id_produto INT,
     id_venda INT,
+    quantidade INT NOT NULL,
     PRIMARY KEY (id_produto, id_venda),
     FOREIGN KEY (id_produto) REFERENCES produto (id),
     FOREIGN KEY (id_venda) REFERENCES venda (id)
@@ -56,19 +88,17 @@ CREATE TABLE IF NOT EXISTS venda_produto (
 CREATE TABLE IF NOT EXISTS devolucao_produto (
     id_produto INT,
     id_devolucao INT,
+    quantidade INT NOT NULL,
     PRIMARY KEY (id_produto, id_devolucao),
     FOREIGN KEY (id_produto) REFERENCES produto (id),
     FOREIGN KEY (id_devolucao) REFERENCES devolucao (id)
 );
- 
-CREATE TABLE IF NOT EXISTS fornecedor (
-    id INT,
-    nome varchar(255),
-    responsavel varchar(255),
-    tel_responsavel varchar(50)
-);
- 
-CREATE TABLE IF NOT EXISTS categoria (
-    id INT,
-    nome varchar(255)
+
+CREATE TABLE IF NOT EXISTS logs_alteracoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    data_hora datetime not null,
+    usuario varchar(15),
+    entidade_banco varchar(65535),
+    valor_anterior varchar(65535),
+    valor_novo varchar(65535)
 );
