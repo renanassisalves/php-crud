@@ -22,8 +22,8 @@ CREATE TABLE IF NOT EXISTS usuario (
     longradouro varchar(50) not null,
     bairro varchar(100) not null, 
     numero int not null,
-    inativado boolean,
-    cep varchar(10) not null
+    cep varchar(10) not null,
+    inativado boolean
 ); 
  
  CREATE TABLE IF NOT EXISTS fornecedor (
