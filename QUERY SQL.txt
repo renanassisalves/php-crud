@@ -41,18 +41,18 @@ CREATE TABLE IF NOT EXISTS produto (
     nome VARCHAR(255) NOT NULL,
     preco DECIMAL(10,2) NOT NULL,
     quantidade INT NOT NULL,
-    lucro_liquido float NOT NULL,
+    lucro_liquido DECIMAL(10,2) NOT NULL,
     id_categoria int not null,
-    id_fornecedor int not null,
     inativado boolean,
-    FOREIGN KEY (id_categoria) references categoria(id),
-    FOREIGN KEY (id_fornecedor) references fornecedor(id)
+    FOREIGN KEY (id_categoria) references categoria(id)
 );
  
 CREATE TABLE IF NOT EXISTS entrada (
     id INT AUTO_INCREMENT PRIMARY KEY,
     data_entrada datetime NOT NULL,
-    inativado boolean
+    id_fornecedor int not null,
+    inativado boolean,
+    FOREIGN KEY (id_fornecedor) references fornecedor(id)
 );
  
 CREATE TABLE IF NOT EXISTS venda (

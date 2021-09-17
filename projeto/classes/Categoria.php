@@ -27,6 +27,12 @@ if(isset($_POST['excluir']))
     Categoria::excluir($link, $id);
 }
 
+if(isset($_POST['pesquisar']))
+{
+    $pesquisa = $_POST['pesquisarSearch'];
+    header('location:../categoria/visualizarCategorias.php?pesquisa=' . $pesquisa);
+}
+
 class Categoria
 {
     private $id;
@@ -39,28 +45,94 @@ class Categoria
         $this->inativado = false;
     }
 
+    public static function validar(string $nome)
+    {
+        $nome = trim($nome);
+        $validacao = false;
+        if (strlen($nome) <= 255 and strlen($nome) > 0)
+        {
+            $validacao = true;
+        }
+        else if (strlen($nome) > 255){
+            header('location:../categoria/cadastrarCategoria.php?resultado=Excesso de caracteres!');
+            $validacao = false;
+        }
+        else if (empty($nome)) {
+            header('location:../categoria/cadastrarCategoria.php?resultado=Digite o nome da categoria!');
+            $validacao = false;
+        }
+
+        if ($validacao == true)
+        {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public function cadastrar(mysqli $link)
     {
-        mysqli_query($link, "insert into categoria(nome, inativado)
-        values('$this->nome', false)");
-        header('location:../categoria/cadastrarCategoria.php');
+        if ($this::validar($this->nome))
+        {
+            mysqli_query($link, "insert into categoria(nome, inativado)
+            values('$this->nome', false)");
+    
+            if (mysqli_error($link)>0)
+            {
+                header('location:../categoria/cadastrarCategoria.php?resultado=' . mysqli_error($link));
+            } else
+            {
+                header('location:../categoria/cadastrarCategoria.php?resultado=sucesso');
+            }
+        }
     }
 
     public static function alterar(mysqli $link, $id, $novoNome)
     {
         mysqli_query($link, 'update categoria set nome = "'. $novoNome . '" where id = ' . $id . ';');
-        header('location:../categoria/visualizarCategorias.php');
+        header('location:../categoria/cadastrarCategoria.php');
+        
+        if (mysqli_error($link)>0)
+            {
+                header('location:../categoria/visualizarCategorias.php?resultado=' . mysqli_error($link));
+            } else
+            {
+                header('location:../categoria/visualizarCategorias.php?resultado=alteradosucesso');
+            }
     }
 
     public static function excluir(mysqli $link, int $id)
     {
         mysqli_query($link, "delete from categoria where id=" . $id . ";" );
         header('location:../categoria/visualizarCategorias.php');
+
+        if (mysqli_error($link)>0)
+            {
+                header('location:../categoria/visualizarCategorias.php?resultado=' . mysqli_error($link));
+            } else
+            {
+                header('location:../categoria/visualizarCategorias.php?resultado=excluidosucesso');
+            }
+    }
+
+    public static function pegarCategoria(mysqli $link, int $id)
+    {
+        $sql = mysqli_query($link, "select * from categoria where id=$id;");
+        $resultado = mysqli_fetch_row($sql);
+        return $resultado;
     }
 
     public static function listarTodos(mysqli $link)
     {
         $sql = mysqli_query($link, "select * from categoria;");
+        $resultado = mysqli_fetch_all($sql);
+        return $resultado;
+    }
+
+    public static function listarPesquisa(mysqli $link, $pesquisa)
+    {
+        $sql = mysqli_query($link, "select * from categoria where nome like '%$pesquisa%';");
         $resultado = mysqli_fetch_all($sql);
         return $resultado;
     }

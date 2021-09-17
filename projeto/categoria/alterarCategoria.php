@@ -18,13 +18,21 @@
     <!--<button type="submit" class="btnBuscarProdutos"><img src="/img/logo.png" height="30px" width="30px"> </img>Buscar Produtos</button>-->    
     <h1>Alterar Categoria</h1>
 
-    <?php 
+    <?php
+    include_once "../classes/Categoria.php";
+    include_once "../classes/Banco.php";
     $id = $_GET['id'];
+    $categoria = Categoria::pegarCategoria($link, $id);
     ?>
+
+
     <form action="../classes/Categoria.php" method="POST">
         <div>
-        <label class="label">Alterando categoria id <?php echo($id);?>
-            <input type="text" name="nome" placeholder="Digite o novo nome da categoria">
+        <h2>Alterando categoria id <?php echo($id);?></h2>
+        </div>
+        <div>
+        <label class="label">Nome
+            <input type="text" name="nome" placeholder=" <?php echo $categoria[1] ?>">
         </label>
         <?php
         echo '<input type="hidden" name="id" value=' . $id . '>';
