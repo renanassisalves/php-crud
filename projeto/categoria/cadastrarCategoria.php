@@ -39,7 +39,7 @@
     <form action="../classes/Categoria.php" method="POST">
         <div>
         <label class="label">Nome da nova Categoria
-            <input type="text" name="nome" placeholder="Digite o nome do produto">
+            <input type="text" name="nome" maxlength="255" placeholder="Digite o nome do produto">
         </label>
         </div>
         <div></div>

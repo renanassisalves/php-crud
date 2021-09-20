@@ -279,12 +279,12 @@ class Endereco {
 
     public static function alterar(mysqli $link, $id, $novoLongradouro, $novoBairro, $novoNumero, $novoCep)
     {
-        $novoLongradouro = $this::formatar($novoLongradouro);
-        $novoBairro = $this::formatar($novoBairro);
-        $novoNumero = $this::formatar($novoNumero);
-        $novoCep = $this::formatar($novoCep);
+        $novoLongradouro = Endereco::formatar($novoLongradouro);
+        $novoBairro = Endereco::formatar($novoBairro);
+        $novoNumero = Endereco::formatar($novoNumero);
+        $novoCep = Endereco::formatar($novoCep);
         
-        mysqli_query($link, 'update endereco set nome = "'. $novoNome . '" where id = ' . $id . ';');
+        mysqli_query($link, 'update endereco set longradouro = "'. $novoLongradouro . '" where id = ' . $id . ';');
         header('location:../categoria/visualizarCategorias.php');
     }
 

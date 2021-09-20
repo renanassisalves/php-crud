@@ -40,30 +40,30 @@
     <form action="../classes/Fornecedor.php" method="POST">
         <div>
         <label class="label">Nome do Fornecedor
-            <input type="text" name="nome" placeholder="Digite o nome do fornecedor">
+            <input type="text" name="nome" maxlength="255" placeholder="Digite o nome do fornecedor">
         </label>
         <label class="label">Responsável pelo fornecimento
-            <input type="text" name="responsavel" placeholder="Digite o nome do responsável">
+            <input type="text" name="responsavel" maxlength="255" placeholder="Digite o nome do responsável">
         </label>
         <label class="label">Telefone do responsável
-            <input type="text" name="tel_responsavel" placeholder="Digite o telefone do responsável">
+            <input type="text" name="tel_responsavel" maxlength="50" placeholder="Digite o telefone do responsável">
         </label>
         </div>
         <div><h1>Endereço</h1></div>
         <div>
         <label class="label">Longradouro
-            <input type="text" name="longradouro" placeholder="Digite o longradouro">
+            <input type="text" name="longradouro" maxlength="50" placeholder="Digite o longradouro">
         </label>
         
         <label class="label">Bairro
-            <input type="text" name="bairro" placeholder="Digite o bairro">
+            <input type="text" name="bairro" maxlength="100" placeholder="Digite o bairro">
         </label>
         <label class="label">Número
-            <input type="text" name="numero" placeholder="Digite o número">
+            <input type="text" name="numero" maxlength="10" placeholder="Digite o número">
         </label>
 
         <label class="label">CEP
-            <input type="text" name="cep" placeholder="Digite o cep">
+            <input type="text" name="cep" maxlength="10" placeholder="Digite o cep">
         </label>
 
         </div>

@@ -19,30 +19,54 @@
     <!--<button type="submit" class="btnBuscarProdutos"><img src="/img/logo.png" height="30px" width="30px"> </img>Buscar Produtos</button>-->    
     <h1>Alterar Produto</h1>
 
-    <form action="">
+
+    <?php 
+
+include_once "../classes/Produto.php";
+include_once "../classes/Categoria.php";
+include_once "../classes/Banco.php";
+
+    $id = $_GET['id'];
+    $produto = Produto::pegarProduto($link, $id);
+
+    $nome = $produto[1];
+    $preco = $produto[2];
+    $quantidade = $produto[3];
+    $lucro_liquido = $produto[4];
+    $id_categoria = $produto[5];
+    $inativado = $produto[6];
+
+    $categoria = Categoria::pegarCategoria($link, $id_categoria);
+    $categoriaTexto = $categoria[0] . " - " . $categoria[1];
+    ?>
+
+    <form action="../classes/Produto.php" method="POST">
         <div>
         <label class="label">Nome do Produto
-            <input type="text" name="nome" placeholder="Digite o nome do produto">
+            <input type="text" name="nome" value=" <?php echo $nome ?>" placeholder="Digite o nome do produto">
         </label>
         <label class="label">Preço do Produto
-            <input type="text" name="preco" placeholder="Digite o preço do produto">
+            <input type="text" name="preco" value=" <?php echo $preco ?>" placeholder="Digite o preço do produto">
         </label>
         <label class="label">Quantidade
-            <input type="number" name="quantidade" placeholder="Digite a quantidade do produto">
+            <input type="text" name="quantidade" min="1" max="1000" step="1" value=" <?php echo $quantidade ?>" placeholder="Digite a quantidade do produto">
         </label>
         <label class="label">% Lucro Líquido
-            <input type="text" name="nome" placeholder="Digite o lucro líquido do produto">
+            <input type="text" name="lucro_liquido" min="0.00" max="100" step=".01" value=" <?php echo $lucro_liquido ?>" placeholder="Digite o lucro líquido do produto">
         </label>
         </div>
         <div>
         <label class="label">Categoria do Produto
-            <input type="text" name="categoria" placeholder="Selecione a categoria do produto">
+            <input type="text" name="id" disabled <?php if(isset($_GET['id'])) {echo('value="'.$id.' - '.$nome.'">');} ?>
         </label>
         <button class="btnAzul">Selecionar a Categoria</button>
-        <button class="btnAzul">Cadastrar a Categoria</button>
         </div>
+        <?php
+        echo '<input type="hidden" name="id" value=' . $id . '>';
+        echo '<input type="hidden" name="id_categoria" value=' . $categoria[0] . '>';
+        ?>
         <div>
-        <button type="submit" class="btnEnviar">Cadastrar</button>
+        <button type="submit" name="alterarconfirma" class="btnEnviar">Cadastrar</button>
         </div>
     </form>
     

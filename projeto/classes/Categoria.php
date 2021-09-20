@@ -97,12 +97,16 @@ class Categoria
                 header('location:../categoria/cadastrarCategoria.php?resultado=sucesso');
             }
         }
+        else
+        {
+            header('location:../categoria/cadastrarCategoria.php?resultado=Verifique todos os campos!');
+        }
     }
 
     public static function alterar(mysqli $link, $id, $novoNome)
     {
-        $novoNome = $this::formatar($novoNome);
-        if($this::validar($novoNome))
+        $novoNome = Categoria::formatar($novoNome);
+        if(Categoria::validar($novoNome))
         {
             mysqli_query($link, 'update categoria set nome = "'. $novoNome . '" where id = ' . $id . ';');
             header('location:../categoria/cadastrarCategoria.php');
@@ -114,6 +118,10 @@ class Categoria
                 {
                     header('location:../categoria/visualizarCategorias.php?resultado=alteradosucesso');
                 }
+        }
+        else
+        {
+            header('location:../categoria/alterarCategoria.php?id='.$id.'&?resultado=Verifique todos os campos!');
         }
         
     }

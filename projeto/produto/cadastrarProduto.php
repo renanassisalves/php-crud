@@ -57,13 +57,13 @@
             <input type="text" name="nome" placeholder="Digite o nome do produto">
         </label>
         <label class="label">Preço do Produto
-            <input type="text" name="preco" placeholder="Digite o preço do produto">
+            <input type="number" name="preco" min="0.00" max="1000" step=".01" placeholder="Digite o preço do produto">
         </label>
         <label class="label">Quantidade
             <input type="number" name="quantidade" placeholder="Digite a quantidade do produto">
         </label>
         <label class="label">% Lucro Líquido
-            <input type="text" name="lucro_liquido" placeholder="Digite o lucro líquido do produto">
+            <input type="text" name="lucro_liquido" min="0.00" max="100" step=".01" placeholder="Digite o lucro líquido do produto">
         </label>
         </div>
         <div>
