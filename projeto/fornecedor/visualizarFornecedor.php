@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Categoria</title>
+    <title>Visualizar Fornecedores</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -16,11 +16,53 @@
     </ul>
 
     <h1>Visualizar Fornecedores</h1>
+    <?php 
+
+    if(isset($_GET['resultado']))
+    {
+        $resultado = $_GET['resultado'];
+        if ($resultado == 'sucesso')
+        {
+            echo('<div style="background-color: #b1ffb8b1;">');
+            echo('<p style="color: #1a571fb1; margin: 10px;">Cadastrado com sucesso!</p>');
+            echo('</div>');
+        }
+        else if (str_contains($resultado, 'Cannot delete or update a parent row: a foreign key constraint fails'))
+        {
+            echo('<div style="background-color: #ff9d9448;">');
+            echo('<p style="color: #c51d0d; margin: 10px;">Erro : Primeiramente remova todas as entradas deste fornecedor.</p>');
+            echo('</div>');
+        }
+        else if ($resultado == 'alteradosucesso')
+        {
+            echo('<div style="background-color: #b1ffb8b1;">');
+            echo('<p style="color: #1a571fb1; margin: 10px;">Alterado com sucesso!</p>');
+            echo('</div>');
+        }
+        else if ($resultado == 'excluidosucesso')
+        {
+            echo('<div style="background-color: #b1ffb8b1;">');
+            echo('<p style="color: #1a571fb1; margin: 10px;">Excluído com sucesso!</p>');
+            echo('</div>');
+        }
+        else
+        {
+            echo('<div style="background-color: #ff9d9448;">');
+            echo('<p style="color: #c51d0d; margin: 10px;">Erro : ' . $resultado . '</p>');
+            echo('</div>');
+        }
+    }
+    ?>
+
+    <form action="../classes/Fornecedor.php" method="POST" style="float: right; margin-bottom:10px; margin-right:10px;">
+                    <input type="search" name="pesquisarSearch" placeholder="Pesquisar pelo nome...">
+                    <button type="submit" name="pesquisar">Pesquisar</button>
+    </form>
     <table style="width: 100%">
         <tr>
             <td class="headerListagem">ID</td>
             <td class="headerListagem">Nome do Fornecedor</td>
-            <td class="headerListagem">Responsavel</td>
+            <td class="headerListagem">Responsável</td>
             <td class="headerListagem">Telefone Responsável</td>
             <td class="headerListagem"></td>
             <td class="headerListagem"></td>
@@ -30,7 +72,15 @@
         include_once "../classes/Fornecedor.php";
         include_once "../classes/Banco.php";
         
-        $vetor = Fornecedor::listarTodos($link);
+        if (isset($_GET['pesquisa']))
+        {
+            $pesquisa = $_GET['pesquisa'];
+            $vetor = Fornecedor::listarPesquisa($link, $pesquisa);
+        }
+        else
+        {
+            $vetor = Fornecedor::listarTodos($link);
+        }
 
         for ($i = 0; $i < count($vetor); $i++)
         {

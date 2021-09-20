@@ -10,11 +10,8 @@
 <body>
     <ul>
         <img src="../img/logo.png" class="logo" alt="Exemplo de logomarca" width="60" height="60">
-        <li><a href="cadastrarProduto.php"">Cadastrar Produto</a></li>
-        <li><a href="alterarProduto.php" class="active">Alterar Produto</a></li>
-        <li><a href="excluirProduto.php">Excluir Produto</a></li>
-        <li><a href="cadastrarCategoria.php">Cadastrar Categoria</a></li>
-        <li><a href="/fornecedor/cadastrarFornecedor.php">Cadastrar Fornecedor</a></li>
+        <li><a href="cadastrarProduto.php">Cadastrar Produto</a></li>
+        <li><a href="visualizarProdutos.php" class="active">Visualizar Produtos</a></li>
         <a href="../index.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
     </ul>
 
@@ -36,13 +33,6 @@
         <label class="label">% Lucro Líquido
             <input type="text" name="nome" placeholder="Digite o lucro líquido do produto">
         </label>
-        </div>
-        <div>
-        <label class="label">Fornecedor do Produto
-            <input type="text" name="fornecedor" placeholder="Selecione o fornecedor do produto">
-        </label>
-        <button class="btnAzul">Selecionar o Fornecedor</button>
-        <button class="btnAzul">Cadastrar o Fornecedor</button>
         </div>
         <div>
         <label class="label">Categoria do Produto

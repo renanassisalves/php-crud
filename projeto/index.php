@@ -10,10 +10,11 @@
 <body>
     <ul>
         <img src="img/logo.png" alt="Exemplo de logomarca" width="60" height="60" class="logo">
-        <li><a href="entrada.php">Iniciar Entrada</a></li>
-        <li><a href="venda.php">Iniciar Venda</a></li>
-        <li><a href="devolucao.php">Iniciar Devolução</a></li>
+        <li><a href="entrada/cadastrarEntrada.php">Iniciar Entrada</a></li>
+        <li><a href="venda/cadastrarVenda.php">Iniciar Venda</a></li>
+        <li><a href="devolucao/cadastrarDevolucao.php">Iniciar Devolução</a></li>
         <li><a href="produto/cadastrarProduto.php">Cadastrar Produto</a></li>
+        <li><a href="fornecedor/cadastrarFornecedor.php">Cadastrar Fornecedor</a></li>
         <li><a href="relatorios.php">Relatórios</a></li>
         <p class="loginStatus">Bem-vindo, Jailson!</p>
     </ul>

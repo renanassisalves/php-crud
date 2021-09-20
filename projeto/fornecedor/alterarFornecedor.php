@@ -18,38 +18,67 @@
     <!--<button type="submit" class="btnBuscarFornecedors"><img src="/img/logo.png" height="30px" width="30px"> </img>Buscar Fornecedors</button>-->    
     <h1>Alterar Fornecedor</h1>
 
+    <?php
+    include_once "../classes/Fornecedor.php";
+    include_once "../classes/Banco.php";
+    $id = $_GET['id'];
+    $fornecedor = Fornecedor::pegarFornecedor($link, $id);
+    $idEndereco = $fornecedor[4];
+    $endereco = Fornecedor::pegarEnderecoFornecedor($link, $idEndereco);
+
+    if(isset($_GET['resultado']))
+    {
+        $resultado = $_GET['resultado'];
+        if ($resultado == 'sucesso')
+        {
+            echo('<div style="background-color: #b1ffb8b1;">');
+            echo('<p style="color: #1a571fb1; margin: 10px;">Cadastrado com sucesso!</p>');
+            echo('</div>');
+        }
+        else
+        {
+            echo('<div style="background-color: #ff9d9448;">');
+            echo('<p style="color: #c51d0d; margin: 10px;">Erro : ' . $resultado . '</p>');
+            echo('</div>');
+        }
+    }
+    ?>
     <form action="../classes/Fornecedor.php" method="POST">
         <div>
         <label class="label">Nome do Fornecedor
-            <input type="text" name="nome" placeholder="Digite o nome do fornecedor">
+            <input type="text" name="nome" value="<?php echo $fornecedor[1] ?>">
         </label>
         <label class="label">Responsável pelo fornecimento
-            <input type="text" name="responsavel" placeholder="Digite o nome do responsável">
+            <input type="text" name="responsavel" value="<?php echo $fornecedor[2] ?>">
         </label>
         <label class="label">Telefone do responsável
-            <input type="text" name="tel_responsavel" placeholder="Digite o telefone do responsável">
+            <input type="text" name="tel_responsavel" value="<?php echo $fornecedor[3] ?>">
         </label>
         </div>
         <div><h1>Endereço</h1></div>
         <div>
         <label class="label">Longradouro
-            <input type="text" name="longradouro" placeholder="Digite o longradouro">
+            <input type="text" name="longradouro" value="<?php echo $endereco[1] ?>">
         </label>
         
         <label class="label">Bairro
-            <input type="text" name="bairro" placeholder="Digite o bairro">
+            <input type="text" name="bairro" value="<?php echo $endereco[2] ?>">
         </label>
         <label class="label">Número
-            <input type="text" name="numero" placeholder="Digite o número">
+            <input type="text" name="numero" value="<?php echo $endereco[3] ?>">
         </label>
 
         <label class="label">CEP
-            <input type="text" name="cep" placeholder="Digite o cep">
+            <input type="text" name="cep" value="<?php echo $endereco[4] ?>">
         </label>
 
         </div>
+        <?php
+        echo '<input type="hidden" name="id" value=' . $id . '>';
+        ?>
     <div>
-        <button type="submit" name="alterar" class="btnEnviar">Alterar</button>
+        
+        <button type="submit" name="alterarconfirma" class="btnEnviar">Alterar</button>
     </div>
     </form>
     

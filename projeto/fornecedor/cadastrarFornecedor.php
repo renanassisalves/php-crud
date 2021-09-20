@@ -18,6 +18,25 @@
     <!--<button type="submit" class="btnBuscarFornecedors"><img src="/img/logo.png" height="30px" width="30px"> </img>Buscar Fornecedors</button>-->    
     <h1>Cadastrar Fornecedor</h1>
 
+    <?php 
+    if(isset($_GET['resultado']))
+    {
+        $resultado = $_GET['resultado'];
+        if ($resultado == 'sucesso')
+        {
+            echo('<div style="background-color: #b1ffb8b1;">');
+            echo('<p style="color: #1a571fb1; margin: 10px;">Cadastrado com sucesso!</p>');
+            echo('</div>');
+        }
+        else
+        {
+            echo('<div style="background-color: #ff9d9448;">');
+            echo('<p style="color: #c51d0d; margin: 10px;">Erro : ' . $resultado . '</p>');
+            echo('</div>');
+        }
+    }
+    ?>
+
     <form action="../classes/Fornecedor.php" method="POST">
         <div>
         <label class="label">Nome do Fornecedor

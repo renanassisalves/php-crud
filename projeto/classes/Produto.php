@@ -8,8 +8,7 @@ if(isset($_POST['cadastrar']))
     $quantidade = $_POST['quantidade'];
     $lucro_liquido = $_POST['lucro_liquido'];
     $id_categoria = $_POST['id_categoria'];
-    $id_fornecedor = $_POST['id_fornecedor'];
-    $produto = new Produto($nome, $preco, $quantidade, $lucro_liquido, $id_categoria, $id_fornecedor);
+    $produto = new Produto($nome, $preco, $quantidade, $lucro_liquido, $id_categoria);
     $produto->cadastrar($link);
 }
 
@@ -40,24 +39,22 @@ class Produto
     private $quantidade;
     private $lucro_liquido;
     private $id_categoria;
-    private $id_fornecedor;
     private $inativado;
 
-    public function __construct(string $nome, float $preco, int $quantidade, float $lucro_liquido, int $id_categoria, int $id_fornecedor)
+    public function __construct(string $nome, float $preco, int $quantidade, float $lucro_liquido, int $id_categoria)
     {
         $this->nome = $nome;
         $this->preco = $preco;
         $this->quantidade = $quantidade;
         $this->lucro_liquido = $lucro_liquido;
         $this->id_categoria = $id_categoria;
-        $this->id_fornecedor = $id_fornecedor;
         $this->inativado = false;
     }
 
     public function cadastrar(mysqli $link)
     {
-        mysqli_query($link, "insert into produto(nome, preco, quantidade, lucro_liquido, id_categoria, id_fornecedor, inativado)
-        values('$this->nome', $this->preco, $this->quantidade, $this->lucro_liquido, $this->id_categoria, $this->id_fornecedor, false);");
+        mysqli_query($link, "insert into produto(nome, preco, quantidade, lucro_liquido, id_categoria, inativado)
+        values('$this->nome', $this->preco, $this->quantidade, $this->lucro_liquido, $this->id_categoria, false);");
         header('location:../categoria/cadastrarProduto.php');
     }
 
