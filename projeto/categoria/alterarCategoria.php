@@ -28,9 +28,6 @@
 
     <form action="../classes/Categoria.php" method="POST">
         <div>
-        <h2>Alterando categoria id <?php echo($id);?></h2>
-        </div>
-        <div>
         <label class="label">Nome
             <input type="text" name="nome" placeholder=" <?php echo $categoria[1] ?>">
         </label>

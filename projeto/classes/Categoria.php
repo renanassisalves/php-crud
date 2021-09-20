@@ -33,6 +33,13 @@ if(isset($_POST['pesquisar']))
     header('location:../categoria/visualizarCategorias.php?pesquisa=' . $pesquisa);
 }
 
+if(isset($_POST['selecionado']))
+{
+    $id = $_POST['id'];
+    $nome = $_POST['nome'];
+    header('location:../produto/cadastrarProduto.php?id='.$id.'&nome='.$nome);
+}
+
 class Categoria
 {
     private $id;
@@ -45,24 +52,20 @@ class Categoria
         $this->inativado = false;
     }
 
-    public static function validar(string $nome)
+    public static function validar(string $campo)
     {
-        $nome = trim($nome);
+       
         $validacao = false;
-        if (strlen($nome) <= 255 and strlen($nome) > 0)
+
+        if (empty($campo)) {
+            header('location:../categoria/cadastrarCategoria.php?resultado=Verifique todos os campos!');
+            $validacao = false;
+        } else
         {
             $validacao = true;
         }
-        else if (strlen($nome) > 255){
-            header('location:../categoria/cadastrarCategoria.php?resultado=Excesso de caracteres!');
-            $validacao = false;
-        }
-        else if (empty($nome)) {
-            header('location:../categoria/cadastrarCategoria.php?resultado=Digite o nome da categoria!');
-            $validacao = false;
-        }
 
-        if ($validacao == true)
+        if ($validacao)
         {
             return true;
         }
@@ -71,12 +74,20 @@ class Categoria
         }
     }
 
+    public static function formatar(string $campo)
+    {
+        $campo = trim($campo);
+        $campo = str_replace("'", "", $campo);
+        return $campo;
+    }
+
     public function cadastrar(mysqli $link)
     {
-        if ($this::validar($this->nome))
+        $nome = $this::formatar($this->nome);
+        if ($this::validar($nome))
         {
             mysqli_query($link, "insert into categoria(nome, inativado)
-            values('$this->nome', false)");
+            values('$nome', false)");
     
             if (mysqli_error($link)>0)
             {
@@ -90,16 +101,21 @@ class Categoria
 
     public static function alterar(mysqli $link, $id, $novoNome)
     {
-        mysqli_query($link, 'update categoria set nome = "'. $novoNome . '" where id = ' . $id . ';');
-        header('location:../categoria/cadastrarCategoria.php');
+        $novoNome = $this::formatar($novoNome);
+        if($this::validar($novoNome))
+        {
+            mysqli_query($link, 'update categoria set nome = "'. $novoNome . '" where id = ' . $id . ';');
+            header('location:../categoria/cadastrarCategoria.php');
+            
+            if (mysqli_error($link)>0)
+                {
+                    header('location:../categoria/visualizarCategorias.php?resultado=' . mysqli_error($link));
+                } else
+                {
+                    header('location:../categoria/visualizarCategorias.php?resultado=alteradosucesso');
+                }
+        }
         
-        if (mysqli_error($link)>0)
-            {
-                header('location:../categoria/visualizarCategorias.php?resultado=' . mysqli_error($link));
-            } else
-            {
-                header('location:../categoria/visualizarCategorias.php?resultado=alteradosucesso');
-            }
     }
 
     public static function excluir(mysqli $link, int $id)

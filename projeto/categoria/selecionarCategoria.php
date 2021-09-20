@@ -89,9 +89,9 @@
                 echo '<td>' . $nome . '</td>';
                 echo  '<td style="max-width: 60px; min-width: 60px;">';
                 echo '<form action="../classes/Categoria.php" method="POST">';
-                echo '<button type="submit" name="alterar" class="btnEditar"><img src="../img/lapis.png" class="btnEditar" width="40px" height="40px"></button>';
-                echo '<button type="submit" name="excluir" class="btnExcluir"><img src="../img/lixeira.png" class="btnExcluir" width="40px" height="40px"></a>';
+                echo '<button type="submit" name="selecionado" class="btnEditar"><img src="../img/mais.jpg" class="btnEditar" width="40px" height="40px"></button>';
                 echo '<input type="hidden" name="id" value=' . $id . '>';
+                echo '<input type="hidden" name="nome" value=' . $nome . '>';
                 echo '</form>';
                 echo '</td>';
                 echo '</tr>';
@@ -100,7 +100,8 @@
         }
         ?>
     </table>
-
-    
+    <div>
+    <button class="btnAzul" onclick="location.href='../categoria/cadastrarCategoria.php'" type="button">Cadastrar nova categoria</button>
+    </div>
 </body>
 </html>
