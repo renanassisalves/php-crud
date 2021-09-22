@@ -143,6 +143,11 @@ td{
     background-color: aqua;
 }
 
+.headerListagemProdutos{
+    font-size: 18px;
+    background-color: aqua;
+}
+
 .colunaListagem{
     align-self: center;
 }

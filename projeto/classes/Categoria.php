@@ -37,6 +37,7 @@ if(isset($_POST['selecionado']))
 {
     $id = $_POST['id'];
     $nome = $_POST['nome'];
+    
     header('location:../produto/cadastrarProduto.php?id='.$id.'&nome='.$nome);
 }
 

@@ -4,19 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualizar Endereço</title>
+    <title>Visualizar Fornecedores</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
     <ul>
         <img src="../img/logo.png" class="logo" alt="Exemplo de logomarca" width="60" height="60">
         <li><a href="cadastrarFornecedor.php">Cadastrar Fornecedor</a></li>
-        <li><a href="visualizarFornecedores.php">Visualizar Fornecedor</a></li>
-        <li><a href="visualizarEndereco.php" class="active">Visualizar Endereço</a></li>
+        <li><a href="visualizarFornecedores.php" class="active">Visualizar Fornecedor</a></li>
         <a href="../index.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
     </ul>
 
-    <h1>Visualizar Endereço</h1>
+    <h1>Visualizar Fornecedores</h1>
     <?php 
 
     if(isset($_GET['resultado']))
@@ -110,6 +109,10 @@
         }
         ?>
     </table>
+
+    <div>
+    <button class="btnAzul" onclick="location.href='../fornecedor/cadastrarFornecedor.php'" type="button">Cadastrar novo fornecedor</button>
+    </div>
 
     
 </body>

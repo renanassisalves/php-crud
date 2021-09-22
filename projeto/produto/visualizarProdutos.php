@@ -119,7 +119,7 @@
 
     </table>
 
-    
+    <button class="btnAzul" onclick="location.href='../produto/cadastrarProduto.php'" type="button">Cadastrar novo produto</button>
 
     
 </body>

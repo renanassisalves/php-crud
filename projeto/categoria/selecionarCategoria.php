@@ -84,6 +84,9 @@
             $id = $vetor[$i][0];
             $nome = $vetor[$i][1];
             $inativado = $vetor[$i][2];
+
+            $id_post = str_replace(' ', '%20', $id);
+            $nome_post = str_replace(' ', '%20', $nome);
             if ($inativado == false) {
                 echo '<tr>';
                 echo '<td>' . $id . '</td>';
@@ -91,8 +94,8 @@
                 echo  '<td style="max-width: 60px; min-width: 60px;">';
                 echo '<form action="../classes/Categoria.php" method="POST">';
                 echo '<button type="submit" name="selecionado" class="btnEditar"><img src="../img/mais.jpg" class="btnEditar" width="40px" height="40px"></button>';
-                echo '<input type="hidden" name="id" value=' . $id . '>';
-                echo '<input type="hidden" name="nome" value=' . $nome . '>';
+                echo '<input type="hidden" name="id" value=' . $id_post . '>';
+                echo '<input type="hidden" name="nome" value=' . $nome_post . '>';
                 echo '</form>';
                 echo '</td>';
                 echo '</tr>';

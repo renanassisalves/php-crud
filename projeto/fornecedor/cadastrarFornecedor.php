@@ -11,7 +11,7 @@
     <ul>
         <img src="../img/logo.png" class="logo" alt="Exemplo de logomarca" width="60" height="60">
         <li><a href="#" class="active">Cadastrar Fornecedor</a></li>
-        <li><a href="visualizarFornecedor.php">Visualizar Fornecedores</a></li>
+        <li><a href="visualizarFornecedores.php">Visualizar Fornecedores</a></li>
         <a href="../index.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
     </ul>
 

@@ -274,7 +274,7 @@ class Endereco {
             {
                 header('location:../categoria/cadastrarFornecedor.php?resultado=sucesso');
             }
-      
+            
     }
 
     public static function alterar(mysqli $link, $id, $novoLongradouro, $novoBairro, $novoNumero, $novoCep)
