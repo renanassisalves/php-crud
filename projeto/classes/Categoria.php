@@ -33,12 +33,18 @@ if(isset($_POST['pesquisar']))
     header('location:../categoria/visualizarCategorias.php?pesquisa=' . $pesquisa);
 }
 
-if(isset($_POST['selecionado']))
+if(isset($_POST['selecionadoproduto']))
 {
-    $id = $_POST['id'];
-    $nome = $_POST['nome'];
+    $id_categoria = $_POST['id_categoria'];
+    $nome_categoria = $_POST['nome_categoria'];
     
-    header('location:../produto/cadastrarProduto.php?id='.$id.'&nome='.$nome);
+
+    $nome_produto = $_POST['nome_produto'];
+    $preco_produto = $_POST['preco_produto'];
+    $quantidade_produto = $_POST['quantidade_produto'];
+    $lucro_liquido_produto = $_POST['lucro_liquido_produto'];
+
+    header('location:../produto/cadastrarProduto.php?id_categoria='.$id_categoria.'&nome_categoria='.$nome_categoria.'&nome_produto='.$nome_produto.'&preco_produto='.$preco_produto.'&quantidade_produto='.$quantidade_produto.'&lucro_liquido_produto='.$quantidade_produto);
 }
 
 class Categoria

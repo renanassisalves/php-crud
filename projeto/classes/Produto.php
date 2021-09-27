@@ -42,6 +42,36 @@ if(isset($_POST['pesquisar']))
     header('location:../produto/visualizarProdutos.php?pesquisa=' . $pesquisa);
 }
 
+if(isset($_POST['pesquisarSelecionar']))
+{
+    $pesquisa = $_POST['pesquisarSearch'];
+    header('location:../produto/selecionarProdutos.php?pesquisa=' . $pesquisa);
+}
+
+if(isset($_POST['selecionarcategoriaproduto']))
+{
+    $nome = $_POST['nome'];
+    $preco = $_POST['preco'];
+    $quantidade = $_POST['quantidade'];
+    $lucro_liquido = $_POST['lucro_liquido'];
+   header('location:../categoria/selecionarCategoria.php?nome_produto='.$nome.'&preco_produto='.$preco.'&quantidade_produto='.$quantidade.'&lucro_liquido_produto='.$lucro_liquido);
+}
+
+if(isset($_POST['adicionar']))
+{
+    $id_novo = $_POST['id_novo'];
+    $lista_id = $_POST['lista_id'];
+    if(isset($_POST['lista_id']))
+    {
+        $lista_id= $lista_id.','.$id_novo;
+    }
+    else
+    {
+        $lista_id = $id_novo;
+    }
+
+    header('location:../produto/selecionarProdutos.php?lista_id='.$lista_id);
+}
 
 class Produto
 {

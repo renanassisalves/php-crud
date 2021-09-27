@@ -69,25 +69,32 @@
         include_once "../classes/Produto.php";
         include_once "../classes/Categoria.php";
         include_once "../classes/Banco.php";
-        if (isset($_GET['pesquisa']))
+        // if (isset($_GET['pesquisa']))
+        // {
+        //     $pesquisa = $_GET['pesquisa'];
+        //     $vetor = Produto::listarPesquisa($link, $pesquisa);
+        // }
+        // else
+        // {
+        //     $vetor = Produto::listarTodos($link);
+        // }
+            
+        if (isset($_GET['lista_id']))
         {
-            $pesquisa = $_GET['pesquisa'];
-            $vetor = Produto::listarPesquisa($link, $pesquisa);
-        }
-        else
-        {
-            $vetor = Produto::listarTodos($link);
+            $values = explode(",", $_GET["lista_id"]);
+            $values = array_values(array_unique($values));
         }
         
-        for ($i = 0; $i < count($vetor); $i++)
+        for ($i = 0; $i < count($values); $i++)
         {
-            $id = $vetor[$i][0];
-            $nome = $vetor[$i][1];
-            $preco = $vetor[$i][2];
-            $quantidade = $vetor[$i][3];
-            $lucro_liquido = $vetor[$i][4];
-            $id_categoria = $vetor[$i][5];
-            $inativado = $vetor[$i][6];
+            $vetor = Produto::pegarProduto($link, $values[$i]);
+            $id = $vetor[0];
+            $nome = $vetor[1];
+            $preco = $vetor[2];
+            $quantidade = $vetor[3];
+            $lucro_liquido = $vetor[4];
+            $id_categoria = $vetor[5];
+            $inativado = $vetor[6];
 
             $categoria = Categoria::pegarCategoria($link, $id_categoria);
             $categoriaTexto = $categoria[0] . " - " . $categoria[1];
@@ -98,7 +105,7 @@
                 echo '<td>' . $categoriaTexto . '</td>';
                 echo '<td>' . $preco . '</td>';
                 echo '<td>' . $quantidade . '</td>';
-                echo  '<td style="max-width: 60px; min-width: 60px;">';
+                echo '<td style="max-width: 60px; min-width: 60px;">';
                 echo '<form action="../classes/Produto.php" method="POST">';
                 echo '<button type="submit" name="excluir" class="btnExcluir"><img src="../img/lixeira.png" class="btnExcluir" width="40px" height="40px"></a>';
                 echo '</form>';

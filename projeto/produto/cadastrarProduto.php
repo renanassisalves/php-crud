@@ -21,15 +21,31 @@
     <?php
     include_once "../classes/Produto.php";
     include_once "../classes/Banco.php";
-    if(isset($_GET['id']))
+    if(isset($_GET['id_categoria']))
     {
-        $id = $_GET['id'];
+        $id_categoria = $_GET['id_categoria'];
     }
-    if(isset($_GET['nome']))
+    if(isset($_GET['nome_categoria']))
     {
-        $nome = $_GET['nome'];
+        $nome_categoria = $_GET['nome_categoria'];
     }
     
+    if(isset($_GET['nome_produto']))
+    {
+        $nome_produto = $_GET['nome_produto'];
+    }
+    if(isset($_GET['preco_produto']))
+    {
+        $preco_produto = $_GET['preco_produto'];
+    }
+    if(isset($_GET['quantidade_produto']))
+    {
+        $quantidade_produto = $_GET['quantidade_produto'];
+    }
+    if(isset($_GET['lucro_liquido_produto']))
+    {
+        $lucro_liquido_produto = $_GET['lucro_liquido_produto'];
+    }
     
 
     if(isset($_GET['resultado']))
@@ -54,24 +70,24 @@
     <form action="../classes/Produto.php" method="POST">
         <div>
         <label class="label">Nome do Produto
-            <input type="text" name="nome" placeholder="Digite o nome do produto">
+            <input type="text" name="nome" maxlength="255" <?php if(isset($_GET['nome_produto'])) { echo(' value="'.$nome_produto.'" '); } ?> placeholder="Digite o nome do produto">
         </label>
         <label class="label">Preço do Produto
-            <input type="number" name="preco" min="0.00" max="1000" step=".01" placeholder="Digite o preço do produto">
+            <input type="number" name="preco" min="0.00" max="1000" <?php if(isset($_GET['preco_produto'])) { echo(' value="'.$preco_produto.'" '); } ?> step=".01" placeholder="Digite o preço do produto">
         </label>
         <label class="label">Quantidade
-            <input type="number" name="quantidade" placeholder="Digite a quantidade do produto">
+            <input type="number" name="quantidade" <?php if(isset($_GET['quantidade_produto'])) { echo(' value="'.$quantidade_produto.'" '); } ?> placeholder="Digite a quantidade do produto">
         </label>
         <label class="label">% Lucro Líquido
-            <input type="text" name="lucro_liquido" min="0.00" max="100" step=".01" placeholder="Digite o lucro líquido do produto">
+            <input type="text" name="lucro_liquido" min="0.00" max="100" step=".01" <?php if(isset($_GET['lucro_liquido_produto'])) { echo(' value="'.$lucro_liquido_produto.'" '); } ?> placeholder="Digite o lucro líquido do produto">
         </label>
         </div>
         <div>
         <label class="label">Categoria do Produto
-            <input type="text" name="id" disabled <?php if(isset($_GET['id'])) {echo('value="'.$id.' - '.$nome.'">');} ?>
+            <input type="text" name="id" disabled <?php if(isset($_GET['id_categoria'])) {echo('value="'.$id_categoria.' - '.$nome_categoria.'">');} ?>
         </label>
-        <input type="hidden" name="id_categoria" value="<?php if(isset($_GET['id'])) { echo($id); }?>">
-        <button class="btnAzul" onclick="location.href='../categoria/selecionarCategoria.php'" type="button">Selecionar a Categoria</button>
+        <input type="hidden" name="id_categoria" value="<?php if(isset($_GET['id_categoria'])) { echo($id_categoria); }?>">
+        <button class="btnAzul" name="selecionarcategoriaproduto" type="submit">Selecionar a Categoria</button>
         </div>
         <div>
         <button type="submit" name="cadastrar" class="btnEnviar">Cadastrar</button>

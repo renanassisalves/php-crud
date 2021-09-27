@@ -78,24 +78,33 @@
         {
             $vetor = Categoria::listarTodos($link);
         }
+
+        $nome_produto = $_GET['nome_produto'];
+        $preco_produto = $_GET['preco_produto'];
+        $quantidade_produto = $_GET['quantidade_produto'];
+        $lucro_liquido_produto = $_GET['lucro_liquido_produto'];
         
         for ($i = 0; $i < count($vetor); $i++)
         {
             $id = $vetor[$i][0];
-            $nome = $vetor[$i][1];
+            $nome_categoria = $vetor[$i][1];
             $inativado = $vetor[$i][2];
 
             $id_post = str_replace(' ', '%20', $id);
-            $nome_post = str_replace(' ', '%20', $nome);
+            $nome_post = str_replace(' ', '%20', $nome_categoria);
             if ($inativado == false) {
                 echo '<tr>';
                 echo '<td>' . $id . '</td>';
-                echo '<td>' . $nome . '</td>';
+                echo '<td>' . $nome_categoria . '</td>';
                 echo  '<td style="max-width: 60px; min-width: 60px;">';
                 echo '<form action="../classes/Categoria.php" method="POST">';
-                echo '<button type="submit" name="selecionado" class="btnEditar"><img src="../img/mais.jpg" class="btnEditar" width="40px" height="40px"></button>';
-                echo '<input type="hidden" name="id" value=' . $id_post . '>';
-                echo '<input type="hidden" name="nome" value=' . $nome_post . '>';
+                echo '<button type="submit" name="selecionadoproduto" class="btnEditar"><img src="../img/mais.jpg" class="btnEditar" width="40px" height="40px"></button>';
+                echo '<input type="hidden" name="id_categoria" value=' . $id_post . '>';
+                echo '<input type="hidden" name="nome_categoria" value=' . $nome_post . '>';
+                echo '<input type="hidden" name="nome_produto" value=' . $nome_produto . '>';
+                echo '<input type="hidden" name="preco_produto" value=' . $preco_produto . '>';
+                echo '<input type="hidden" name="quantidade_produto" value=' . $quantidade_produto . '>';
+                echo '<input type="hidden" name="lucro_liquido_produto" value=' . $lucro_liquido_produto . '>';
                 echo '</form>';
                 echo '</td>';
                 echo '</tr>';

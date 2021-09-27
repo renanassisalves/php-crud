@@ -57,7 +57,7 @@
 
 <form action="../classes/Produto.php" method="POST" style="float: right; margin-bottom:10px; margin-right:10px;">
                     <input type="search" name="pesquisarSearch" placeholder="Pesquisar nome...">
-                    <button type="submit" name="pesquisar">Pesquisar</button>
+                    <button type="submit" name="pesquisarSelecionar">Pesquisar</button>
 </form>
 
     <table style="width: 100%">
@@ -76,6 +76,12 @@
         include_once "../classes/Produto.php";
         include_once "../classes/Categoria.php";
         include_once "../classes/Banco.php";
+
+     if (isset($_GET['lista_id']))
+        {
+            $lista_id = $_GET['lista_id'];
+        }
+
         if (isset($_GET['pesquisa']))
         {
             $pesquisa = $_GET['pesquisa'];
@@ -107,9 +113,12 @@
                 echo '<td>' . $quantidade . '</td>';
                 echo  '<td style="max-width: 60px; min-width: 60px;">';
                 echo '<form action="../classes/Produto.php" method="POST">';
-                echo '<button type="submit" name="alterar" class="btnEditar"><img src="../img/lapis.png" class="btnEditar" width="40px" height="40px"></button>';
-                echo '<button type="submit" name="excluir" class="btnExcluir"><img src="../img/lixeira.png" class="btnExcluir" width="40px" height="40px"></a>';
-                echo '<input type="hidden" name="id" value=' . $id . '>';
+                echo '<button type="submit" name="adicionar" class="btnExcluir"><img src="../img/mais.jpg" class="btnExcluir" width="40px" height="40px"></a>';
+                echo '<input type="hidden" name="id_novo" value="'.$id.'">';
+                if (isset($_GET['lista_id']))
+                {
+                    echo '<input type="hidden" name="lista_id" value="'.$lista_id.'">';
+                }
                 echo '</form>';
                 echo '</td>';
                 echo '</tr>';
@@ -119,9 +128,10 @@
         ?>
 
     </table>
-
+    <div>
     <button class="btnAzul" onclick="location.href='../produto/cadastrarProduto.php'" type="button">Cadastrar novo produto</button>
-
+    <button class="btnAzul" onclick="location.href='../entrada/cadastrarEntrada.php?lista_id=<?php echo $lista_id?>'" type="button">Finalizar seleção</button>
+    </div>
     
 </body>
 </html>

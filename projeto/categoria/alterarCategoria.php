@@ -29,7 +29,7 @@
     <form action="../classes/Categoria.php" method="POST">
         <div>
         <label class="label">Nome
-            <input type="text" name="nome" maxlength="255" value=" <?php echo $categoria[1] ?>">
+            <input type="text" name="nome" maxlength="255" value="<?php echo $categoria[1] ?>">
         </label>
         <?php
         echo '<input type="hidden" name="id" value=' . $id . '>';
