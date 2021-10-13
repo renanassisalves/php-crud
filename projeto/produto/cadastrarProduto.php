@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Produto</title>
     <link rel="stylesheet" href="../style.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script>
+
+    $(".preco").mask({"mask": "(999) 999-9999"});
+    </script>
 </head>
 <body>
     <ul>
@@ -73,7 +78,7 @@
             <input type="text" name="nome" maxlength="255" <?php if(isset($_GET['nome_produto'])) { echo(' value="'.$nome_produto.'" '); } ?> placeholder="Digite o nome do produto">
         </label>
         <label class="label">Preço do Produto
-            <input type="number" name="preco" min="0.00" max="1000" <?php if(isset($_GET['preco_produto'])) { echo(' value="'.$preco_produto.'" '); } ?> step=".01" placeholder="Digite o preço do produto">
+            <input type="number" id="preco" name="preco" min="0.00" max="1000" <?php if(isset($_GET['preco_produto'])) { echo(' value="'.$preco_produto.'" '); } ?> step=".01" placeholder="Digite o preço do produto">
         </label>
         <label class="label">Quantidade
             <input type="number" name="quantidade" <?php if(isset($_GET['quantidade_produto'])) { echo(' value="'.$quantidade_produto.'" '); } ?> placeholder="Digite a quantidade do produto">
@@ -93,6 +98,5 @@
         <button type="submit" name="cadastrar" class="btnEnviar">Cadastrar</button>
         </div>
     </form>
-    
 </body>
 </html>

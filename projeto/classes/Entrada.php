@@ -6,10 +6,13 @@ if(isset($_POST['cadastrar']))
 
     date_default_timezone_set('America/Sao_Paulo');
     $data = date('d/m/Y h:i:s', time());
-    echo($data);
+
     $id_fornecedor = $_POST['id_fornecedor'];
+    $listaProdutos = $_POST['lista_id'];
+    
+    $listaProdutos = explode(",", $listaProdutos);
     $entrada = new Entrada($data, $id_fornecedor);
-    $entrada->cadastrar($link);
+    $entrada->cadastrar($link, $listaProdutos);
 }
 
 if(isset($_POST['alterar']))
@@ -41,7 +44,13 @@ if(isset($_POST['selecionadofornecedor']))
 {
     $id = $_POST['id_fornecedor'];
     $nome = $_POST['nome_fornecedor'];
-    header('location:../entrada/cadastrarEntrada.php?id_fornecedor='.$id.'&nome_fornecedor='.$nome);
+    if (!empty($_POST['lista_id']))
+    {
+        header('location:../entrada/cadastrarEntrada.php?id_fornecedor='.$id.'&nome_fornecedor='.$nome.'&lista_id='.$_POST['lista_id']);
+    } else {
+        header('location:../entrada/cadastrarEntrada.php?id_fornecedor='.$id.'&nome_fornecedor='.$nome);
+    }
+    
 }
 
 class Entrada
@@ -86,7 +95,7 @@ class Entrada
         return $campo;
     }
 
-    public function cadastrar(mysqli $link)
+    public function cadastrar(mysqli $link, Array $listaProdutos)
     {
         
         $id_fornecedor = $this::formatar($this->id_fornecedor);
@@ -100,8 +109,29 @@ class Entrada
                 header('location:../entrada/cadastrarEntrada.php?resultado=' . mysqli_error($link));
             } else
             {
-                header('location:../entrada/cadastrarEntrada.php?resultado=sucesso');
+                $query = "insert into entrada_produto(id_produto, id_entrada, quantidade) values";
+                $idEntrada = mysqli_insert_id($link);
+                for ($i=0; $i < sizeof($listaProdutos); $i++) { 
+                    if ($i == sizeof($listaProdutos)-1)
+                    {
+                        $query = $query."(".$listaProdutos[$i].", ". $idEntrada.", ". 3 .");";
+                    }
+                    else
+                    {
+                        $query = $query."(".$listaProdutos[$i].", ". $idEntrada.", ". 3 ."),";
+                    }
+                    
+                }
+                mysqli_query($link, $query);
             }
+            if (mysqli_error($link)>0)
+                {
+                header('location:../entrada/cadastrarEntrada.php?resultado=' . mysqli_error($link));
+                }
+                else {
+                    header('location:../entrada/cadastrarEntrada.php?resultado=sucesso');
+                    
+                }
         }
         else
         {

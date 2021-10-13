@@ -105,6 +105,11 @@
                 echo '<button type="submit" name="selecionadofornecedor" class="btnEditar"><img src="../img/mais.jpg" class="btnEditar" width="40px" height="40px"></button>';
                 echo '<input type="hidden" name="id_fornecedor" value=' . $id_post . '>';
                 echo '<input type="hidden" name="nome_fornecedor" value=' . $nome_post . '>';
+                if (isset($_GET['lista_id']))
+                {
+                    echo '<input type="hidden" name="lista_id" value=' . $_GET['lista_id'] . '>';
+                }
+                
                 echo '</form>';
                 echo '</td>';
                 echo '</tr>';

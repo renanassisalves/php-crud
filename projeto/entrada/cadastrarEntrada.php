@@ -30,8 +30,6 @@
         $nome_fornecedor = $_GET['nome_fornecedor'];
     }
     
-    
-
     if(isset($_GET['resultado']))
     {
         $resultado = $_GET['resultado'];
@@ -51,7 +49,7 @@
 
     ?>
 
-    <form action="../classes/Entrada.php" method="POST">
+    
         <label class="label" style="margin-left: 380px;">Lista de produtos</label>
             <div style="width:800px; border-radius: 10px;" class="divProdutos">
             
@@ -81,47 +79,57 @@
             
         if (isset($_GET['lista_id']))
         {
+            $lista_id = $_GET['lista_id'];
             $values = explode(",", $_GET["lista_id"]);
             $values = array_values(array_unique($values));
         }
         
-        for ($i = 0; $i < count($values); $i++)
+        if (isset($values))
         {
-            $vetor = Produto::pegarProduto($link, $values[$i]);
-            $id = $vetor[0];
-            $nome = $vetor[1];
-            $preco = $vetor[2];
-            $quantidade = $vetor[3];
-            $lucro_liquido = $vetor[4];
-            $id_categoria = $vetor[5];
-            $inativado = $vetor[6];
+            for ($i = 0; $i < sizeof($values); $i++)
+            {
+                if (!empty($values[$i]))
+                {
 
-            $categoria = Categoria::pegarCategoria($link, $id_categoria);
-            $categoriaTexto = $categoria[0] . " - " . $categoria[1];
-            if ($inativado == false) {
-                echo '<tr>';
-                echo '<td>' . $id . '</td>';
-                echo '<td>' . $nome . '</td>';
-                echo '<td>' . $categoriaTexto . '</td>';
-                echo '<td>' . $preco . '</td>';
-                echo '<td>' . $quantidade . '</td>';
-                echo '<td style="max-width: 60px; min-width: 60px;">';
-                echo '<form action="../classes/Produto.php" method="POST">';
-                echo '<button type="submit" name="excluir" class="btnExcluir"><img src="../img/lixeira.png" class="btnExcluir" width="40px" height="40px"></a>';
-                echo '</form>';
-                echo '</td>';
-                echo '</tr>';
+                
+                $vetor = Produto::pegarProduto($link, $values[$i]);
+                $id = $vetor[0];
+                $nome = $vetor[1];
+                $preco = $vetor[2];
+                $quantidade = $vetor[3];
+                $lucro_liquido = $vetor[4];
+                $id_categoria = $vetor[5];
+                $inativado = $vetor[6];
+    
+                $categoria = Categoria::pegarCategoria($link, $id_categoria);
+                $categoriaTexto = $categoria[0] . " - " . $categoria[1];
+                if ($inativado == false) {
+                    echo '<tr>';
+                    echo '<td>' . $id . '</td>';
+                    echo '<td>' . $nome . '</td>';
+                    echo '<td>' . $categoriaTexto . '</td>';
+                    echo '<td>' . $preco . '</td>';
+                    echo '<td>' . $quantidade . '</td>';
+                    echo '<td style="max-width: 60px; min-width: 60px;">';
+                    echo '<form action="../classes/Produto.php" method="POST">';
+                    echo '<button type="submit" name="removerEntrada" class="btnExcluir"><img src="../img/lixeira.png" class="btnExcluir" width="40px" height="40px"></a>';
+                    echo '<input type="hidden" name="id_remover" value="'.$id.'">';
+                    if (isset($_GET['lista_id']))
+                    {
+                        echo '<input type="hidden" name="lista_id" value="'.$lista_id.'">';
+                    }
+                    echo '</form>';
+                    echo '</td>';
+                    echo '</tr>';
+                }
+                
             }
-            
+        }
         }
         ?>
-
             </table>
-
-
         </tr>
         </div>
-            
         <div>
         <button class="btnAzul" onclick="location.href='../produto/selecionarProdutos.php'" type="button">Selecionar produtos</button>
         </div>
@@ -130,13 +138,19 @@
         <label class="label">Fornecedor do Produto
             <input type="text" name="fornecedor" disabled <?php if(isset($_GET['id_fornecedor'])) {echo('value="'.$id_fornecedor.' - '.$nome_fornecedor);} ?> ">
         </label>
-        <input type="hidden" name="id_fornecedor" value="<?php if(isset($_GET['id_fornecedor'])) { echo($id_fornecedor); }?>">
-        <button class="btnAzul" onclick="location.href='../fornecedor/selecionarFornecedor.php'" type="button">Selecionar o Fornecedor</button>
+        
+        <button class="btnAzul" onclick="location.href='../fornecedor/selecionarFornecedor.php?lista_id=<?php if(!empty($values)) {
+        echo implode(',', $values);
+        }?>'" type="button">Selecionar o Fornecedor</button>
         </div>
         <div>
-        <button type="submit" name="cadastrar" class="btnEnviar">Cadastrar</button>
         </div>
-    </form>
+
+        <form action="../classes/Entrada.php" method="POST">
+        <input type="hidden" name="id_fornecedor" value="<?php if(isset($_GET['id_fornecedor'])) { echo($id_fornecedor); }?>">
+        <input type="hidden" name="lista_id" value="<?php if(isset($_GET['lista_id'])) { echo($lista_id); }?>">
+        <button type="submit" name="cadastrar" class="btnEnviar">Cadastrar</button>
+        </form>
     
 </body>
 </html>

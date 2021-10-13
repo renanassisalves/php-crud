@@ -8,6 +8,10 @@ if(isset($_POST['cadastrar']))
     $quantidade = $_POST['quantidade'];
     $lucro_liquido = $_POST['lucro_liquido'];
     $id_categoria = $_POST['id_categoria'];
+
+    $preco = str_replace(",",".", $preco);
+    $lucro_liquido = str_replace(",",".", $lucro_liquido);
+    
     $produto = new Produto($nome, $preco, $quantidade, $lucro_liquido, $id_categoria);
     $produto->cadastrar($link);
 }
@@ -71,6 +75,36 @@ if(isset($_POST['adicionar']))
     }
 
     header('location:../produto/selecionarProdutos.php?lista_id='.$lista_id);
+}
+
+if(isset($_POST['remover']))
+{
+    $id_remover = ($_POST['id_remover']);
+    $lista_id = $_POST['lista_id'];
+    $lista_id = explode(',', $lista_id);
+    if (($index = array_search($id_remover, $lista_id)) !== false) {
+        unset($lista_id[$index]);
+    }
+    $lista_id = implode(',', $lista_id);
+   header('location:../produto/selecionarProdutos.php?lista_id='.$lista_id);
+}
+
+if(isset($_POST['removerEntrada']))
+{
+    $id_remover = ($_POST['id_remover']);
+    $lista_id = $_POST['lista_id'];
+    $lista_id = explode(',', $lista_id);
+    if (($index = array_search($id_remover, $lista_id)) !== false) {
+        unset($lista_id[$index]);
+    }
+    $lista_id = implode(',', $lista_id);
+   header('location:../entrada/cadastrarEntrada.php?lista_id='.$lista_id);
+}
+
+if(isset($_POST['visualizarprodutos']))
+{
+    $id_entrada = $_POST['id'];
+    header('location:../produto/visualizarProdutosEntrada.php?id_entrada='.$id_entrada);
 }
 
 class Produto
@@ -206,6 +240,13 @@ class Produto
     public static function listarTodos(mysqli $link)
     {
         $sql = mysqli_query($link, "select * from produto;");
+        $resultado = mysqli_fetch_all($sql);
+        return $resultado;
+    }
+
+    public static function listarEntrada(mysqli $link, int $idEntrada)
+    {
+        $sql = mysqli_query($link, "select * from entrada_produto where id_entrada=".$idEntrada.";");
         $resultado = mysqli_fetch_all($sql);
         return $resultado;
     }

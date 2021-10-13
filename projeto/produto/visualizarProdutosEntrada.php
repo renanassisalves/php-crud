@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualizar Entrada</title>
+    <title>Cadastrar Produto</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
     <ul>
         <img src="../img/logo.png" class="logo" alt="Exemplo de logomarca" width="60" height="60">
-        <li><a href="cadastrarEntrada.php">Cadastrar Entrada</a></li>
-        <li><a href="visualizarEntradas.php" class="active">Visualizar Entradas</a></li>
+        <li><a href="../entrada/visualizarEntradas.php">Visualizar Entradas</a></li>
+        <li><a href="visualizarProdutosEntrada.php" class="active">Visualizar Produtos</a></li>
         <a href="../index.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
     </ul>
-
-    <h1>Visualizar Entradas</h1>
+<?php $idEntrada = $_GET['id_entrada']; ?>
+    <h1>Visualizar Produtos Entrada <?php echo($idEntrada); ?></h1>
 
     <?php 
     if(isset($_GET['resultado']))
@@ -53,7 +53,8 @@
         }
     }
     ?>
- <!-- <form action="../classes/Entrada.php" method="POST" style="float: right; margin-bottom:10px; margin-right:10px;">
+
+<!-- <form action="../classes/Produto.php" method="POST" style="float: right; margin-bottom:10px; margin-right:10px;">
                     <input type="search" name="pesquisarSearch" placeholder="Pesquisar nome...">
                     <button type="submit" name="pesquisar">Pesquisar</button>
 </form> -->
@@ -61,43 +62,54 @@
     <table style="width: 100%">
         <tr>
             <td class="headerListagem">ID</td>
-            <td class="headerListagem">Data Entrada</td>
-            <td class="headerListagem">Fornecedor</td>
-            <td class="headerListagem"></td>
+            <td class="headerListagem">Nome do Produto</td>
+            <td class="headerListagem">Categoria</td>
+            <td class="headerListagem">Preço (R$)</td>
+            <td class="headerListagem">Quantidade</td>
+            <td class="headerListagem">
+                
+            </td>
         </tr>
-
+        
         <?php 
-        include_once "../classes/Entrada.php";
-        include_once "../classes/Fornecedor.php";
+        include_once "../classes/Produto.php";
+        include_once "../classes/Categoria.php";
         include_once "../classes/Banco.php";
 
-        
+       
         if (isset($_GET['pesquisa']))
         {
             $pesquisa = $_GET['pesquisa'];
-            $vetor = Entrada::listarPesquisa($link, $pesquisa);
+            $vetorEntrada = Produto::listarPesquisa($link, $pesquisa);
         }
         else
         {
-            $vetor = Entrada::listarTodos($link);
+            $vetorEntrada = Produto::listarEntrada($link,$idEntrada);
         }
-        
-        for ($i = 0; $i < count($vetor); $i++)
+        for ($i = 0; $i < count($vetorEntrada); $i++)
         {
-            $id = $vetor[$i][0];
-            $data = $vetor[$i][1];
-            $id_fornecedor = $vetor[$i][2];
-            $inativado = $vetor[$i][3];
+            $vetor = Produto::pegarProduto($link, $vetorEntrada[$i][0]);
+            $id = $vetor[0];
+            $nome = $vetor[1];
+            $preco = $vetor[2];
+            $quantidade = $vetor[3];
+            $lucro_liquido = $vetor[4];
+            $id_categoria = $vetor[5];
+            $inativado = $vetor[6];
 
-            $fornecedor = Fornecedor::pegarFornecedor($link, $id_fornecedor);
+            $categoria = Categoria::pegarCategoria($link, $id_categoria);
+            $categoriaTexto = $categoria[0] . " - " . $categoria[1];
             if ($inativado == false) {
                 echo '<tr>';
                 echo '<td>' . $id . '</td>';
-                echo '<td>' . $data . '</td>';
-                echo '<td>' . $fornecedor[1] . '</td>';
+                echo '<td>' . $nome . '</td>';
+                echo '<td>' . $categoriaTexto . '</td>';
+                echo '<td>' . $preco . '</td>';
+                echo '<td>' . $quantidade . '</td>';
                 echo  '<td style="max-width: 60px; min-width: 60px;">';
                 echo '<form action="../classes/Produto.php" method="POST">';
-                echo '<button type="submit" style="min-width: 200px;" name="visualizarprodutos" class="btnAzul">Visualizar Produtos</button>';
+                // echo '<button type="submit" name="alterar" class="btnEditar"><img src="../img/lapis.png" class="btnEditar" width="40px" height="40px"></button>';
+                // echo '<button type="submit" name="excluir" class="btnExcluir"><img src="../img/lixeira.png" class="btnExcluir" width="40px" height="40px"></a>';
                 echo '<input type="hidden" name="id" value=' . $id . '>';
                 echo '</form>';
                 echo '</td>';
@@ -106,7 +118,10 @@
             
         }
         ?>
+
     </table>
+
+    <!-- <button class="btnAzul" onclick="location.href='../produto/cadastrarProduto.php'" type="button">Cadastrar novo produto</button> -->
 
     
 </body>
