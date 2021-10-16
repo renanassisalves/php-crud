@@ -109,7 +109,10 @@
                 {
                     echo '<input type="hidden" name="lista_id" value=' . $_GET['lista_id'] . '>';
                 }
-                
+                if (isset($_GET['lista_quantidade']))
+                {
+                    echo '<input type="hidden" name="lista_quantidade" value=' . $_GET['lista_quantidade'] . '>';
+                }
                 echo '</form>';
                 echo '</td>';
                 echo '</tr>';

@@ -9,7 +9,7 @@
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script>
 
-    $(".preco").mask({"mask": "(999) 999-9999"});
+    $("#preco").mask({"mask": "(999) 999-9999"});
     </script>
 </head>
 <body>

@@ -9,10 +9,12 @@ if(isset($_POST['cadastrar']))
 
     $id_fornecedor = $_POST['id_fornecedor'];
     $listaProdutos = $_POST['lista_id'];
+    $listaQuantidade = $_POST['lista_quantidade'];
     
     $listaProdutos = explode(",", $listaProdutos);
+    $listaQuantidade = explode(",", $listaQuantidade);
     $entrada = new Entrada($data, $id_fornecedor);
-    $entrada->cadastrar($link, $listaProdutos);
+    $entrada->cadastrar($link, $listaProdutos, $listaQuantidade);
 }
 
 if(isset($_POST['alterar']))
@@ -44,13 +46,101 @@ if(isset($_POST['selecionadofornecedor']))
 {
     $id = $_POST['id_fornecedor'];
     $nome = $_POST['nome_fornecedor'];
+    
     if (!empty($_POST['lista_id']))
     {
-        header('location:../entrada/cadastrarEntrada.php?id_fornecedor='.$id.'&nome_fornecedor='.$nome.'&lista_id='.$_POST['lista_id']);
+        header('location:../entrada/cadastrarEntrada.php?id_fornecedor='.$id.'&nome_fornecedor='.$nome.'&lista_id='.$_POST['lista_id'].'&lista_quantidade='.$_POST['lista_quantidade']);
     } else {
         header('location:../entrada/cadastrarEntrada.php?id_fornecedor='.$id.'&nome_fornecedor='.$nome);
     }
+}
+
+if(isset($_POST['adicionar']))
+{
+    $id_novo = $_POST['id_novo'];
+    $lista_id = $_POST['lista_id'];
+    $lista_quantidade = $_POST['lista_quantidade'];
     
+    if(isset($_POST['lista_id']))
+    {
+        if(!empty($lista_id))
+        {
+            $lista_id= $lista_id.','.$id_novo;
+            $lista_quantidade=$lista_quantidade.','.'0';
+        }
+        else
+        {
+            $lista_id = $id_novo;
+            $lista_quantidade = 0;
+        }
+    }
+    else
+    {
+        $lista_id = $id_novo;
+        $lista_quantidade = 0;
+    }
+
+    header('location:../entrada/selecionarProdutos.php?lista_id='.$lista_id.'&lista_quantidade='.$lista_quantidade);
+}
+
+if(isset($_POST['remover']))
+{
+    $id_remover = ($_POST['id_remover']);
+    $lista_id = $_POST['lista_id'];
+    $lista_id = explode(',', $lista_id);
+    $lista_quantidade = $_POST['lista_quantidade'];
+    $lista_quantidade = explode(',', $lista_quantidade);
+
+    if (($index = array_search($id_remover, $lista_id)) !== false) {
+        unset($lista_id[$index]);
+        unset($lista_quantidade[$index]);
+    }
+    $lista_id = implode(',', $lista_id);
+    $lista_quantidade = implode(',', $lista_quantidade);
+   header('location:../entrada/selecionarProdutos.php?lista_id='.$lista_id.'&lista_quantidade='.$lista_quantidade);
+}
+
+if(isset($_POST['removerEntrada']))
+{
+    $id_remover = ($_POST['id_remover']);
+    $lista_id = $_POST['lista_id'];
+    $lista_id = explode(',', $lista_id);
+    $lista_quantidade = $_POST['lista_quantidade'];
+    $lista_quantidade = explode(',', $lista_quantidade);
+
+    if (($index = array_search($id_remover, $lista_id)) !== false) {
+        unset($lista_id[$index]);
+        unset($lista_quantidade[$index]);
+    }
+
+    $lista_id = implode(',', $lista_id);
+    $lista_quantidade = implode(',', $lista_quantidade);
+   header('location:../entrada/cadastrarEntrada.php?lista_id='.$lista_id.'&lista_quantidade='.$lista_quantidade);
+}
+
+if(isset($_POST['adicionarQuantidade']))
+{
+    $id_adicionar = ($_POST['id_adicionar']);
+    $lista_id = $_POST['lista_id'];
+    $quantidade = $_POST['quantidade'];
+    $lista_id = explode(',', $lista_id);
+    $lista_quantidade = $_POST['lista_quantidade'];
+    $lista_quantidade = explode(',', $lista_quantidade);
+
+    if (($index = array_search($id_adicionar, $lista_id)) !== false) {
+        
+        $lista_quantidade[$index]  = $quantidade;
+    }
+    
+    $lista_id = implode(',', $lista_id);
+    $lista_quantidade = implode(',', $lista_quantidade);
+   header('location:../entrada/cadastrarEntrada.php?lista_id='.$lista_id.'&lista_quantidade='.$lista_quantidade);
+}
+
+if(isset($_POST['visualizarProdutos']))
+{
+    $id_entrada = $_POST['id'];
+    header('location:../entrada/visualizarProdutosEntrada.php?id_entrada='.$id_entrada);
 }
 
 class Entrada
@@ -95,7 +185,7 @@ class Entrada
         return $campo;
     }
 
-    public function cadastrar(mysqli $link, Array $listaProdutos)
+    public function cadastrar(mysqli $link, Array $listaProdutos, Array $listaQuantidade)
     {
         
         $id_fornecedor = $this::formatar($this->id_fornecedor);
@@ -110,17 +200,17 @@ class Entrada
             } else
             {
                 $query = "insert into entrada_produto(id_produto, id_entrada, quantidade) values";
+
                 $idEntrada = mysqli_insert_id($link);
                 for ($i=0; $i < sizeof($listaProdutos); $i++) { 
                     if ($i == sizeof($listaProdutos)-1)
                     {
-                        $query = $query."(".$listaProdutos[$i].", ". $idEntrada.", ". 3 .");";
+                        $query = $query."(".$listaProdutos[$i].", ". $idEntrada.", ". $listaQuantidade[$i] .");";
                     }
                     else
                     {
-                        $query = $query."(".$listaProdutos[$i].", ". $idEntrada.", ". 3 ."),";
-                    }
-                    
+                        $query = $query."(".$listaProdutos[$i].", ". $idEntrada.", ". $listaQuantidade[$i] ."),";
+                    } 
                 }
                 mysqli_query($link, $query);
             }

@@ -96,8 +96,8 @@
                 echo '<td>' . $data . '</td>';
                 echo '<td>' . $fornecedor[1] . '</td>';
                 echo  '<td style="max-width: 60px; min-width: 60px;">';
-                echo '<form action="../classes/Produto.php" method="POST">';
-                echo '<button type="submit" style="min-width: 200px;" name="visualizarprodutos" class="btnAzul">Visualizar Produtos</button>';
+                echo '<form action="../classes/Entrada.php" method="POST">';
+                echo '<button type="submit" style="min-width: 200px;" name="visualizarProdutos" class="btnAzul">Visualizar Produtos</button>';
                 echo '<input type="hidden" name="id" value=' . $id . '>';
                 echo '</form>';
                 echo '</td>';

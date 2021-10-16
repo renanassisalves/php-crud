@@ -8,10 +8,14 @@ if(isset($_POST['cadastrar']))
     $quantidade = $_POST['quantidade'];
     $lucro_liquido = $_POST['lucro_liquido'];
     $id_categoria = $_POST['id_categoria'];
-
+    
     $preco = str_replace(",",".", $preco);
     $lucro_liquido = str_replace(",",".", $lucro_liquido);
-    
+    Produto::validar($nome);
+    Produto::validar($preco);
+    Produto::validar($quantidade);
+    Produto::validar($lucro_liquido);
+    Produto::validar($id_categoria);
     $produto = new Produto($nome, $preco, $quantidade, $lucro_liquido, $id_categoria);
     $produto->cadastrar($link);
 }
@@ -61,52 +65,6 @@ if(isset($_POST['selecionarcategoriaproduto']))
    header('location:../categoria/selecionarCategoria.php?nome_produto='.$nome.'&preco_produto='.$preco.'&quantidade_produto='.$quantidade.'&lucro_liquido_produto='.$lucro_liquido);
 }
 
-if(isset($_POST['adicionar']))
-{
-    $id_novo = $_POST['id_novo'];
-    $lista_id = $_POST['lista_id'];
-    if(isset($_POST['lista_id']))
-    {
-        $lista_id= $lista_id.','.$id_novo;
-    }
-    else
-    {
-        $lista_id = $id_novo;
-    }
-
-    header('location:../produto/selecionarProdutos.php?lista_id='.$lista_id);
-}
-
-if(isset($_POST['remover']))
-{
-    $id_remover = ($_POST['id_remover']);
-    $lista_id = $_POST['lista_id'];
-    $lista_id = explode(',', $lista_id);
-    if (($index = array_search($id_remover, $lista_id)) !== false) {
-        unset($lista_id[$index]);
-    }
-    $lista_id = implode(',', $lista_id);
-   header('location:../produto/selecionarProdutos.php?lista_id='.$lista_id);
-}
-
-if(isset($_POST['removerEntrada']))
-{
-    $id_remover = ($_POST['id_remover']);
-    $lista_id = $_POST['lista_id'];
-    $lista_id = explode(',', $lista_id);
-    if (($index = array_search($id_remover, $lista_id)) !== false) {
-        unset($lista_id[$index]);
-    }
-    $lista_id = implode(',', $lista_id);
-   header('location:../entrada/cadastrarEntrada.php?lista_id='.$lista_id);
-}
-
-if(isset($_POST['visualizarprodutos']))
-{
-    $id_entrada = $_POST['id'];
-    header('location:../produto/visualizarProdutosEntrada.php?id_entrada='.$id_entrada);
-}
-
 class Produto
 {
     private $id;
@@ -133,7 +91,7 @@ class Produto
         $validacao = false;
 
         if (empty($campo)) {
-            header('location:../categoria/cadastrarCategoria.php?resultado=Verifique todos os campos!');
+            header('location:../produto/cadastrarProduto.php?resultado=Verifique todos os campos!');
             $validacao = false;
         } else
         {

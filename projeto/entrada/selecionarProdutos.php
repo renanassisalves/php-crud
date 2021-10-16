@@ -78,10 +78,16 @@
         include_once "../classes/Banco.php";
 
         $lista_id = [];
+        $lista_quantidade = [];
 
-     if (isset($_GET['lista_id']))
+        if (isset($_GET['lista_id']))
         {
             $lista_id = $_GET['lista_id'];
+        }
+
+        if (isset($_GET['lista_quantidade']))
+        {
+            $lista_quantidade = $_GET['lista_quantidade'];
         }
 
         if (isset($_GET['pesquisa']))
@@ -124,12 +130,16 @@
                     echo '<td>' . $preco . '</td>';
                     echo '<td>' . $quantidade . '</td>';
                     echo  '<td style="max-width: 60px; min-width: 60px;">';
-                    echo '<form action="../classes/Produto.php" method="POST">';
+                    echo '<form action="../classes/Entrada.php" method="POST">';
                     echo '<button type="submit" name="remover" class="btnExcluir"><img src="../img/menos.png" class="btnExcluir" width="40px" height="40px"></a>';
                     echo '<input type="hidden" name="id_remover" value="'.$id.'">';
                     if (isset($_GET['lista_id']))
                     {
                         echo '<input type="hidden" name="lista_id" value="'.$lista_id.'">';
+                    }
+                    if (isset($_GET['lista_quantidade']))
+                    {
+                        echo '<input type="hidden" name="lista_quantidade" value="'.$lista_quantidade.'">';
                     }
                     echo '</form>';
                     echo '</td>';
@@ -141,14 +151,18 @@
                     echo '<td>' . $nome . '</td>';
                     echo '<td>' . $categoriaTexto . '</td>';
                     echo '<td>' . $preco . '</td>';
-                    echo '<td><input type="" name="quantidade" value="0"></td>';
+                    echo '<td>' . $quantidade . '</td>';
                     echo  '<td style="max-width: 60px; min-width: 60px;">';
-                    echo '<form action="../classes/Produto.php" method="POST">';
+                    echo '<form action="../classes/Entrada.php" method="POST">';
                     echo '<button type="submit" name="adicionar" class="btnExcluir"><img src="../img/mais.jpg" class="btnExcluir" width="40px" height="40px"></a>';
                     echo '<input type="hidden" name="id_novo" value="'.$id.'">';
                     if (isset($_GET['lista_id']))
                     {
                         echo '<input type="hidden" name="lista_id" value="'.$lista_id.'">';
+                    }
+                    if (isset($_GET['lista_quantidade']))
+                    {
+                        echo '<input type="hidden" name="lista_quantidade" value="'.$lista_quantidade.'">';
                     }
                     echo '</form>';
                     echo '</td>';
@@ -163,7 +177,7 @@
     </table>
     <div>
     <button class="btnAzul" onclick="location.href='../produto/cadastrarProduto.php'" type="button">Cadastrar novo produto</button>
-    <button class="btnAzul" onclick="location.href='../entrada/cadastrarEntrada.php?lista_id=<?php if(!empty($lista_id)) {echo $lista_id;}?>'" type="button">Finalizar seleção</button>
+    <button class="btnAzul" onclick="location.href='../entrada/cadastrarEntrada.php?lista_id=<?php if(!empty($lista_id)) {echo $lista_id;} if(!empty($lista_quantidade)) {echo '&lista_quantidade='.$lista_quantidade;}?>'" type="button">Finalizar seleção</button>
     </div>
     
 </body>
