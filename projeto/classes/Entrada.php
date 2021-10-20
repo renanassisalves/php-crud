@@ -200,6 +200,7 @@ class Entrada
             } else
             {
                 $query = "insert into entrada_produto(id_produto, id_entrada, quantidade) values";
+                
 
                 $idEntrada = mysqli_insert_id($link);
                 for ($i=0; $i < sizeof($listaProdutos); $i++) { 
@@ -211,16 +212,20 @@ class Entrada
                     {
                         $query = $query."(".$listaProdutos[$i].", ". $idEntrada.", ". $listaQuantidade[$i] ."),";
                     } 
+                    $queryQuantidade = mysqli_query($link, "SELECT quantidade FROM produto WHERE id = ".$listaProdutos[$i].";");
+                    $quantidadeAtual = mysqli_fetch_row($queryQuantidade);
+                    $query2 = "update produto set quantidade = " . $quantidadeAtual[0] + $listaQuantidade[$i] . " where id = ". $listaProdutos[$i].";";
+                    mysqli_query($link, $query2);
                 }
                 mysqli_query($link, $query);
             }
+            
             if (mysqli_error($link)>0)
                 {
                 header('location:../entrada/cadastrarEntrada.php?resultado=' . mysqli_error($link));
                 }
                 else {
                     header('location:../entrada/cadastrarEntrada.php?resultado=sucesso');
-                    
                 }
         }
         else

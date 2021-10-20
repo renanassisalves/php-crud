@@ -105,6 +105,9 @@
                 echo '<input type="hidden" name="preco_produto" value=' . $preco_produto . '>';
                 echo '<input type="hidden" name="quantidade_produto" value=' . $quantidade_produto . '>';
                 echo '<input type="hidden" name="lucro_liquido_produto" value=' . $lucro_liquido_produto . '>';
+                if(isset($_GET['origem'])) {
+                    echo '<input type="hidden" name="origem" value="'. $_GET['origem'] .'">';
+                    } 
                 echo '</form>';
                 echo '</td>';
                 echo '</tr>';

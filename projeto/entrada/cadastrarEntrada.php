@@ -127,7 +127,14 @@
                     ###QUANTIDADE ENTRADA
                     echo '<td style="width: 180px; min-width: 60px;">';
                     echo '<form action="../classes/Entrada.php" method="POST" style="display:inline;">';
-                    echo '<input type="number" name="quantidade" value="'.$quantidadeEntrada.'" min="0.00" max="1000" style="margin:0px; padding:0px; width:60px; height:40px;">';
+                    if ($quantidadeEntrada != 0) {
+                        echo '<input type="number" name="quantidade" value="'.$quantidadeEntrada.'" min="0.00" max="1000" style="margin:0px; padding:0px; width:60px; height:40px; background-color:lightgreen">';
+                    }
+                    else
+                    {
+                        echo '<input type="number" name="quantidade" value="'.$quantidadeEntrada.'" min="0.00" max="1000" style="margin:0px; padding:0px; width:60px; height:40px; background-color:lightcoral">';
+                    }
+                    
                     echo '<button type="submit" name="adicionarQuantidade" class="btnExcluir"><img src="../img/mais.jpg" class="btnExcluir" width="40px" height="40px"></a>';
                     echo '<input type="hidden" name="id_adicionar" value="'.$id.'">';
                     if (isset($_GET['lista_id']))
@@ -169,13 +176,15 @@
         </div>
         <div>
             
-        <button class="btnAzul" onclick="location.href='../entrada/selecionarProdutos.php<?php if(!empty($lista_array)) {
+        <button class="btnAzul" onclick="location.href='../entrada/selecionarProdutos.php<?php
         echo '?lista_id=';
+        if(!empty($lista_array)) {
         echo implode(',', $lista_array);
         }
-        
-        if(!empty($lista_quantidade_array)) {
+
         echo '&lista_quantidade=';
+
+        if(!empty($lista_quantidade_array)) {
         echo implode(',', $lista_quantidade_array);
         }
         

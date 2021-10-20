@@ -92,6 +92,9 @@
             <input type="text" name="id" disabled <?php if(isset($_GET['id_categoria'])) {echo('value="'.$id_categoria.' - '.$nome_categoria.'">');} ?>
         </label>
         <input type="hidden" name="id_categoria" value="<?php if(isset($_GET['id_categoria'])) { echo($id_categoria); }?>">
+        <?php if(isset($_GET['origem'])) {
+            echo '<input type="hidden" name="origem" value="'. $_GET['origem'] .'">';
+            } ?>
         <button class="btnAzul" name="selecionarcategoriaproduto" type="submit">Selecionar a Categoria</button>
         </div>
         <div>

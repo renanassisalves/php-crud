@@ -105,8 +105,8 @@
         else {
             $arrayLista = [];
         }
-        
 
+        
         for ($i = 0; $i < count($vetor); $i++)
         {
             $id = $vetor[$i][0];
@@ -172,12 +172,16 @@
             }
             
         }
+
+        $origem = $_SERVER['REQUEST_URI'];
+        $origem = str_replace("&resultado=sucesso", "", $origem);
+        $origem = str_replace("&", "|||", $origem);
         ?>
 
     </table>
     <div>
-    <button class="btnAzul" onclick="location.href='../produto/cadastrarProduto.php'" type="button">Cadastrar novo produto</button>
-    <button class="btnAzul" onclick="location.href='../entrada/cadastrarEntrada.php?lista_id=<?php if(!empty($lista_id)) {echo $lista_id;} if(!empty($lista_quantidade)) {echo '&lista_quantidade='.$lista_quantidade;}?>'" type="button">Finalizar seleção</button>
+    <button class="btnAzul" onclick="location.href='../produto/cadastrarProduto.php?origem=<?php echo $origem ?>'" type="button">Cadastrar novo produto</button>
+    <button class="btnAzul" onclick="location.href='../entrada/cadastrarEntrada.php?lista_id=<?php if(!empty($lista_id)) {echo $lista_id;} echo '&lista_quantidade='; if(!empty($lista_quantidade)) {echo $lista_quantidade;}?>'" type="button">Finalizar seleção</button>
     </div>
     
 </body>

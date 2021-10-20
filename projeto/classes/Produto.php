@@ -9,15 +9,40 @@ if(isset($_POST['cadastrar']))
     $lucro_liquido = $_POST['lucro_liquido'];
     $id_categoria = $_POST['id_categoria'];
     
+    if(isset($_POST['origem']))
+    {
+        $origem = $_POST['origem'];
+        $origem = str_replace("|||","&", $origem);
+    }
+    else 
+    {
+        $origem = "0";
+    }
+
     $preco = str_replace(",",".", $preco);
     $lucro_liquido = str_replace(",",".", $lucro_liquido);
-    Produto::validar($nome);
-    Produto::validar($preco);
-    Produto::validar($quantidade);
-    Produto::validar($lucro_liquido);
-    Produto::validar($id_categoria);
-    $produto = new Produto($nome, $preco, $quantidade, $lucro_liquido, $id_categoria);
-    $produto->cadastrar($link);
+
+    if (Produto::validar($nome) and Produto::validar($preco) and Produto::validar($quantidade) and Produto::validar($lucro_liquido) and Produto::validar($id_categoria))
+
+    {
+        $produto = new Produto($nome, $preco, $quantidade, $lucro_liquido, $id_categoria);
+        $produto->cadastrar($link, $origem);    
+    }
+    else
+    {
+        if ($origem == "0")
+        {
+            header('location:../produto/cadastrarProduto.php?resultado=Verifique todos os campos!');
+        }
+        else 
+        {
+            $link = $_SERVER['HTTP_REFERER'];
+            $link = str_replace("&resultado=Verifique%20todos%20os%20campos!", "", $link);
+            $link = str_replace("&resultado=sucesso", "", $link);
+            header('location: ' . $link . '&resultado=Verifique todos os campos!');
+        }
+    }
+    
 }
 
 if(isset($_POST['alterar']))
@@ -62,7 +87,15 @@ if(isset($_POST['selecionarcategoriaproduto']))
     $preco = $_POST['preco'];
     $quantidade = $_POST['quantidade'];
     $lucro_liquido = $_POST['lucro_liquido'];
-   header('location:../categoria/selecionarCategoria.php?nome_produto='.$nome.'&preco_produto='.$preco.'&quantidade_produto='.$quantidade.'&lucro_liquido_produto='.$lucro_liquido);
+    if(isset($_POST['origem']))
+    {
+        header('location:../categoria/selecionarCategoria.php?nome_produto='.$nome.'&preco_produto='.$preco.'&quantidade_produto='.$quantidade.'&lucro_liquido_produto='.$lucro_liquido.'&origem='.$_POST['origem']);
+    }
+    else
+    {
+        header('location:../categoria/selecionarCategoria.php?nome_produto='.$nome.'&preco_produto='.$preco.'&quantidade_produto='.$quantidade.'&lucro_liquido_produto='.$lucro_liquido);
+    }
+   
 }
 
 class Produto
@@ -91,20 +124,12 @@ class Produto
         $validacao = false;
 
         if (empty($campo)) {
-            header('location:../produto/cadastrarProduto.php?resultado=Verifique todos os campos!');
-            $validacao = false;
+            return false;
         } else
-        {
-            $validacao = true;
-        }
-
-        if ($validacao)
         {
             return true;
         }
-        else {
-            return false;
-        }
+
     }
 
     public static function formatar(string $campo)
@@ -114,7 +139,7 @@ class Produto
         return $campo;
     }
 
-    public function cadastrar(mysqli $link)
+    public function cadastrar(mysqli $link, string $origem)
     {
 
         $nome = $this::formatar($this->nome);
@@ -130,18 +155,53 @@ class Produto
             mysqli_query($link, "insert into produto(nome, preco, quantidade, lucro_liquido, id_categoria, inativado)
             values('$nome', $preco, $quantidade, $lucro_liquido, $id_categoria, false);");
             
-            
-            if (mysqli_error($link)>0)
+            if ($origem == "0")
             {
-                header('location:../produto/cadastrarProduto.php?resultado=' . mysqli_error($link));
-            } else
-            {
-                header('location:../produto/cadastrarProduto.php?resultado=sucesso');
+                
+                if (mysqli_error($link)>0)
+                {
+                    header('location:../produto/cadastrarProduto.php?resultado=' . mysqli_error($link));
+                } else
+                {
+                    header('location:../produto/cadastrarProduto.php?resultado=sucesso');
+                }
             }
+            else
+            {
+                if (mysqli_error($link)>0)
+                {
+                    header('Location: ' . $origem . '&resultado=' . mysqli_error($link));
+                } else
+                {
+                    header('Location: ' . $origem . '&resultado=sucesso');
+                }
+            }
+            
         }
         else
         {
-            header('location:../produto/cadastrarProduto.php?resultado=Verifique todos os campos!');
+
+            if ($origem == "0")
+            {
+                
+                if (mysqli_error($link)>0)
+                {
+                    header('location:../produto/cadastrarProduto.php?resultado=' . mysqli_error($link));
+                } else
+                {
+                    header('location:../produto/cadastrarProduto.php?resultado=Verifique todos os campos!');
+                }
+            }
+            else
+            {
+                if (mysqli_error($link)>0)
+                {
+                    header('Location: ' . $origem . '&resultado=' . mysqli_error($link));
+                } else
+                {
+                    header('Location: ' . $origem . '&resultado=Verifique todos os campos!');
+                }
+            }
         }
 
         

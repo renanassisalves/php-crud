@@ -43,8 +43,15 @@ if(isset($_POST['selecionadoproduto']))
     $preco_produto = $_POST['preco_produto'];
     $quantidade_produto = $_POST['quantidade_produto'];
     $lucro_liquido_produto = $_POST['lucro_liquido_produto'];
-
-    header('location:../produto/cadastrarProduto.php?id_categoria='.$id_categoria.'&nome_categoria='.$nome_categoria.'&nome_produto='.$nome_produto.'&preco_produto='.$preco_produto.'&quantidade_produto='.$quantidade_produto.'&lucro_liquido_produto='.$lucro_liquido_produto);
+    if(isset($_POST['origem']))
+    {
+        header('location:../produto/cadastrarProduto.php?id_categoria='.$id_categoria.'&nome_categoria='.$nome_categoria.'&nome_produto='.$nome_produto.'&preco_produto='.$preco_produto.'&quantidade_produto='.$quantidade_produto.'&lucro_liquido_produto='.$lucro_liquido_produto.'&origem='.$_POST['origem']);
+    }
+    else 
+    {
+        header('location:../produto/cadastrarProduto.php?id_categoria='.$id_categoria.'&nome_categoria='.$nome_categoria.'&nome_produto='.$nome_produto.'&preco_produto='.$preco_produto.'&quantidade_produto='.$quantidade_produto.'&lucro_liquido_produto='.$lucro_liquido_produto);
+    }
+    
 }
 
 class Categoria
