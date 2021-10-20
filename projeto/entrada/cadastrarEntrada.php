@@ -196,13 +196,14 @@
             <input type="text" name="fornecedor" disabled <?php if(isset($_GET['id_fornecedor'])) {echo('value="'.$id_fornecedor.' - '.$nome_fornecedor);} ?> ">
         </label>
         
-        <button class="btnAzul" onclick="location.href='../fornecedor/selecionarFornecedor.php<?php if(!empty($lista_array)) {
-        echo '?lista_id=';
+        <button class="btnAzul" onclick="location.href='../fornecedor/selecionarFornecedor.php<?php echo '?lista_id='; if(!empty($lista_array)) {
+        
         echo implode(',', $lista_array);
         }
-        
-        if(!empty($lista_quantidade_array)) {
+
         echo '&lista_quantidade=';
+
+        if(!empty($lista_quantidade_array)) {
         echo implode(',', $lista_quantidade_array);
         }
         

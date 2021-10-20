@@ -4,19 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selecionar Fornecedor</title>
+    <title>Visualizar Usuários</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
     <ul>
         <img src="../img/logo.png" class="logo" alt="Exemplo de logomarca" width="60" height="60">
-        <li><a href="../fornecedor/cadastrarFornecedor.php">Cadastrar Fornecedor</a></li>
-        <li><a href="../fornecedor/visualizarFornecedores.php">Visualizar Fornecedores</a></li>
-        <li><a href="../fornecedor/selecionarFornecedor.php" class="active">Selecionar Fornecedor</a></li>
+        <li><a href="visualizarUsuarios.php" class="active">Visualizar Usuários</a></li>
+        <li><a href="cadastrarUsuario.php">Cadastrar Usuário</a></li>
         <a href="../index.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
     </ul>
 
-    <h1>Selecionar Fornecedor</h1>
+    <h1>Visualizar Usuários</h1>
 
     <?php 
     if(isset($_GET['resultado']))
@@ -54,66 +53,60 @@
         }
     }
     ?>
- <form action="../classes/Fornecedor.php" method="POST" style="float: right; margin-bottom:10px; margin-right:10px;">
+ <form action="../classes/Categoria.php" method="POST" style="float: right; margin-bottom:10px; margin-right:10px;">
                     <input type="search" name="pesquisarSearch" placeholder="Pesquisar nome...">
-                    <input type="hidden" name="origem" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
                     <button type="submit" name="pesquisar">Pesquisar</button>
 </form>
 
     <table style="width: 100%">
-    <tr>
+        <tr>
             <td class="headerListagem">ID</td>
-            <td class="headerListagem">Nome do Fornecedor</td>
-            <td class="headerListagem">Responsável</td>
-            <td class="headerListagem">Telefone Responsável</td>
-            <td class="headerListagem"></td>
+            <td class="headerListagem">Nome do usuário</td>
+            <td class="headerListagem">Login</td>
+            <td class="headerListagem">Nivel de Acesso</td>
             <td class="headerListagem"></td>
         </tr>
 
         <?php 
-        include_once "../classes/Fornecedor.php";
+        include_once "../classes/Usuario.php";
         include_once "../classes/Banco.php";
-        
         if (isset($_GET['pesquisa']))
         {
             $pesquisa = $_GET['pesquisa'];
-            $vetor = Fornecedor::listarPesquisa($link, $pesquisa);
+            $vetor = Usuario::listarPesquisa($link, $pesquisa);
         }
         else
         {
-            $vetor = Fornecedor::listarTodos($link);
+            $vetor = Usuario::listarTodos($link);
         }
-
+        
         for ($i = 0; $i < count($vetor); $i++)
         {
             $id = $vetor[$i][0];
             $nome = $vetor[$i][1];
-            $responsavel = $vetor[$i][2];
-            $tel_responsavel = $vetor[$i][3];
-            $inativado = $vetor[$i][5];
+            $login = $vetor[$i][2];
+            $nivel_de_acesso = $vetor[$i][4];
 
-            $id_post = str_replace(' ', '%20', $id);
-            $nome_post = str_replace(' ', '%20', $nome);
+            if ($nivel_de_acesso == 2) {
+                $nivel_de_acesso = "Administrador";
+            }
+            else if ($nivel_de_acesso == 1)
+            {
+                $nivel_de_acesso = "Funcionário";
+            }
+
+            $inativado = $vetor[$i][5];
             if ($inativado == false) {
                 echo '<tr>';
                 echo '<td>' . $id . '</td>';
                 echo '<td>' . $nome . '</td>';
-                echo '<td>' . $responsavel . '</td>';
-                echo '<td>' . $tel_responsavel . '</td>';
-                echo '<td><button>Visualizar Endereco</button></td>';
+                echo '<td>' . $login . '</td>';
+                echo '<td>' . $nivel_de_acesso . '</td>';
                 echo  '<td style="max-width: 60px; min-width: 60px;">';
-                echo '<form action="../classes/Entrada.php" method="POST">';
-                echo '<button type="submit" name="selecionadofornecedor" class="btnEditar"><img src="../img/mais.jpg" class="btnEditar" width="40px" height="40px"></button>';
-                echo '<input type="hidden" name="id_fornecedor" value=' . $id_post . '>';
-                echo '<input type="hidden" name="nome_fornecedor" value=' . $nome_post . '>';
-                if (isset($_GET['lista_id']))
-                {
-                    echo '<input type="hidden" name="lista_id" value=' . $_GET['lista_id'] . '>';
-                }
-                if (isset($_GET['lista_quantidade']))
-                {
-                    echo '<input type="hidden" name="lista_quantidade" value=' . $_GET['lista_quantidade'] . '>';
-                }
+                echo '<form action="../classes/Usuario.php" method="POST">';
+                echo '<button type="submit" name="alterar" class="btnEditar"><img src="../img/lapis.png" class="btnEditar" width="40px" height="40px"></button>';
+                echo '<button type="submit" name="excluir" class="btnExcluir"><img src="../img/lixeira.png" class="btnExcluir" width="40px" height="40px"></a>';
+                echo '<input type="hidden" name="id" value=' . $id . '>';
                 echo '</form>';
                 echo '</td>';
                 echo '</tr>';
@@ -121,10 +114,10 @@
             
         }
         ?>
-
     </table>
     <div>
-    <button class="btnAzul" onclick="location.href='../fornecedor/cadastrarFornecedor.php'" type="button">Cadastrar novo fornecedor</button>
+    <button class="btnAzul" onclick="location.href='../usuario/cadastrarUsuario.php'" type="button">Cadastrar novo usuário</button>
     </div>
+    
 </body>
 </html>

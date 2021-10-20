@@ -16,6 +16,7 @@
         <li><a href="produto/cadastrarProduto.php">Cadastrar Produto</a></li>
         <li><a href="fornecedor/cadastrarFornecedor.php">Cadastrar Fornecedor</a></li>
         <li><a href="relatorios.php">Relatórios</a></li>
+        <li><a href="usuario/visualizarUsuarios.php">Visualizar usuários cadastrados</a></li>
         <p class="loginStatus">Bem-vindo, Jailson!</p>
     </ul>
 </body>

@@ -42,8 +42,17 @@ if(isset($_POST['alterarconfirma']))
 if(isset($_POST['pesquisar']))
 {
     $pesquisa = $_POST['pesquisarSearch'];
-    header('location:../fornecedor/visualizarFornecedor.php?pesquisa=' . $pesquisa);
-}
+    if(isset($_POST['origem']))
+    {
+        $origem = $_POST['origem'];    
+        header('location: ' . $origem . '&pesquisa=' . $pesquisa);
+    }
+    else
+    {
+        header('location:../fornecedor/visualizarFornecedor.php?pesquisa=' . $pesquisa);
+    }
+}    
+    
 
 if(isset($_POST['excluir']))
 {
@@ -156,7 +165,7 @@ class Fornecedor
                 header('location:../fornecedor/visualizarFornecedor.php?resultado=' . mysqli_error($link));
             } else
             {
-                header('location:../fornecedor/visualizarFornecedor.php?resultado=sucesso');
+                header('location:../fornecedor/visualizarFornecedor.php?resultado=alteradosucesso');
             }
         }
         else

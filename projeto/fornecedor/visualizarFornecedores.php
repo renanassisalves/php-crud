@@ -95,9 +95,10 @@
                 echo '<td>' . $nome . '</td>';
                 echo '<td>' . $responsavel . '</td>';
                 echo '<td>' . $tel_responsavel . '</td>';
-                echo '<td><button>Visualizar Endereco</button></td>';
-                echo  '<td style="max-width: 60px; min-width: 60px;">';
+                
+                echo  '<td style="max-width: 300px; min-width: 80px;">';
                 echo '<form action="../classes/Fornecedor.php" method="POST">';
+                echo '<button type="submit" name="visualizarEndereco">Visualizar Endereco</button>';
                 echo '<button type="submit" name="alterar" class="btnEditar"><img src="../img/lapis.png" class="btnEditar" width="40px" height="40px"></button>';
                 echo '<button type="submit" name="excluir" class="btnExcluir"><img src="../img/lixeira.png" class="btnExcluir" width="40px" height="40px"></a>';
                 echo '<input type="hidden" name="id" value=' . $id . '>';
