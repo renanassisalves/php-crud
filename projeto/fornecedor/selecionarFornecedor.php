@@ -90,8 +90,12 @@
             $nome = $vetor[$i][1];
             $responsavel = $vetor[$i][2];
             $tel_responsavel = $vetor[$i][3];
+            $id_endereco = $vetor[$i][4];
             $inativado = $vetor[$i][5];
 
+
+            $origem = $_SERVER['REQUEST_URI'];
+            $origem = str_replace("&", "|||", $origem);
             $id_post = str_replace(' ', '%20', $id);
             $nome_post = str_replace(' ', '%20', $nome);
             if ($inativado == false) {
@@ -100,11 +104,13 @@
                 echo '<td>' . $nome . '</td>';
                 echo '<td>' . $responsavel . '</td>';
                 echo '<td>' . $tel_responsavel . '</td>';
-                echo '<td><button>Visualizar Endereco</button></td>';
-                echo  '<td style="max-width: 60px; min-width: 60px;">';
+                //echo  '<td style="max-width: 60px; min-width: 60px;">';
                 echo '<form action="../classes/Entrada.php" method="POST">';
-                echo '<button type="submit" name="selecionadofornecedor" class="btnEditar"><img src="../img/mais.jpg" class="btnEditar" width="40px" height="40px"></button>';
+                echo '<td><button type="submit" name="visualizarEndereco">Visualizar Endereco</button></td>';
+                echo '<td><button type="submit" name="selecionadofornecedor" class="btnEditar"><img src="../img/mais.jpg" class="btnEditar" width="40px" height="40px"></button></td>';
                 echo '<input type="hidden" name="id_fornecedor" value=' . $id_post . '>';
+                echo '<input type="hidden" name="id_endereco" value=' . $id_endereco . '>';
+                echo '<input type="hidden" name="origem" value=' . $origem . '>';
                 echo '<input type="hidden" name="nome_fornecedor" value=' . $nome_post . '>';
                 if (isset($_GET['lista_id']))
                 {
@@ -115,7 +121,7 @@
                     echo '<input type="hidden" name="lista_quantidade" value=' . $_GET['lista_quantidade'] . '>';
                 }
                 echo '</form>';
-                echo '</td>';
+                // echo '</td>';
                 echo '</tr>';
             }
             

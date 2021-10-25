@@ -126,7 +126,6 @@ td{
       width:15%;
   } */
   
-
 .backgroundListagem{
     background-color: #04b4ff48;
   }
@@ -167,4 +166,23 @@ tr{
 
 .colunaListagem{
     align-self: center;
+}
+
+
+.container {
+    justify-content: center;
+    display: flex;
+}
+
+.container .menu {
+    padding: 25px;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    position: absolute;
+    text-align: center;
+    display: inline-flex;
+    flex-direction: column;
+    background-color: #0057ff;
+    border-radius: 30px;
 }

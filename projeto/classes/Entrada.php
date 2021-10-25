@@ -143,6 +143,13 @@ if(isset($_POST['visualizarProdutos']))
     header('location:../entrada/visualizarProdutosEntrada.php?id_entrada='.$id_entrada);
 }
 
+if(isset($_POST['visualizarEndereco']))
+{
+    $id = $_POST['id_endereco'];
+    $origem = $_POST['origem'];
+    header('location:../fornecedor/visualizarEndereco.php?id_endereco=' . $id . '&origem=' . $origem);
+}
+
 class Entrada
 {
     private $id;
@@ -274,6 +281,13 @@ class Entrada
     public static function pegarEntrada(mysqli $link, int $id)
     {
         $sql = mysqli_query($link, "select * from entrada where id=$id;");
+        $resultado = mysqli_fetch_row($sql);
+        return $resultado;
+    }
+
+    public static function pegarQuantidadeProdutoEntrada(mysqli $link, int $id_entrada, int $id_produto)
+    {
+        $sql = mysqli_query($link, "select * from entrada_produto where id_entrada=$id_entrada and id_produto=$id_produto;");
         $resultado = mysqli_fetch_row($sql);
         return $resultado;
     }

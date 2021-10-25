@@ -8,9 +8,14 @@
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
+    <?php 
+        $origem = $_SERVER['REQUEST_URI'];
+        $origem = str_replace("&resultado=sucesso", "", $origem);
+        $origem = str_replace("&", "|||", $origem);
+        ?>
     <ul>
         <img src="../img/logo.png" class="logo" alt="Exemplo de logomarca" width="60" height="60">
-        <li><a href="cadastrarProduto.php">Cadastrar Produto</a></li>
+        <li><a href="../produto/cadastrarProduto.php?origem=<?php echo $origem ?>">Cadastrar Produto</a></li>
         <li><a href="visualizarProdutos.php">Visualizar Produtos</a></li>
         <li><a href="selecionarProdutos.php" class="active">Selecionar Produtos</a></li>
         <a href="../index.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
@@ -55,10 +60,11 @@
     }
     ?>
 
-<!-- <form action="../classes/Produto.php" method="POST" style="float: right; margin-bottom:10px; margin-right:10px;">
+<form action="../classes/Produto.php" method="POST" style="float: right; margin-bottom:10px; margin-right:10px;">
                     <input type="search" name="pesquisarSearch" placeholder="Pesquisar nome...">
-                    <button type="submit" name="pesquisarSelecionar">Pesquisar</button>
-</form> -->
+                    <input type="hidden" name="origem" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
+                    <button type="submit" name="pesquisar">Pesquisar</button>
+</form>
 
     <table style="width: 100%">
         <tr>
@@ -172,10 +178,10 @@
             }
             
         }
-
-        $origem = $_SERVER['REQUEST_URI'];
-        $origem = str_replace("&resultado=sucesso", "", $origem);
-        $origem = str_replace("&", "|||", $origem);
+//TA MAIS PRA CIMA
+        // $origem = $_SERVER['REQUEST_URI'];
+        // $origem = str_replace("&resultado=sucesso", "", $origem);
+        // $origem = str_replace("&", "|||", $origem);
         ?>
 
     </table>

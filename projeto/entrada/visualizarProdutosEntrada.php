@@ -54,10 +54,11 @@
     }
     ?>
 
-<!-- <form action="../classes/Produto.php" method="POST" style="float: right; margin-bottom:10px; margin-right:10px;">
+<form action="../classes/Produto.php" method="POST" style="float: right; margin-bottom:10px; margin-right:10px;">
                     <input type="search" name="pesquisarSearch" placeholder="Pesquisar nome...">
+                    <input type="hidden" name="origem" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
                     <button type="submit" name="pesquisar">Pesquisar</button>
-</form> -->
+</form>
 
     <table style="width: 100%">
         <tr>
@@ -72,6 +73,7 @@
         </tr>
         
         <?php 
+        include_once "../classes/Entrada.php";
         include_once "../classes/Produto.php";
         include_once "../classes/Categoria.php";
         include_once "../classes/Banco.php";
@@ -92,11 +94,12 @@
             $id = $vetor[0];
             $nome = $vetor[1];
             $preco = $vetor[2];
-            $quantidade = $vetor[3];
+            $quantidade_estoque = $vetor[3];
             $lucro_liquido = $vetor[4];
             $id_categoria = $vetor[5];
             $inativado = $vetor[6];
 
+            $quantidadeEntrada = Entrada::pegarQuantidadeProdutoEntrada($link, $idEntrada, $id);
             $categoria = Categoria::pegarCategoria($link, $id_categoria);
             $categoriaTexto = $categoria[0] . " - " . $categoria[1];
             if ($inativado == false) {
@@ -105,7 +108,7 @@
                 echo '<td>' . $nome . '</td>';
                 echo '<td>' . $categoriaTexto . '</td>';
                 echo '<td>' . $preco . '</td>';
-                echo '<td>' . $quantidade . '</td>';
+                echo '<td>' . $quantidadeEntrada[2] . '</td>';
                 // echo  '<td style="max-width: 60px; min-width: 60px;">';
                 // echo '<form action="../classes/Produto.php" method="POST">';
                 // echo '<button type="submit" name="alterar" class="btnEditar"><img src="../img/lapis.png" class="btnEditar" width="40px" height="40px"></button>';

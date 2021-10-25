@@ -11,7 +11,7 @@
     <ul>
         <img src="../img/logo.png" class="logo" alt="Exemplo de logomarca" width="60" height="60">
         <li><a href="cadastrarFornecedor.php">Cadastrar Fornecedor</a></li>
-        <li><a href="visualizarFornecedores.php" class="active">Visualizar Fornecedor</a></li>
+        <li><a href="visualizarFornecedores.php" class="active">Visualizar Fornecedores</a></li>
         <a href="../index.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
     </ul>
 
@@ -88,6 +88,7 @@
             $nome = $vetor[$i][1];
             $responsavel = $vetor[$i][2];
             $tel_responsavel = $vetor[$i][3];
+            $id_endereco = $vetor[$i][4];
             $inativado = $vetor[$i][5];
             if ($inativado == false) {
                 echo '<tr>';
@@ -101,7 +102,8 @@
                 echo '<button type="submit" name="visualizarEndereco">Visualizar Endereco</button>';
                 echo '<button type="submit" name="alterar" class="btnEditar"><img src="../img/lapis.png" class="btnEditar" width="40px" height="40px"></button>';
                 echo '<button type="submit" name="excluir" class="btnExcluir"><img src="../img/lixeira.png" class="btnExcluir" width="40px" height="40px"></a>';
-                echo '<input type="hidden" name="id" value=' . $id . '>';
+                echo '<input type="hidden" name="id_fornecedor" value=' . $id . '>';
+                echo '<input type="hidden" name="id_endereco" value=' . $id_endereco . '>';
                 echo '</form>';
                 echo '</td>';
                 echo '</tr>';

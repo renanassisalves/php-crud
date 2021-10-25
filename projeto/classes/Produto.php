@@ -72,8 +72,16 @@ if(isset($_POST['excluir']))
 if(isset($_POST['pesquisar']))
 {
     $pesquisa = $_POST['pesquisarSearch'];
-    header('location:../produto/visualizarProdutos.php?pesquisa=' . $pesquisa);
-}
+    if(isset($_POST['origem']))
+    {
+        $origem = $_POST['origem'];    
+        header('location: ' . $origem . '&pesquisa=' . $pesquisa);
+    }
+    else
+    {
+        header('location:../fornecedor/visualizarProdutos.php?pesquisa=' . $pesquisa);
+    }
+}    
 
 if(isset($_POST['pesquisarSelecionar']))
 {

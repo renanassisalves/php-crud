@@ -74,7 +74,7 @@
 
         </div>
         <?php
-        echo '<input type="hidden" name="id" value=' . $id . '>';
+        echo '<input type="hidden" name="id_fornecedor" value=' . $id . '>';
         ?>
     <div>
         

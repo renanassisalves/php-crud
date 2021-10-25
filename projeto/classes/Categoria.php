@@ -30,8 +30,16 @@ if(isset($_POST['excluir']))
 if(isset($_POST['pesquisar']))
 {
     $pesquisa = $_POST['pesquisarSearch'];
-    header('location:../categoria/visualizarCategorias.php?pesquisa=' . $pesquisa);
-}
+    if(isset($_POST['origem']))
+    {
+        $origem = $_POST['origem'];    
+        header('location: ' . $origem . '&pesquisa=' . $pesquisa);
+    }
+    else
+    {
+        header('location:../fornecedor/visualizarCategorias.php?pesquisa=' . $pesquisa);
+    }
+}    
 
 if(isset($_POST['selecionadoproduto']))
 {

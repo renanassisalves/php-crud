@@ -56,6 +56,7 @@
     ?>
  <form action="../classes/Categoria.php" method="POST" style="float: right; margin-bottom:10px; margin-right:10px;">
                     <input type="search" name="pesquisarSearch" placeholder="Pesquisar nome...">
+                    <input type="hidden" name="origem" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
                     <button type="submit" name="pesquisar">Pesquisar</button>
 </form>
 

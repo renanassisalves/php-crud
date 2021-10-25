@@ -53,7 +53,7 @@
         }
     }
     ?>
- <form action="../classes/Categoria.php" method="POST" style="float: right; margin-bottom:10px; margin-right:10px;">
+ <form action="../classes/Usuario.php" method="POST" style="float: right; margin-bottom:10px; margin-right:10px;">
                     <input type="search" name="pesquisarSearch" placeholder="Pesquisar nome...">
                     <button type="submit" name="pesquisar">Pesquisar</button>
 </form>

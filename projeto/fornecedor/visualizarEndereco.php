@@ -10,8 +10,8 @@
 <body>
     <ul>
         <img src="../img/logo.png" class="logo" alt="Exemplo de logomarca" width="60" height="60">
-        <li><a href="cadastrarFornecedor.php">Cadastrar Fornecedor</a></li>
-        <li><a href="visualizarFornecedores.php">Visualizar Fornecedor</a></li>
+        <!-- <li><a href="cadastrarFornecedor.php">Cadastrar Fornecedor</a></li>
+        <li><a href="visualizarFornecedores.php">Visualizar Fornecedores</a></li> -->
         <li><a href="visualizarEndereco.php" class="active">Visualizar Endereço</a></li>
         <a href="../index.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
     </ul>
@@ -55,17 +55,17 @@
     }
     ?>
 
-    <form action="../classes/Fornecedor.php" method="POST" style="float: right; margin-bottom:10px; margin-right:10px;">
+    <!-- <form action="../classes/Fornecedor.php" method="POST" style="float: right; margin-bottom:10px; margin-right:10px;">
                     <input type="search" name="pesquisarSearch" placeholder="Pesquisar pelo nome...">
-                    <button type="submit" name="pesquisar">Pesquisar</button>
+                    <button type="submit" name="pesquisar">Pesquisar</button> -->
     </form>
     <table style="width: 100%">
         <tr>
             <td class="headerListagem">ID</td>
-            <td class="headerListagem">Nome do Fornecedor</td>
-            <td class="headerListagem">Responsável</td>
-            <td class="headerListagem">Telefone Responsável</td>
-            <td class="headerListagem"></td>
+            <td class="headerListagem">Longradouro</td>
+            <td class="headerListagem">Bairro</td>
+            <td class="headerListagem">Número</td>
+            <td class="headerListagem">Cep</td>
             <td class="headerListagem"></td>
         </tr>
 
@@ -73,44 +73,45 @@
         include_once "../classes/Fornecedor.php";
         include_once "../classes/Banco.php";
         
-        if (isset($_GET['pesquisa']))
+        if (isset($_GET['id_endereco']))
         {
-            $pesquisa = $_GET['pesquisa'];
-            $vetor = Fornecedor::listarPesquisa($link, $pesquisa);
-        }
-        else
-        {
-            $vetor = Fornecedor::listarTodos($link);
+            $id_endereco = $_GET['id_endereco'];
+            $vetor = Endereco::pegarEndereco($link, $id_endereco);
         }
 
-        for ($i = 0; $i < count($vetor); $i++)
-        {
-            $id = $vetor[$i][0];
-            $nome = $vetor[$i][1];
-            $responsavel = $vetor[$i][2];
-            $tel_responsavel = $vetor[$i][3];
-            $inativado = $vetor[$i][5];
+            $id = $vetor[0];
+            $longradouro = $vetor[1];
+            $bairro = $vetor[2];
+            $numero = $vetor[3];
+            $cep = $vetor[4];
+            $inativado = $vetor[5];
             if ($inativado == false) {
                 echo '<tr>';
                 echo '<td>' . $id . '</td>';
-                echo '<td>' . $nome . '</td>';
-                echo '<td>' . $responsavel . '</td>';
-                echo '<td>' . $tel_responsavel . '</td>';
-                echo '<td><button>Visualizar Endereco</button></td>';
-                echo  '<td style="max-width: 60px; min-width: 60px;">';
-                echo '<form action="../classes/Fornecedor.php" method="POST">';
-                echo '<button type="submit" name="alterar" class="btnEditar"><img src="../img/lapis.png" class="btnEditar" width="40px" height="40px"></button>';
-                echo '<button type="submit" name="excluir" class="btnExcluir"><img src="../img/lixeira.png" class="btnExcluir" width="40px" height="40px"></a>';
-                echo '<input type="hidden" name="id" value=' . $id . '>';
-                echo '</form>';
-                echo '</td>';
+                echo '<td>' . $longradouro . '</td>';
+                echo '<td>' . $bairro . '</td>';
+                echo '<td>' . $numero . '</td>';
+                echo '<td>' . $cep . '</td>';
                 echo '</tr>';
             }
             
-        }
         ?>
     </table>
-
+    <div>
+    <?php 
+    if (isset($_GET['origem']))
+    {
+        $origem = $_GET['origem'];
+        $origem = str_replace("|||", "&",  $origem);
+        echo '<button class="btnAzul" onclick="location.href=\''. $origem .'\'" type="button">Voltar</button>';
+    }
+    else
+    {
+        echo '<button class="btnAzul" onclick="location.href=\'../fornecedor/cadastrarFornecedor.php\'" type="button">Voltar</button>';
+    }
+    ?>
     
+    
+    </div>
 </body>
 </html>

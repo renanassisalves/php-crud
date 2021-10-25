@@ -18,14 +18,14 @@ if(isset($_POST['cadastrar']))
 
 if(isset($_POST['alterar']))
 {
-    $id = $_POST['id'];
+    $id = $_POST['id_fornecedor'];
     header('location:../fornecedor/alterarFornecedor.php?id=' . $id);   
 }
 
 if(isset($_POST['alterarconfirma']))
 {
     
-    $idFornecedor = $_POST['id'];
+    $idFornecedor = $_POST['id_fornecedor'];
     $fornecedor = Fornecedor::pegarFornecedor($link, $idFornecedor);
     $idEndereco = $fornecedor[4];
     
@@ -49,15 +49,21 @@ if(isset($_POST['pesquisar']))
     }
     else
     {
-        header('location:../fornecedor/visualizarFornecedor.php?pesquisa=' . $pesquisa);
+        header('location:../fornecedor/visualizarFornecedores.php?pesquisa=' . $pesquisa);
     }
 }    
     
 
 if(isset($_POST['excluir']))
 {
-    $id = $_POST['id'];
+    $id = $_POST['id_fornecedor'];
     Fornecedor::excluir($link, $id);
+}
+
+if(isset($_POST['visualizarEndereco']))
+{
+    $id = $_POST['id_endereco'];
+    header('location:../fornecedor/visualizarEndereco.php?id_endereco=' . $id);
 }
 
 class Fornecedor
@@ -146,10 +152,10 @@ class Fornecedor
         mysqli_query($link, 'update fornecedor set nome = "'. $novoNome . '", responsavel = "'. $novoResponsavel . '", tel_responsavel = "'. $novoTel_Responsavel . '" where id = ' . $idFornecedor . ';');
         if (mysqli_error($link)>0)
             {
-                header('location:../fornecedor/visualizarFornecedor.php?resultado=' . mysqli_error($link));
+                header('location:../fornecedor/visualizarFornecedores.php?resultado=' . mysqli_error($link));
             } else
             {
-                header('location:../fornecedor/visualizarFornecedor.php?resultado=alteradosucesso');
+                header('location:../fornecedor/visualizarFornecedores.php?resultado=alteradosucesso');
             }
         }
         else
@@ -162,10 +168,10 @@ class Fornecedor
         mysqli_query($link, 'update endereco set longradouro = "'. $novoLongradouro . '", bairro = "'. $novoBairro . '", numero = "'. $novoNumero . '", cep = "'. $novoCep . '" where id = ' . $idEndereco . ';');
         if (mysqli_error($link)>0)
             {
-                header('location:../fornecedor/visualizarFornecedor.php?resultado=' . mysqli_error($link));
+                header('location:../fornecedor/visualizarFornecedores.php?resultado=' . mysqli_error($link));
             } else
             {
-                header('location:../fornecedor/visualizarFornecedor.php?resultado=alteradosucesso');
+                header('location:../fornecedor/visualizarFornecedores.php?resultado=alteradosucesso');
             }
         }
         else
@@ -181,10 +187,10 @@ class Fornecedor
 
         if (mysqli_error($link)>0)
             {
-                header('location:../fornecedor/visualizarFornecedor.php?resultado=' . mysqli_error($link));
+                header('location:../fornecedor/visualizarFornecedores.php?resultado=' . mysqli_error($link));
             } else
             {
-                header('location:../fornecedor/visualizarFornecedor.php?resultado=excluidosucesso');
+                header('location:../fornecedor/visualizarFornecedores.php?resultado=excluidosucesso');
             }
     }
 
