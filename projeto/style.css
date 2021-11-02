@@ -11,7 +11,7 @@ ul {
     background-color: #0057ff;
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 7px;
 }
 
 li {
@@ -22,7 +22,7 @@ li {
 li a {
     text-decoration: solid;
     color: #000000;
-    padding: 10px;
+    padding: 7px;
     background-color: #04B4FF;
     border-radius: 10px;
 }

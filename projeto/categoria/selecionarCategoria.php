@@ -13,7 +13,7 @@
         <li><a href="cadastrarCategoria.php">Cadastrar Categoria</a></li>
         <li><a href="visualizarCategorias.php">Visualizar Categorias</a></li>
         <li><a href="selecionarCategoria.php" class="active">Selecionar Categoria</a></li>
-        <a href="../index.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
+        <a href="../inicio.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
     </ul>
 
     <h1>Visualizar Categorias</h1>

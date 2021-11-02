@@ -12,7 +12,7 @@
         <img src="../img/logo.png" class="logo" alt="Exemplo de logomarca" width="60" height="60">
         <li><a href="../venda/visualizarDevolucoes.php">Visualizar Devolucoes</a></li>
         <li><a href="#" class="active">Visualizar Produtos</a></li>
-        <a href="../index.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
+        <a href="../inicio.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
     </ul>
 <?php $idVenda = $_GET['id_venda']; ?>
     <h1>Visualizar Produtos Venda <?php echo($idVenda); ?></h1>

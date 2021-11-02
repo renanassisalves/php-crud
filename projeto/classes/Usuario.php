@@ -80,6 +80,47 @@ if(isset($_POST['pesquisar']))
     header('location:../usuario/visualizarUsuarios.php?pesquisa=' . $pesquisa);
 }
 
+if(isset($_POST['entrar']))
+{
+    session_start();
+
+    $login = $_POST['login'];
+    $senha = md5($_POST['senha']);
+    
+    $busca = mysqli_query($link, 'SELECT * FROM usuario 
+    WHERE login = "'.$login.'" AND senha = "'.$senha.'";');
+    $resultado = mysqli_fetch_row($busca);
+
+    if(mysqli_num_rows ($busca) > 0 )
+    {
+        $_SESSION['nome'] = $resultado[1];
+        $_SESSION['login'] = $resultado[2];
+        $_SESSION['senha'] = $resultado[3];
+        $_SESSION['nivel_de_acesso'] = $resultado[4];
+        
+        header('location:../inicio.php');
+    }
+    else{
+        unset ($_SESSION['nome']);
+        unset ($_SESSION['login']);
+        unset ($_SESSION['senha']);
+        unset ($_SESSION['nivel_de_acesso']);
+        header('location:../index.php');
+    }
+
+}
+
+if(isset($_GET['deslogar']))
+{
+    unset ($_SESSION['nome']);
+    unset ($_SESSION['login']);
+    unset ($_SESSION['senha']);
+    unset ($_SESSION['nivel_de_acesso']);
+    header('location:../index.php');
+
+
+}
+
 class Usuario
 {
     private $id;

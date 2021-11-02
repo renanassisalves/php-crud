@@ -12,7 +12,7 @@
         <img src="../img/logo.png" class="logo" alt="Exemplo de logomarca" width="60" height="60">
         <li><a href="cadastrarDevolucao.php">Cadastrar Devolucao</a></li>
         <li><a href="visualizarDevolucoes.php" class="active">Visualizar Devolucoes</a></li>
-        <a href="../index.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
+        <a href="../inicio.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
     </ul>
 
     <h1>Visualizar Devolucoes</h1>

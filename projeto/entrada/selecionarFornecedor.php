@@ -13,7 +13,7 @@
         <li><a href="../fornecedor/cadastrarFornecedor.php">Cadastrar Fornecedor</a></li>
         <li><a href="../fornecedor/visualizarFornecedores.php">Visualizar Fornecedores</a></li>
         <li><a href="../fornecedor/selecionarFornecedor.php" class="active">Selecionar Fornecedor</a></li>
-        <a href="../index.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
+        <a href="../inicio.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
     </ul>
 
     <h1>Selecionar Fornecedor</h1>

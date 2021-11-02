@@ -12,7 +12,7 @@
         <img src="../img/logo.png" class="logo" alt="Exemplo de logomarca" width="60" height="60">
         <li><a href="#" class="active">Cadastrar entrada</a></li>
         <li><a href="../entrada/visualizarEntradas.php">Visualizar entradas</a></li>
-        <a href="../index.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
+        <a href="../inicio.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
     </ul>
 
     <!--<button type="submit" class="btnBuscarProdutos"><img src="/img/logo.png" height="30px" width="30px"> </img>Buscar Produtos</button>-->    
@@ -89,7 +89,7 @@
         {
             $lista_quantidade = $_GET['lista_quantidade'];
             $lista_quantidade_array = explode(",", $_GET["lista_quantidade"]);
-            print_r($lista_quantidade_array);
+            // print_r($lista_quantidade_array);
         }
 
         if (isset($lista_array))

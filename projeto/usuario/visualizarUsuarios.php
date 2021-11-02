@@ -12,12 +12,25 @@
         <img src="../img/logo.png" class="logo" alt="Exemplo de logomarca" width="60" height="60">
         <li><a href="visualizarUsuarios.php" class="active">Visualizar Usuários</a></li>
         <li><a href="cadastrarUsuario.php">Cadastrar Usuário</a></li>
-        <a href="../index.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
+        <a href="../inicio.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
     </ul>
 
     <h1>Visualizar Usuários</h1>
 
     <?php 
+
+session_start();
+if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true) or ($_SESSION['nivel_de_acesso'] == 1))
+{
+  unset($_SESSION['login']);
+  unset($_SESSION['senha']);
+  header('location:../index.php');
+  }
+$nome = $_SESSION['nome'];
+$login = $_SESSION['login'];
+$nivel_de_acesso = $_SESSION['nivel_de_acesso'];
+
+
     if(isset($_GET['resultado']))
     {
         $resultado = $_GET['resultado'];

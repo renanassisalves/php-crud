@@ -10,14 +10,23 @@
 <body>
     <ul>
         <img src="img/logo.png" alt="Exemplo de logomarca" width="60" height="60" class="logo">
-        <li><a href="entrada/cadastrarEntrada.php">Iniciar Entrada</a></li>
-        <li><a href="venda/cadastrarVenda.php">Iniciar Venda</a></li>
-        <li><a href="devolucao/cadastrarDevolucao.php">Iniciar Devolução</a></li>
-        <li><a href="produto/cadastrarProduto.php">Cadastrar Produto</a></li>
-        <li><a href="fornecedor/cadastrarFornecedor.php">Cadastrar Fornecedor</a></li>
-        <li><a href="relatorios.php">Relatórios</a></li>
-        <li><a href="usuario/visualizarUsuarios.php">Visualizar usuários cadastrados</a></li>
-        <p class="loginStatus">Bem-vindo, Jailson!</p>
     </ul>
+
+
+    <div class="container">
+    <div class="menu">
+    <form action="classes/Usuario.php" method="POST">
+    <label class="label" style="color: white;">Login do usuário
+            <input type="text" name="login" maxlength="255" placeholder="Digite o seu login">
+        </label>
+        <br>
+        <label class="label" style="color: white;">Senha do usuário
+            <input type="password" name="senha" maxlength="255" placeholder="Digite a sua senha">
+        </label>
+        <div></div>
+        <button type="submit" name="entrar" class="btnEnviar">Entrar</button>
+    </form>
+    </div>
+</div>
 </body>
 </html>

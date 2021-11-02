@@ -17,7 +17,7 @@
         <img src="../img/logo.png" class="logo" alt="Exemplo de logomarca" width="60" height="60">
         <li><a href="../produto/cadastrarProduto.php?origem=<?php echo $origem ?>">Cadastrar Produto</a></li>
         <li><a href="#" class="active">Selecionar Produtos</a></li>
-        <a href="../index.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
+        <a href="../inicio.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
     </ul>
 
     <h1>Visualizar Produtos</h1>
