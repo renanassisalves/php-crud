@@ -297,5 +297,19 @@ class Produto
         $resultado = mysqli_fetch_all($sql);
         return $resultado;
     }
+
+    public static function pegarQuantidadeBruta(mysqli $link, int $id)
+    {
+        $sql = mysqli_query($link, "SELECT preco*quantidade AS preco_total FROM produto where produto.id = $id;");
+        $resultado = mysqli_fetch_row($sql);
+        return $resultado;
+    }
+
+    public static function pegarQuantidadeBrutaTotal(mysqli $link)
+    {
+        $sql = mysqli_query($link, "SELECT SUM(preco*quantidade) AS preco_total FROM produto;");
+        $resultado = mysqli_fetch_row($sql);
+        return $resultado;
+    }
 }
 ?>

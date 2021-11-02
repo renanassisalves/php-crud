@@ -17,17 +17,17 @@
 
     <div class="container">
     <div class="menu">
-    <form action="../classes/Relatorios.php" method="POST">
+    <form action="classes/Relatorios.php" method="POST">
     <label class="label" style="color: white;">Relatórios disponíveis</label>
         <br>
-        <button type="submit" name="relatorioProdutosCategoria" class="btnEnviar">Produtos por categoria</button>
+        <input type="date" name="dataInicio">Data de início do relatório</input>
         <div></div>
-        <button type="submit" name="relatorioTotalBrutoEmEstoque" class="btnEnviar">Valor total bruto dos produtos em estoque</button>
+        <input type="date" name="dataFim">Data de fim do relatório</input>
         <div></div>
-        <button type="submit" name="relatorioLucroLiquidoVendas" class="btnEnviar">Lucro líquido obtido nas vendas dos produtos</button>
+        <button type="submit" name="gerarRelatorio" class="btnEnviar">Gerar Relatório</button>
         <div></div>
     </form>
-    <button class="btnAzul" onclick="location.href='../inicio.php'" type="button">Voltar</button>
+    <button class="btnAzul" onclick="location.href='relatorios.php'" type="button">Voltar</button>
     </div>
 </div>
 </body>
