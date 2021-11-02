@@ -13,27 +13,37 @@ if(isset($_POST['cadastrar']))
     
     $listaProdutos = explode(",", $listaProdutos);
     $listaQuantidade = explode(",", $listaQuantidade);
-    $entrada = new Entrada($data, $id_fornecedor);
-    $entrada->cadastrar($link, $listaProdutos, $listaQuantidade);
+
+    if (Entrada::validar($id_fornecedor) and Entrada::validar($listaProdutos[0] and Entrada::validar($listaQuantidade[0])))
+    {
+        $entrada = new Entrada($data, $id_fornecedor);
+        $entrada->cadastrar($link, $listaProdutos, $listaQuantidade);
+    }
+    else
+    {
+        header('location:../entrada/cadastrarEntrada.php?resultado=Verifique todos os campos!');
+    }
+    
+    
 }
 
-if(isset($_POST['alterar']))
-{
-    $id = $_POST['id'];
-    header('location:../categoria/alterarCategoria.php?id=' . $id);   
-}
+// if(isset($_POST['alterar']))
+// {
+//     $id = $_POST['id'];
+//     header('location:../entrada/alterarEntrada.php?id=' . $id);   
+// }
 
-if(isset($_POST['alterarconfirma']))
-{
-    $id = $_POST['id'];
-    $nome = $_POST['nome'];
-    Entrada::alterar($link, $id, $nome);
-}
+// if(isset($_POST['alterarconfirma']))
+// {
+//     $id = $_POST['id'];
+//     $nome = $_POST['nome'];
+//     Entrada::alterar($link, $id, $nome);
+// }
 
 if(isset($_POST['pesquisar']))
 {
     $pesquisa = $_POST['pesquisarSearch'];
-    header('location:../categoria/visualizarEntradas.php?pesquisa=' . $pesquisa);
+    header('location:../entrada/visualizarEntradas.php?pesquisa=' . $pesquisa);
 }
 
 if(isset($_POST['excluir']))
@@ -165,23 +175,11 @@ class Entrada
 
     public static function validar(string $campo)
     {
-       
-        $validacao = false;
-
         if (empty($campo)) {
-            header('location:../entrada/cadastrarEntrada.php?resultado=Verifique todos os campos!');
-            $validacao = false;
+            return false;
         } else
         {
-            $validacao = true;
-        }
-
-        if ($validacao)
-        {
             return true;
-        }
-        else {
-            return false;
         }
     }
 
@@ -241,28 +239,6 @@ class Entrada
         }
     }
 
-    public static function alterar(mysqli $link, $id, $novoNome)
-    {
-        $novoNome = Categoria::formatar($novoNome);
-        if(Categoria::validar($novoNome))
-        {
-            mysqli_query($link, 'update categoria set nome = "'. $novoNome . '" where id = ' . $id . ';');
-            header('location:../categoria/cadastrarCategoria.php');
-            
-            if (mysqli_error($link)>0)
-                {
-                    header('location:../categoria/visualizarCategorias.php?resultado=' . mysqli_error($link));
-                } else
-                {
-                    header('location:../categoria/visualizarCategorias.php?resultado=alteradosucesso');
-                }
-        }
-        else
-        {
-            header('location:../categoria/alterarCategoria.php?id='.$id.'&?resultado=Verifique todos os campos!');
-        }
-        
-    }
 
     public static function excluir(mysqli $link, int $id)
     {

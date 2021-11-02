@@ -10,12 +10,12 @@
 <body>
     <ul>
         <img src="../img/logo.png" class="logo" alt="Exemplo de logomarca" width="60" height="60">
-        <li><a href="../entrada/visualizarEntradas.php">Visualizar Entradas</a></li>
+        <li><a href="../venda/visualizarDevolucoes.php">Visualizar Devolucoes</a></li>
         <li><a href="#" class="active">Visualizar Produtos</a></li>
         <a href="../index.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
     </ul>
-<?php $idEntrada = $_GET['id_entrada']; ?>
-    <h1>Visualizar Produtos Entrada <?php echo($idEntrada); ?></h1>
+<?php $idVenda = $_GET['id_venda']; ?>
+    <h1>Visualizar Produtos Venda <?php echo($idVenda); ?></h1>
 
     <?php 
     if(isset($_GET['resultado']))
@@ -68,18 +68,18 @@
         </tr>
         
         <?php 
-        include_once "../classes/Entrada.php";
+        include_once "../classes/Venda.php";
         include_once "../classes/Produto.php";
         include_once "../classes/Categoria.php";
         include_once "../classes/Banco.php";
 
        
         
-            $vetorEntrada = Produto::listarEntrada($link,$idEntrada);
+            $vetorVenda = Produto::listarVenda($link,$idVenda);
         
-        for ($i = 0; $i < count($vetorEntrada); $i++)
+        for ($i = 0; $i < count($vetorVenda); $i++)
         {
-            $vetor = Produto::pegarProduto($link, $vetorEntrada[$i][0]);
+            $vetor = Produto::pegarProduto($link, $vetorVenda[$i][0]);
             $id = $vetor[0];
             $nome = $vetor[1];
             $preco = $vetor[2];
@@ -88,7 +88,7 @@
             $id_categoria = $vetor[5];
             $inativado = $vetor[6];
 
-            $quantidadeEntrada = Entrada::pegarQuantidadeProdutoEntrada($link, $idEntrada, $id);
+            $quantidadeVenda = Venda::pegarQuantidadeProdutoVenda($link, $idVenda, $id);
             $categoria = Categoria::pegarCategoria($link, $id_categoria);
             $categoriaTexto = $categoria[0] . " - " . $categoria[1];
             if ($inativado == false) {
@@ -97,7 +97,7 @@
                 echo '<td>' . $nome . '</td>';
                 echo '<td>' . $categoriaTexto . '</td>';
                 echo '<td>' . $preco . '</td>';
-                echo '<td>' . $quantidadeEntrada[2] . '</td>';
+                echo '<td>' . $quantidadeVenda[2] . '</td>';
                 // echo  '<td style="max-width: 60px; min-width: 60px;">';
                 // echo '<form action="../classes/Produto.php" method="POST">';
                 // echo '<button type="submit" name="alterar" class="btnEditar"><img src="../img/lapis.png" class="btnEditar" width="40px" height="40px"></button>';

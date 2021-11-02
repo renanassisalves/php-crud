@@ -36,10 +36,10 @@ if(isset($_POST['cadastrar']))
         }
         else 
         {
-            $link = $_SERVER['HTTP_REFERER'];
-            $link = str_replace("&resultado=Verifique%20todos%20os%20campos!", "", $link);
-            $link = str_replace("&resultado=sucesso", "", $link);
-            header('location: ' . $link . '&resultado=Verifique todos os campos!');
+            $linkNovo = $_SERVER['HTTP_REFERER'];
+            $linkNovo = str_replace("&resultado=Verifique%20todos%20os%20campos!", "", $linkNovo);
+            $linkNovo = str_replace("&resultado=sucesso", "", $linkNovo);
+            header('location: ' . $linkNovo . '&resultado=Verifique todos os campos!');
         }
     }
     
@@ -79,7 +79,7 @@ if(isset($_POST['pesquisar']))
     }
     else
     {
-        header('location:../fornecedor/visualizarProdutos.php?pesquisa=' . $pesquisa);
+        header('location:../produto/visualizarProdutos.php?pesquisa=' . $pesquisa);
     }
 }    
 
@@ -273,6 +273,20 @@ class Produto
     public static function listarEntrada(mysqli $link, int $idEntrada)
     {
         $sql = mysqli_query($link, "select * from entrada_produto where id_entrada=".$idEntrada.";");
+        $resultado = mysqli_fetch_all($sql);
+        return $resultado;
+    }
+
+    public static function listarVenda(mysqli $link, int $idVenda)
+    {
+        $sql = mysqli_query($link, "select * from venda_produto where id_venda=".$idVenda.";");
+        $resultado = mysqli_fetch_all($sql);
+        return $resultado;
+    }
+
+    public static function listarDevolucao(mysqli $link, int $idDevolucao)
+    {
+        $sql = mysqli_query($link, "select * from devolucao_produto where id_devolucao=".$idDevolucao.";");
         $resultado = mysqli_fetch_all($sql);
         return $resultado;
     }

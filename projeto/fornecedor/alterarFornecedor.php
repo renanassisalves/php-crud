@@ -45,30 +45,30 @@
     ?>
     <form action="../classes/Fornecedor.php" method="POST">
         <div>
-        <label class="label">Nome do Fornecedor
+        <label class="label">Nome do Fornecedor <label class="label" style="color: red;">*</label>
             <input type="text" name="nome" maxlength="255" value="<?php echo $fornecedor[1] ?>">
         </label>
-        <label class="label">Responsável pelo fornecimento
+        <label class="label">Responsável pelo fornecimento <label class="label" style="color: red;">*</label>
             <input type="text" name="responsavel" maxlength="255" value="<?php echo $fornecedor[2] ?>">
         </label>
-        <label class="label">Telefone do responsável
+        <label class="label">Telefone do responsável <label class="label" style="color: red;">*</label>
             <input type="text" name="tel_responsavel" maxlength="50" value="<?php echo $fornecedor[3] ?>">
         </label>
         </div>
         <div><h1>Endereço</h1></div>
         <div>
-        <label class="label">Longradouro
+        <label class="label">Longradouro <label class="label" style="color: red;">*</label>
             <input type="text" name="longradouro" maxlength="50" value="<?php echo $endereco[1] ?>">
         </label>
         
-        <label class="label">Bairro
+        <label class="label">Bairro <label class="label" style="color: red;">*</label>
             <input type="text" name="bairro" maxlength="100" value="<?php echo $endereco[2] ?>">
         </label>
-        <label class="label">Número
+        <label class="label">Número <label class="label" style="color: red;">*</label>
             <input type="text" name="numero" maxlength="10" value="<?php echo $endereco[3] ?>">
         </label>
 
-        <label class="label">CEP
+        <label class="label">CEP <label class="label" style="color: red;">*</label>
             <input type="text" name="cep" maxlength="10" value="<?php echo $endereco[4] ?>">
         </label>
 

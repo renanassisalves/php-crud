@@ -19,6 +19,11 @@
     <h1>Selecionar Fornecedor</h1>
 
     <?php 
+
+        $origem = $_SERVER['REQUEST_URI'];
+        $origem = str_replace("&resultado=sucesso", "", $origem);
+        $origem = str_replace("&", "|||", $origem);
+
     if(isset($_GET['resultado']))
     {
         $resultado = $_GET['resultado'];
@@ -130,7 +135,7 @@
 
     </table>
     <div>
-    <button class="btnAzul" onclick="location.href='../fornecedor/cadastrarFornecedor.php'" type="button">Cadastrar novo fornecedor</button>
+    <button class="btnAzul" onclick="location.href='../fornecedor/cadastrarFornecedor.php?origem=<?php echo $origem ?>'" type="button">Cadastrar novo fornecedor</button>
     </div>
 </body>
 </html>

@@ -135,7 +135,7 @@
                     echo '<td>' . $preco . '</td>';
                     echo '<td>' . $quantidade . '</td>';
                     echo  '<td style="max-width: 60px; min-width: 60px;">';
-                    echo '<form action="../classes/Entrada.php" method="POST">';
+                    echo '<form action="../classes/Venda.php" method="POST">';
                     echo '<button type="submit" name="remover" class="btnExcluir"><img src="../img/menos.png" class="btnExcluir" width="40px" height="40px"></a>';
                     echo '<input type="hidden" name="id_remover" value="'.$id.'">';
                     if (isset($_GET['lista_id']))
@@ -158,7 +158,7 @@
                     echo '<td>' . $preco . '</td>';
                     echo '<td>' . $quantidade . '</td>';
                     echo  '<td style="max-width: 60px; min-width: 60px;">';
-                    echo '<form action="../classes/Entrada.php" method="POST">';
+                    echo '<form action="../classes/Venda.php" method="POST">';
                     echo '<button type="submit" name="adicionar" class="btnExcluir"><img src="../img/mais.jpg" class="btnExcluir" width="40px" height="40px"></a>';
                     echo '<input type="hidden" name="id_novo" value="'.$id.'">';
                     if (isset($_GET['lista_id']))
@@ -186,7 +186,7 @@
     </table>
     <div>
     <button class="btnAzul" onclick="location.href='../produto/cadastrarProduto.php?origem=<?php echo $origem ?>'" type="button">Cadastrar novo produto</button>
-    <button class="btnAzul" onclick="location.href='../entrada/cadastrarEntrada.php?lista_id=<?php if(!empty($lista_id)) {echo $lista_id;} echo '&lista_quantidade='; if(!empty($lista_quantidade)) {echo $lista_quantidade;}?>'" type="button">Finalizar seleção</button>
+    <button class="btnAzul" onclick="location.href='../venda/cadastrarVenda.php?lista_id=<?php if(!empty($lista_id)) {echo $lista_id;} echo '&lista_quantidade='; if(!empty($lista_quantidade)) {echo $lista_quantidade;}?>'" type="button">Finalizar seleção</button>
     </div>
     
 </body>

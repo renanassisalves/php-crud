@@ -30,7 +30,7 @@
         else if (str_contains($resultado, 'Cannot delete or update a parent row: a foreign key constraint fails'))
         {
             echo('<div style="background-color: #ff9d9448;">');
-            echo('<p style="color: #c51d0d; margin: 10px;">Erro : Primeiramente exclua todos os produtos desta categoria.</p>');
+            echo('<p style="color: #c51d0d; margin: 10px;">Erro : Primeiramente exclua todas as entradas deste produto.</p>');
             echo('</div>');
         }
         else if ($resultado == 'alteradosucesso')

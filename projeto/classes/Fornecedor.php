@@ -1,8 +1,7 @@
 <?php
 require "Banco.php";
 
-if(isset($_POST['cadastrar']))
-{
+if (isset($_POST['cadastrar'])) {
     $nome = $_POST['nome'];
     $responsavel = $_POST['responsavel'];
     $tel_responsavel = $_POST['tel_responsavel'];
@@ -10,25 +9,32 @@ if(isset($_POST['cadastrar']))
     $bairro = $_POST['bairro'];
     $numero = $_POST['numero'];
     $cep = $_POST['cep'];
+
+    if (isset($_POST['origem'])) {
+        $origem = $_POST['origem'];
+        $origem = str_replace("|||", "&", $origem);
+    } else {
+        $origem = "0";
+    }
+
+
     $endereco = new Endereco($longradouro, $bairro, $numero, $cep);
-    $endereco->cadastrar($link);
+    $endereco->cadastrar($link, $origem);
     $fornecedor = new Fornecedor($nome, $responsavel, $tel_responsavel, $endereco->getId());
-    $fornecedor->cadastrar($link);
+    $fornecedor->cadastrar($link, $origem);
 }
 
-if(isset($_POST['alterar']))
-{
+if (isset($_POST['alterar'])) {
     $id = $_POST['id_fornecedor'];
-    header('location:../fornecedor/alterarFornecedor.php?id=' . $id);   
+    header('location:../fornecedor/alterarFornecedor.php?id=' . $id);
 }
 
-if(isset($_POST['alterarconfirma']))
-{
-    
+if (isset($_POST['alterarconfirma'])) {
+
     $idFornecedor = $_POST['id_fornecedor'];
     $fornecedor = Fornecedor::pegarFornecedor($link, $idFornecedor);
     $idEndereco = $fornecedor[4];
-    
+
     $nome = $_POST['nome'];
     $responsavel = $_POST['responsavel'];
     $tel_responsavel = $_POST['tel_responsavel'];
@@ -39,29 +45,23 @@ if(isset($_POST['alterarconfirma']))
     Fornecedor::alterar($link, $idFornecedor, $idEndereco, $nome, $responsavel, $tel_responsavel, $longradouro, $bairro, $numero, $cep);
 }
 
-if(isset($_POST['pesquisar']))
-{
+if (isset($_POST['pesquisar'])) {
     $pesquisa = $_POST['pesquisarSearch'];
-    if(isset($_POST['origem']))
-    {
-        $origem = $_POST['origem'];    
+    if (isset($_POST['origem'])) {
+        $origem = $_POST['origem'];
         header('location: ' . $origem . '&pesquisa=' . $pesquisa);
-    }
-    else
-    {
+    } else {
         header('location:../fornecedor/visualizarFornecedores.php?pesquisa=' . $pesquisa);
     }
-}    
-    
+}
 
-if(isset($_POST['excluir']))
-{
+
+if (isset($_POST['excluir'])) {
     $id = $_POST['id_fornecedor'];
     Fornecedor::excluir($link, $id);
 }
 
-if(isset($_POST['visualizarEndereco']))
-{
+if (isset($_POST['visualizarEndereco'])) {
     $id = $_POST['id_endereco'];
     header('location:../fornecedor/visualizarEndereco.php?id_endereco=' . $id);
 }
@@ -86,21 +86,18 @@ class Fornecedor
 
     public static function validar(string $campo)
     {
-       
+
         $validacao = false;
 
         if (empty($campo)) {
             $validacao = false;
-        } else
-        {
+        } else {
             $validacao = true;
         }
 
-        if ($validacao)
-        {
+        if ($validacao) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -112,29 +109,50 @@ class Fornecedor
         return $campo;
     }
 
-    public function cadastrar(mysqli $link)
+    public function cadastrar(mysqli $link, string $origem)
     {
         $nome = $this::formatar($this->nome);
         $responsavel = $this::formatar($this->responsavel);
         $tel_responsavel = $this::formatar($this->tel_responsavel);
         $id_endereco = $this::formatar($this->id_endereco);
-        if ($this::validar($nome) and $this::validar($responsavel) and $this::validar($tel_responsavel) and $this::validar($id_endereco))
-        {
-            mysqli_query($link, "insert into fornecedor(nome, responsavel, tel_responsavel, id_endereco, inativado)
+
+        if ($origem == "0") {
+            if ($this::validar($nome) and $this::validar($responsavel) and $this::validar($tel_responsavel) and $this::validar($id_endereco)) {
+                mysqli_query($link, "insert into fornecedor(nome, responsavel, tel_responsavel, id_endereco, inativado)
             values('$nome', '$responsavel', '$tel_responsavel', $id_endereco, false);");
-           
-            if (mysqli_error($link)>0)
-            {
-                header('location:../fornecedor/cadastrarFornecedor.php?resultado=' . mysqli_error($link));
-            } else
-            {
-                header('location:../fornecedor/cadastrarFornecedor.php?resultado=sucesso');
+
+                if (mysqli_error($link) > 0) {
+                    header('location:../fornecedor/cadastrarFornecedor.php?resultado=' . mysqli_error($link));
+                } else {
+                    header('location:../fornecedor/cadastrarFornecedor.php?resultado=sucesso');
+                }
+            } else {
+                header('location:../fornecedor/cadastrarFornecedor.php?resultado=Verifique todos os campos!');
+            }
+        }
+        else
+        {
+            $linkNovo = $origem;
+            $linkNovo = str_replace("&resultado=Verifique%20todos%20os%20campos!", "", $linkNovo);
+            $linkNovo = str_replace("&resultado=sucesso", "", $linkNovo);
+
+            if ($this::validar($nome) and $this::validar($responsavel) and $this::validar($tel_responsavel) and $this::validar($id_endereco)) {
+                mysqli_query($link, "insert into fornecedor(nome, responsavel, tel_responsavel, id_endereco, inativado)
+            values('$nome', '$responsavel', '$tel_responsavel', $id_endereco, false);");
+
+                if (mysqli_error($link) > 0) {
+                    header('location: ' . $linkNovo . '&resultado='.mysqli_error($link));
+                } else {
+                    header('location: ' . $linkNovo . '&resultado=sucesso');
+                }
+            } else {
+                header('location: ' . $linkNovo . '&resultado=Verifique todos os campos!');
             }
 
+
         }
-        else{
-            header('location:../fornecedor/cadastrarFornecedor.php?resultado=Verifique todos os campos!');
-        }
+
+
     }
 
     public static function alterar(mysqli $link, $idFornecedor, $idEndereco, $novoNome, $novoResponsavel, $novoTel_Responsavel, $novoLongradouro, $novoBairro, $novoNumero, $novoCep)
@@ -147,51 +165,39 @@ class Fornecedor
         $novoBairro = Fornecedor::formatar($novoBairro);
         $novoNumero = Fornecedor::formatar($novoNumero);
         $novoCep = Fornecedor::formatar($novoCep);
-        if (Fornecedor::validar($novoNome) and Fornecedor::validar($novoResponsavel) and Fornecedor::validar($novoTel_Responsavel))
-        {
-        mysqli_query($link, 'update fornecedor set nome = "'. $novoNome . '", responsavel = "'. $novoResponsavel . '", tel_responsavel = "'. $novoTel_Responsavel . '" where id = ' . $idFornecedor . ';');
-        if (mysqli_error($link)>0)
-            {
+        if (Fornecedor::validar($novoNome) and Fornecedor::validar($novoResponsavel) and Fornecedor::validar($novoTel_Responsavel)) {
+            mysqli_query($link, 'update fornecedor set nome = "' . $novoNome . '", responsavel = "' . $novoResponsavel . '", tel_responsavel = "' . $novoTel_Responsavel . '" where id = ' . $idFornecedor . ';');
+            if (mysqli_error($link) > 0) {
                 header('location:../fornecedor/visualizarFornecedores.php?resultado=' . mysqli_error($link));
-            } else
-            {
+            } else {
                 header('location:../fornecedor/visualizarFornecedores.php?resultado=alteradosucesso');
             }
-        }
-        else
-        {
-            header('location:../fornecedor/alterarFornecedor.php?id='.$idFornecedor.'?resultado=Verifique todos os campos!');
+        } else {
+            header('location:../fornecedor/alterarFornecedor.php?id=' . $idFornecedor . '?resultado=Verifique todos os campos!');
         }
 
-        if (Fornecedor::validar($novoLongradouro) and Fornecedor::validar($novoBairro) and Fornecedor::validar($novoTel_Responsavel) and Fornecedor::validar($novoCep))
-        {
-        mysqli_query($link, 'update endereco set longradouro = "'. $novoLongradouro . '", bairro = "'. $novoBairro . '", numero = "'. $novoNumero . '", cep = "'. $novoCep . '" where id = ' . $idEndereco . ';');
-        if (mysqli_error($link)>0)
-            {
+        if (Fornecedor::validar($novoLongradouro) and Fornecedor::validar($novoBairro) and Fornecedor::validar($novoTel_Responsavel) and Fornecedor::validar($novoCep)) {
+            mysqli_query($link, 'update endereco set longradouro = "' . $novoLongradouro . '", bairro = "' . $novoBairro . '", numero = "' . $novoNumero . '", cep = "' . $novoCep . '" where id = ' . $idEndereco . ';');
+            if (mysqli_error($link) > 0) {
                 header('location:../fornecedor/visualizarFornecedores.php?resultado=' . mysqli_error($link));
-            } else
-            {
+            } else {
                 header('location:../fornecedor/visualizarFornecedores.php?resultado=alteradosucesso');
             }
-        }
-        else
-        {
-            header('location:../fornecedor/alterarFornecedor.php?id='.$idFornecedor.'&resultado=Verifique todos os campos!');
+        } else {
+            header('location:../fornecedor/alterarFornecedor.php?id=' . $idFornecedor . '&resultado=Verifique todos os campos!');
         }
     }
 
     public static function excluir(mysqli $link, int $id)
     {
-        mysqli_query($link, "delete from fornecedor where id=" . $id . ";" );
+        mysqli_query($link, "delete from fornecedor where id=" . $id . ";");
         header('location:../fornecedor/visualizarFornecedor.php');
 
-        if (mysqli_error($link)>0)
-            {
-                header('location:../fornecedor/visualizarFornecedores.php?resultado=' . mysqli_error($link));
-            } else
-            {
-                header('location:../fornecedor/visualizarFornecedores.php?resultado=excluidosucesso');
-            }
+        if (mysqli_error($link) > 0) {
+            header('location:../fornecedor/visualizarFornecedores.php?resultado=' . mysqli_error($link));
+        } else {
+            header('location:../fornecedor/visualizarFornecedores.php?resultado=excluidosucesso');
+        }
     }
 
     public static function pegarFornecedor(mysqli $link, int $id)
@@ -221,10 +227,10 @@ class Fornecedor
         $resultado = mysqli_fetch_all($sql);
         return $resultado;
     }
-
 }
 
-class Endereco {
+class Endereco
+{
     private $id;
     private $longradouro;
     private $bairro;
@@ -243,22 +249,19 @@ class Endereco {
 
     public static function validar(string $campo)
     {
-       
+
         $validacao = false;
 
         if (empty($campo)) {
             header('location:../categoria/cadastrarFornecedor.php?resultado=Verifique todos os campos!');
             $validacao = false;
-        } else
-        {
+        } else {
             $validacao = true;
         }
 
-        if ($validacao)
-        {
+        if ($validacao) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -282,14 +285,11 @@ class Endereco {
         values('$longradouro', '$bairro', $numero, false, '$cep');");
         $this->id = mysqli_insert_id($link);
 
-        if (mysqli_error($link)>0)
-            {
-                header('location:../categoria/cadastrarFornecedor.php?resultado=' . mysqli_error($link));
-            } else
-            {
-                header('location:../categoria/cadastrarFornecedor.php?resultado=sucesso');
-            }
-            
+        if (mysqli_error($link) > 0) {
+            header('location:../categoria/cadastrarFornecedor.php?resultado=' . mysqli_error($link));
+        } else {
+            header('location:../categoria/cadastrarFornecedor.php?resultado=sucesso');
+        }
     }
 
     public static function alterar(mysqli $link, $id, $novoLongradouro, $novoBairro, $novoNumero, $novoCep)
@@ -298,14 +298,14 @@ class Endereco {
         $novoBairro = Endereco::formatar($novoBairro);
         $novoNumero = Endereco::formatar($novoNumero);
         $novoCep = Endereco::formatar($novoCep);
-        
-        mysqli_query($link, 'update endereco set longradouro = "'. $novoLongradouro . '" where id = ' . $id . ';');
+
+        mysqli_query($link, 'update endereco set longradouro = "' . $novoLongradouro . '" where id = ' . $id . ';');
         header('location:../categoria/visualizarCategorias.php');
     }
 
     public static function excluir(mysqli $link, int $id)
     {
-        mysqli_query($link, "delete from endereco where id=" . $id . ";" );
+        mysqli_query($link, "delete from endereco where id=" . $id . ";");
         header('location:../endereco/visualizarEndereco.php');
     }
 
@@ -328,4 +328,3 @@ class Endereco {
         return $this->id;
     }
 }
-?>

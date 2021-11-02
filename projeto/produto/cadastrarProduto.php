@@ -74,21 +74,21 @@
 
     <form action="../classes/Produto.php" method="POST">
         <div>
-        <label class="label">Nome do Produto
+        <label class="label">Nome do Produto <label class="label" style="color: red;">*</label>
             <input type="text" name="nome" maxlength="255" <?php if(isset($_GET['nome_produto'])) { echo(' value="'.$nome_produto.'" '); } ?> placeholder="Digite o nome do produto">
         </label>
-        <label class="label">Preço do Produto
+        <label class="label">Preço do Produto <label class="label" style="color: red;">*</label>
             <input type="number" id="preco" name="preco" min="0.00" max="1000" <?php if(isset($_GET['preco_produto'])) { echo(' value="'.$preco_produto.'" '); } ?> step=".01" placeholder="Digite o preço do produto">
         </label>
-        <label class="label">Quantidade
+        <label class="label">Quantidade <label class="label" style="color: red;">*</label>
             <input type="number" name="quantidade" <?php if(isset($_GET['quantidade_produto'])) { echo(' value="'.$quantidade_produto.'" '); } ?> placeholder="Digite a quantidade do produto">
         </label>
-        <label class="label">% Lucro Líquido
+        <label class="label">% Lucro Líquido <label class="label" style="color: red;">*</label>
             <input type="text" name="lucro_liquido" min="0.00" max="100" step=".01" <?php if(isset($_GET['lucro_liquido_produto'])) { echo(' value="'.$lucro_liquido_produto.'" '); } ?> placeholder="Digite o lucro líquido do produto">
         </label>
         </div>
         <div>
-        <label class="label">Categoria do Produto
+        <label class="label">Categoria do Produto <label class="label" style="color: red;">*</label>
             <input type="text" name="id" disabled <?php if(isset($_GET['id_categoria'])) {echo('value="'.$id_categoria.' - '.$nome_categoria.'">');} ?>
         </label>
         <input type="hidden" name="id_categoria" value="<?php if(isset($_GET['id_categoria'])) { echo($id_categoria); }?>">

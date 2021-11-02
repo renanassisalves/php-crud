@@ -42,21 +42,21 @@ include_once "../classes/Banco.php";
 
     <form action="../classes/Produto.php" method="POST">
         <div>
-        <label class="label">Nome do Produto
+        <label class="label">Nome do Produto <label class="label" style="color: red;">*</label>
             <input type="text" name="nome" value=" <?php echo $nome ?>" placeholder="Digite o nome do produto">
         </label>
-        <label class="label">Preço do Produto
+        <label class="label">Preço do Produto <label class="label" style="color: red;">*</label>
             <input type="text" name="preco" value=" <?php echo $preco ?>" placeholder="Digite o preço do produto">
         </label>
-        <label class="label">Quantidade
+        <label class="label">Quantidade <label class="label" style="color: red;">*</label>
             <input type="text" name="quantidade" min="1" max="1000" step="1" value=" <?php echo $quantidade ?>" placeholder="Digite a quantidade do produto">
         </label>
-        <label class="label">% Lucro Líquido
+        <label class="label">% Lucro Líquido <label class="label" style="color: red;">*</label>
             <input type="text" name="lucro_liquido" min="0.00" max="100" step=".01" value=" <?php echo $lucro_liquido ?>" placeholder="Digite o lucro líquido do produto">
         </label>
         </div>
         <div>
-        <label class="label">Categoria do Produto
+        <label class="label">Categoria do Produto <label class="label" style="color: red;">*</label>
             <input type="text" name="id" disabled <?php if(isset($_GET['id'])) {echo('value="'.$id.' - '.$nome.'">');} ?>
         </label>
         <button class="btnAzul">Selecionar a Categoria</button>
