@@ -74,17 +74,23 @@
             $nome = $vetor[$i][1];
             $inativado = $vetor[$i][2];
             $produtosNessaCategoria = Categoria::contarProdutosCategoria($link, $id);
-            
+            $produtosNessaCategoriaTotal = Categoria::contarProdutosCategoriaTotal($link);
             if ($inativado == false) {
                 echo '<tr>';
                 echo '<td>' . $id . '</td>';
                 echo '<td>' . $nome . '</td>';
-                echo '<td>' . sizeof($produtosNessaCategoria) . '</td>';
+                echo '<td>' . $produtosNessaCategoria[0][0] . '</td>';
                 echo '</tr>';
             }
             
         }
         ?>
+
+    <tr style=background-color:grey>
+            <td></td>
+            <td></td>
+            <td>Total de Produtos : <?php echo $produtosNessaCategoriaTotal[0][0] ?></td>
+        </tr>
     </table>
 
     <button class="btnAzul" onclick="location.href='relatorios.php'" type="button">Voltar</button>

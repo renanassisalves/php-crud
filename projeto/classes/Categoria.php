@@ -172,8 +172,16 @@ class Categoria
     public static function contarProdutosCategoria(mysqli $link, int $id)
     {
 
-    $sql = mysqli_query($link, "SELECT * FROM produto INNER JOIN categoria
-    ON produto.id_categoria = categoria.id where id_categoria = $id;");
+    $sql = mysqli_query($link, "SELECT SUM(quantidade) from produto as quantidade_total where id_categoria = $id;");
+        $resultado = mysqli_fetch_all($sql);
+
+        return $resultado;
+    }
+
+    public static function contarProdutosCategoriaTotal(mysqli $link)
+    {
+
+        $sql = mysqli_query($link, "SELECT SUM(quantidade) from produto as quantidade_total;");
         $resultado = mysqli_fetch_all($sql);
 
         return $resultado;
