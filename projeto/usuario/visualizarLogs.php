@@ -73,31 +73,30 @@
         if (isset($_GET['pesquisa']))
         {
             $pesquisa = $_GET['pesquisa'];
-            $vetor = Categoria::listarPesquisa($link, $pesquisa);
+            $vetor = Log::listarPesquisa($link, $pesquisa);
         }
         else
         {
-            $vetor = Categoria::listarTodos($link);
+            $vetor = Log::listarTodos($link);
         }
         
         for ($i = 0; $i < count($vetor); $i++)
         {
             $id = $vetor[$i][0];
-            $nome = $vetor[$i][1];
-            $inativado = $vetor[$i][2];
-            if ($inativado == false) {
+            $dataHora = $vetor[$i][1];
+            $usuario = $vetor[$i][2];
+            $entidade = $vetor[$i][3];
+            $valorAnterior = $vetor[$i][4];
+            $valorNovo = $vetor[$i][5];
+
                 echo '<tr>';
                 echo '<td>' . $id . '</td>';
-                echo '<td>' . $nome . '</td>';
-                echo  '<td style="max-width: 60px; min-width: 60px;">';
-                echo '<form action="../classes/Categoria.php" method="POST">';
-                echo '<button type="submit" name="alterar" class="btnEditar"><img src="../img/lapis.png" class="btnEditar" width="40px" height="40px"></button>';
-                echo '<button type="submit" name="excluir" class="btnExcluir"><img src="../img/lixeira.png" class="btnExcluir" width="40px" height="40px"></a>';
-                echo '<input type="hidden" name="id" value=' . $id . '>';
-                echo '</form>';
-                echo '</td>';
+                echo '<td>' . $dataHora . '</td>';
+                echo '<td>' . $usuario . '</td>';
+                echo '<td>' . $entidade . '</td>';
+                echo '<td>' . $valorAnterior . '</td>';
+                echo '<td>' . $valorNovo . '</td>';
                 echo '</tr>';
-            }
             
         }
         ?>

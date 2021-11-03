@@ -35,9 +35,8 @@ class Log
     private $valor_anterior;
     private $valor_novo;
 
-    public function __construct(string $data_hora, string $usuario, string $entidade_banco, string $valor_anterior, string $valor_novo)
+    public function __construct(string $usuario, string $entidade_banco, string $valor_anterior, string $valor_novo)
     {
-        $this->data_hora = $data_hora;
         $this->usuario = $usuario;
         $this->entidade_banco = $entidade_banco;
         $this->valor_anterior = $valor_anterior;
@@ -61,19 +60,22 @@ class Log
         return $campo;
     }
 
-    public function cadastrar(mysqli $link, Log $log)
+    public static function cadastrar(mysqli $link, Log $log)
     {
-        $data_hora = $log->data_hora;
-        $usuario = $this::formatar($log->usuario);
-        $entidade_banco = $this::formatar($log->entidade_banco);
-        $valor_anterior = $this::formatar($log->valor_anterior);
-        $valor_novo = $this::formatar($log->valor_novo);
+        $usuario = Log::formatar($log->usuario);
+        $entidade_banco = Log::formatar($log->entidade_banco);
+        $valor_anterior = Log::formatar($log->valor_anterior);
+        $valor_novo = Log::formatar($log->valor_novo);
 
-        if (($this::validar($usuario)) and ($this::validar($entidade_banco)) and ($this::validar($valor_anterior)) and ($this::validar($valor_novo)))
+        if ((Log::validar($usuario)) and (Log::validar($entidade_banco)) and (Log::validar($valor_anterior)) and (Log::validar($valor_novo)))
         {
             mysqli_query($link, "insert into logs_alteracoes(data_hora, usuario, entidade_banco, valor_anterior, valor_novo) 
-            values($data_hora, '$usuario', '$entidade_banco', '$valor_anterior', '$valor_novo');");
+            values(now(), '$usuario', '$entidade_banco', '$valor_anterior', '$valor_novo');");
         }
+        if (mysqli_error($link)>0)
+                {
+                    header('location:../categoria/visualizarCategorias.php?resultado=' . mysqli_error($link));
+                }
     }
 
     public static function pegarLog(mysqli $link, int $id)
@@ -92,7 +94,7 @@ class Log
 
     public static function listarPesquisa(mysqli $link, $pesquisa)
     {
-        $sql = mysqli_query($link, "select * from logs_alteracoes where nome like '%$pesquisa%';");
+        $sql = mysqli_query($link, "select * from logs_alteracoes where usuario like '%$pesquisa%';");
         $resultado = mysqli_fetch_all($sql);
         return $resultado;
     }

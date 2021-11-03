@@ -1,5 +1,8 @@
 <?php
 require "Banco.php";
+require "Log.php";
+
+session_start();
 
 if(isset($_POST['cadastrar']))
 {
@@ -117,6 +120,8 @@ class Categoria
             } else
             {
                 header('location:../categoria/cadastrarCategoria.php?resultado=sucesso');
+                $log = new log($_SESSION['nome'], "Categoria", "Cadastro de nova categoria", "$nome");
+                Log::cadastrar($link, $log);
             }
         }
         else
@@ -130,8 +135,8 @@ class Categoria
         $novoNome = Categoria::formatar($novoNome);
         if(Categoria::validar($novoNome))
         {
+            $categoriaAtual = Categoria::pegarCategoria($link, $id);
             mysqli_query($link, 'update categoria set nome = "'. $novoNome . '" where id = ' . $id . ';');
-            header('location:../categoria/cadastrarCategoria.php');
             
             if (mysqli_error($link)>0)
                 {
@@ -139,6 +144,8 @@ class Categoria
                 } else
                 {
                     header('location:../categoria/visualizarCategorias.php?resultado=alteradosucesso');
+                    $log = new log($_SESSION['nome'], "Categoria", "$categoriaAtual[1]", "$novoNome");
+                    Log::cadastrar($link, $log);
                 }
         }
         else
@@ -152,13 +159,16 @@ class Categoria
     {
         mysqli_query($link, "delete from categoria where id=" . $id . ";" );
         header('location:../categoria/visualizarCategorias.php');
-
+        $categoriaAtual = Categoria::pegarCategoria($link, $id);
         if (mysqli_error($link)>0)
             {
                 header('location:../categoria/visualizarCategorias.php?resultado=' . mysqli_error($link));
             } else
             {
                 header('location:../categoria/visualizarCategorias.php?resultado=excluidosucesso');
+
+                $log = new log($_SESSION['nome'], "Categoria", "Exclusão de categoria", "$categoriaAtual[1]");
+                    Log::cadastrar($link, $log);
             }
     }
 
