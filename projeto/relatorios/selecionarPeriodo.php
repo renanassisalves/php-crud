@@ -17,7 +17,7 @@
 
     <div class="container">
     <div class="menu">
-    <form action="classes/Relatorios.php" method="POST">
+    <form action="../classes/Relatorios.php" method="POST">
     <label class="label" style="color: white;">Relatórios disponíveis</label>
         <br>
         <input type="date" name="dataInicio">Data de início do relatório</input>

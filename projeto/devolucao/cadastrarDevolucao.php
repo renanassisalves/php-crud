@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Devolucao</title>
+    <title>Cadastrar Devolução</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
     <ul>
         <img src="../img/logo.png" class="logo" alt="Exemplo de logomarca" width="60" height="60">
-        <li><a href="#" class="active">Cadastrar devolucao</a></li>
-        <li><a href="../devolucao/visualizarDevolucoes.php">Visualizar devolucoes</a></li>
+        <li><a href="#" class="active">Cadastrar Devolução</a></li>
+        <li><a href="../devolucao/visualizarDevolucoes.php">Visualizar Devoluções</a></li>
         <a href="../inicio.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
     </ul>
 
     <!--<button type="submit" class="btnBuscarProdutos"><img src="/img/logo.png" height="30px" width="30px"> </img>Buscar Produtos</button>-->    
-    <h1>Cadastrar Devolucao</h1>
+    <h1>Cadastrar Devolução</h1>
 
     <?php
     include_once "../classes/Produto.php";

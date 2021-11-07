@@ -81,6 +81,7 @@
         }
 
         $nome_produto = $_GET['nome_produto'];
+        $nome_produto = str_replace(' ', '%20', $nome_produto);
         $preco_produto = $_GET['preco_produto'];
         $quantidade_produto = $_GET['quantidade_produto'];
         $lucro_liquido_produto = $_GET['lucro_liquido_produto'];

@@ -54,13 +54,13 @@
     }
     ?>
 
-    <table style="width: 100%">
-        <tr>
-            <td class="headerListagem">ID</td>
-            <td class="headerListagem">Nome da Categoria</td>
-            <td class="headerListagem">Quantidade de produtos nessa categoria</td>
-        </tr>
-
+    <table style="width: 55%; margin-left: 22.5%; margin-right:22.5%;" id="relatorio" name="relatorio">
+        <thead>
+            <th class="headerListagem">ID</th>
+            <th class="headerListagem">Nome da Categoria</th>
+            <th class="headerListagem">Quantidade de produtos nessa categoria</th>
+        </thead>
+        <tbody>
         <?php 
         include_once "../classes/Categoria.php";
         include_once "../classes/Banco.php";
@@ -79,20 +79,70 @@
                 echo '<tr>';
                 echo '<td>' . $id . '</td>';
                 echo '<td>' . $nome . '</td>';
-                echo '<td>' . $produtosNessaCategoria[0][0] . '</td>';
+                if (empty($produtosNessaCategoria[0][0]))
+                {
+                    echo '<td>0</td>';    
+                }else
+                {
+                    echo '<td>' . $produtosNessaCategoria[0][0] . '</td>';
+                }
                 echo '</tr>';
             }
             
         }
         ?>
 
-    <tr style=background-color:grey>
+        <tr style=background-color:grey>
             <td></td>
             <td></td>
             <td>Total de Produtos : <?php echo $produtosNessaCategoriaTotal[0][0] ?></td>
         </tr>
+        </tbody>
     </table>
 
-    <button class="btnAzul" onclick="location.href='relatorios.php'" type="button">Voltar</button>
+
+    <div class="row" style="padding-left: 12px; padding-top: 12px;">
+    <button class="btnAzul" onclick="location.href='relatorios.php'" style="margin-right: 35%;" type="button">Voltar</button>
+      <button class="btnAzul" id="download-csv">Gerar CSV</button>
+      <button class="btnAzul" id="download-json">Gerar JSON</button>
+      <button class="btnAzul" id="download-pdf">Gerar PDF</button>
+    
+    </div>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+
+    <link href="https://unpkg.com/tabulator-tables@4.2.0/dist/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.2.0/dist/js/tabulator.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.0.5/jspdf.plugin.autotable.js"></script>
+
+    <script>
+            var table = new Tabulator("#relatorio", {
+                layout: "fitDataFill",
+                pagination:"local",
+                paginationSize:20,
+            });
+            
+            function voltar() {
+                $("#report-result-panel").hide();
+                $("#report-list-panel").show();
+            }
+            
+            $("#download-csv").click(function(){
+                table.download("csv", "data.csv");
+            });
+            
+            $("#download-json").click(function () {
+                table.download("json", "data.json");
+            });
+            
+            $("#download-xlsx").click(function () {
+                table.download("xlsx", "data.xlsx", {sheetName: "dados"});
+            });
+            
+            $("#download-pdf").click(function () {
+                table.download("pdf", "data.pdf", {orientation: "portrait", title: "Relatório de produtos por categoria"});
+            });
+        </script>
 </body>
 </html>

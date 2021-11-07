@@ -48,8 +48,6 @@ if(isset($_POST['selecionadoproduto']))
 {
     $id_categoria = $_POST['id_categoria'];
     $nome_categoria = $_POST['nome_categoria'];
-    
-
     $nome_produto = $_POST['nome_produto'];
     $preco_produto = $_POST['preco_produto'];
     $quantidade_produto = $_POST['quantidade_produto'];

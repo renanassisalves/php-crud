@@ -311,5 +311,12 @@ class Produto
         $resultado = mysqli_fetch_row($sql);
         return $resultado;
     }
+
+    public static function gerarRelatorioLucroLiquido(mysqli $link, $dataInicio, $dataFim)
+    {
+        $sql = mysqli_query($link, "SELECT *, produto.preco*venda_produto.quantidade*(produto.lucro_liquido/100) as lucro_total FROM `venda_produto` inner join produto on venda_produto.id_produto = produto.id inner join venda on venda_produto.id_venda = venda.id where data_venda BETWEEN '$dataInicio 00:00:00' AND '$dataFim 23:59:59'");
+        $resultado = mysqli_fetch_all($sql);
+        return $resultado;
+    }
 }
 ?>

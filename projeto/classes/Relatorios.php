@@ -16,4 +16,15 @@ if(isset($_POST['relatorioLucroLiquidoVendas']))
     header('location:../relatorios/selecionarPeriodo.php');
 }
 
+if(isset($_POST['gerarRelatorio']))
+{
+    $dataInicio = $_POST['dataInicio'];
+    $dataFim = $_POST['dataFim'];
+
+    header('location:../relatorios/visualizarRelatorio.php?dataInicio='.$dataInicio.'&dataFim='.$dataFim);
+    
+}
+
+
+
 ?>
