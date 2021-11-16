@@ -54,24 +54,24 @@ $nivel_de_acesso = $_SESSION['nivel_de_acesso'];
     ?>
 
     <form action="../classes/Usuario.php" method="POST">
-        <div>
-        <label class="label">Nome
+    <div style="margin-left: auto; margin-right: auto; display: block;">
+        <label class="label">Nome<label class="label" style="color: red;">*</label>
             <input type="text" name="nome" maxlength="255" value="<?php echo $usuario[1] ?>">
         </label>
-        <label class="label">Login
+        <label class="label">Login<label class="label" style="color: red;">*</label>
             <input type="text" name="login" maxlength="255" value="<?php echo $usuario[2] ?>">
         </label>
-        <label class="label">Nova Senha
-            <input type="password" name="senha" maxlength="255" value="<?php echo $usuario[3] ?>">
+        <label class="label">Nova Senha<label class="label" style="color: red;">*</label>
+            <input type="password" name="senha" maxlength="255" value=""><?php //echo $usuario[3] ?>
         </label>
-        <label class="label">Confirme a nova senha
-            <input type="password" name="senhaConfirma" maxlength="255" value="<?php echo $usuario[3] ?>">
+        <label class="label">Confirme a nova senha<label class="label" style="color: red;">*</label>
+            <input type="password" name="senhaConfirma" maxlength="255" value=""><?php //echo $usuario[3] ?>
         </label>
 
         <div>
-        <label class="label">Nível de acesso
+        <label class="label">Nível de acesso<label class="label" style="color: red;">*</label>
         <div></div>
-        <select name="nivel_de_acesso">
+        <select name="nivel_de_acesso" style="padding:10px; margin: 10px;">
         <?php if ($usuario[4] == 1) 
         {
             echo '<option value="funcionario">Funcionário</option>';

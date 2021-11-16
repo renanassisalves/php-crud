@@ -10,12 +10,20 @@
 <body>
     <ul>
         <img src="../img/logo.png" class="logo" alt="Exemplo de logomarca" width="60" height="60">
-        <li><a href="../venda/visualizarDevolucoes.php">Visualizar Devolucoes</a></li>
-        <li><a href="#" class="active">Visualizar Produtos</a></li>
+        <li><a href="../venda/visualizarDevolucoes.php">Visualizar Vendas</a></li>
+        <li><a href="#" class="active">Visualizar Venda</a></li>
         <a href="../inicio.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
     </ul>
-<?php $idVenda = $_GET['id_venda']; ?>
-    <h1>Visualizar Produtos Venda <?php echo($idVenda); ?></h1>
+<?php 
+        include_once "../classes/Venda.php";
+        include_once "../classes/Produto.php";
+        include_once "../classes/Categoria.php";
+        include_once "../classes/Banco.php";
+        $idVenda = $_GET['id_venda']; 
+        $dataVenda = Venda::pegarVenda($link, $idVenda);
+    $dataVenda = $dataVenda[1];
+?>
+    <h1>Visualizar Produtos Venda <?php echo($dataVenda); ?></h1>
 
     <?php 
     if(isset($_GET['resultado']))
@@ -67,14 +75,7 @@
             </td>
         </tr>
         
-        <?php 
-        include_once "../classes/Venda.php";
-        include_once "../classes/Produto.php";
-        include_once "../classes/Categoria.php";
-        include_once "../classes/Banco.php";
-
-       
-        
+        <?php
             $vetorVenda = Produto::listarVenda($link,$idVenda);
         
         for ($i = 0; $i < count($vetorVenda); $i++)

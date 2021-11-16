@@ -120,18 +120,26 @@ if(isset($_POST['adicionarQuantidade']))
     $id_adicionar = ($_POST['id_adicionar']);
     $lista_id = $_POST['lista_id'];
     $quantidade = $_POST['quantidade'];
+    $quantidadeAtual = $_POST['quantidadeatual'];
     $lista_id = explode(',', $lista_id);
     $lista_quantidade = $_POST['lista_quantidade'];
     $lista_quantidade = explode(',', $lista_quantidade);
-
-    if (($index = array_search($id_adicionar, $lista_id)) !== false) {
-        
-        $lista_quantidade[$index]  = $quantidade;
+    if (($quantidadeAtual - $quantidade) < 0)
+    {
+        $lista_id = implode(',', $lista_id);
+        $lista_quantidade = implode(',', $lista_quantidade);
+        header('location:../devolucao/cadastrarDevolucao.php?lista_id='.$lista_id.'&lista_quantidade='.$lista_quantidade.'&resultado=erroquantidade');
     }
-    
-    $lista_id = implode(',', $lista_id);
-    $lista_quantidade = implode(',', $lista_quantidade);
-   header('location:../devolucao/cadastrarDevolucao.php?lista_id='.$lista_id.'&lista_quantidade='.$lista_quantidade);
+    else
+    {
+        if (($index = array_search($id_adicionar, $lista_id)) !== false) {
+        
+            $lista_quantidade[$index]  = $quantidade;
+            $lista_id = implode(',', $lista_id);
+            $lista_quantidade = implode(',', $lista_quantidade);
+            header('location:../devolucao/cadastrarDevolucao.php?lista_id='.$lista_id.'&lista_quantidade='.$lista_quantidade);
+        }
+    }
 }
 
 if(isset($_POST['visualizarProdutos']))

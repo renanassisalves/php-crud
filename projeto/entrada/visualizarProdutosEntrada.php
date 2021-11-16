@@ -11,11 +11,20 @@
     <ul>
         <img src="../img/logo.png" class="logo" alt="Exemplo de logomarca" width="60" height="60">
         <li><a href="../entrada/visualizarEntradas.php">Visualizar Entradas</a></li>
-        <li><a href="#" class="active">Visualizar Produtos</a></li>
+        <li><a href="#" class="active">Visualizar Entrada</a></li>
         <a href="../inicio.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
     </ul>
-<?php $idEntrada = $_GET['id_entrada']; ?>
-    <h1>Visualizar Produtos Entrada <?php echo($idEntrada); ?></h1>
+    <?php 
+    include_once "../classes/Entrada.php";
+    include_once "../classes/Produto.php";
+    include_once "../classes/Categoria.php";
+    include_once "../classes/Banco.php";
+
+    $idEntrada = $_GET['id_entrada'];
+    $dataEntrada = Entrada::pegarEntrada($link, $idEntrada);
+    $dataEntrada = $dataEntrada[1];
+    ?>
+    <h1>Visualizar Produtos Entrada <?php echo($dataEntrada); ?></h1>
 
     <?php 
     if(isset($_GET['resultado']))
@@ -68,13 +77,6 @@
         </tr>
         
         <?php 
-        include_once "../classes/Entrada.php";
-        include_once "../classes/Produto.php";
-        include_once "../classes/Categoria.php";
-        include_once "../classes/Banco.php";
-
-       
-        
             $vetorEntrada = Produto::listarEntrada($link,$idEntrada);
         
         for ($i = 0; $i < count($vetorEntrada); $i++)

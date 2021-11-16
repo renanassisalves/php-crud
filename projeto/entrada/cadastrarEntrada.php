@@ -51,7 +51,7 @@
 
     
         <label class="label" style="margin-left: 380px;">Lista de produtos</label>
-            <div style="width:800px; border-radius: 10px;" class="divProdutos">
+            <div style="width:800px; border-radius: 10px; margin-left: 20px" class="divProdutos">
             
             <table style="width: 100%">
                 <tr>
@@ -188,12 +188,12 @@
         echo implode(',', $lista_quantidade_array);
         }
         
-        ?>'" type="button">Selecionar produtos</button>
+        ?>'" type="button" style="margin-left: 20px">Selecionar produtos</button>
         </div>
         <br>
         <div>
-        <label class="label">Fornecedor do Produto
-            <input type="text" name="fornecedor" disabled <?php if(isset($_GET['id_fornecedor'])) {echo('value="'.$id_fornecedor.' - '.$nome_fornecedor);} ?> ">
+        <label class="label" style="margin-left: 20px">Fornecedor do Produto
+            <input type="text" name="fornecedor" style="margin-left: 20px" disabled <?php if(isset($_GET['id_fornecedor'])) {echo('value="'.$id_fornecedor.' - '.$nome_fornecedor);} ?> ">
         </label>
         
         <button class="btnAzul" onclick="location.href='selecionarFornecedor.php<?php echo '?lista_id='; if(!empty($lista_array)) {
@@ -207,7 +207,7 @@
         echo implode(',', $lista_quantidade_array);
         }
         
-        ?>'" type="button">Selecionar o Fornecedor</button>
+        ?>'" type="button" style="margin-left: 20px">Selecionar o Fornecedor</button>
         </div>
         <div>
         </div>
@@ -216,7 +216,7 @@
         <input type="hidden" name="id_fornecedor" value="<?php if(isset($_GET['id_fornecedor'])) { echo($id_fornecedor); }?>">
         <input type="hidden" name="lista_id" value="<?php if(isset($_GET['lista_id'])) { echo($lista_id); }?>">
         <input type="hidden" name="lista_quantidade" value="<?php if(isset($_GET['lista_quantidade'])) { echo($lista_quantidade); }?>">
-        <button type="submit" name="cadastrar" class="btnEnviar">Cadastrar</button>
+        <button type="submit" name="cadastrar" class="btnEnviar" style="margin-left: 10px">Cadastrar</button>
         </form>
     
 </body>

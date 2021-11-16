@@ -10,12 +10,21 @@
 <body>
     <ul>
         <img src="../img/logo.png" class="logo" alt="Exemplo de logomarca" width="60" height="60">
-        <li><a href="../devolucao/visualizarDevolucoes.php">Visualizar Devolucoes</a></li>
-        <li><a href="#" class="active">Visualizar Produtos</a></li>
+        <li><a href="../devolucao/visualizarDevolucoes.php">Visualizar Devoluções</a></li>
+        <li><a href="#" class="active">Visualizar Devolução</a></li>
         <a href="../inicio.php" class="voltar"><img src="../img/voltar.png" class="voltar" width="60px" height="60px"></a>
     </ul>
-<?php $idDevolucao = $_GET['id_devolucao']; ?>
-    <h1>Visualizar Produtos Devolucao <?php echo($idDevolucao); ?></h1>
+<?php 
+        include_once "../classes/Devolucao.php";
+        include_once "../classes/Produto.php";
+        include_once "../classes/Categoria.php";
+        include_once "../classes/Banco.php";
+
+        $idDevolucao = $_GET['id_devolucao']; 
+        $dataDevolucao = Devolucao::pegarDevolucao($link, $idDevolucao);
+        $dataDevolucao = $dataDevolucao[1];
+?>
+    <h1>Visualizar Produtos Devolucao <?php echo($dataDevolucao); ?></h1>
 
     <?php 
     if(isset($_GET['resultado']))
@@ -68,13 +77,6 @@
         </tr>
         
         <?php 
-        include_once "../classes/Devolucao.php";
-        include_once "../classes/Produto.php";
-        include_once "../classes/Categoria.php";
-        include_once "../classes/Banco.php";
-
-       
-        
             $vetorDevolucao = Produto::listarDevolucao($link,$idDevolucao);
         
         for ($i = 0; $i < count($vetorDevolucao); $i++)

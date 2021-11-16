@@ -50,29 +50,29 @@ $nivel_de_acesso = $_SESSION['nivel_de_acesso'];
     
     <form action="../classes/Usuario.php" method="POST">
         <div style="margin-left: auto; margin-right: auto; display: block;">
-        <label class="label">Nome do usuário
+        <label class="label">Nome do usuário<label class="label" style="color: red;">*</label>
             <input type="text" name="nome" maxlength="255" placeholder="Digite o nome do usuário">
         </label>
         </div>
         <div>
-        <label class="label">Login do usuário
+        <label class="label">Login do usuário<label class="label" style="color: red;">*</label>
             <input type="text" name="login" maxlength="255" placeholder="Digite o login do usuário">
         </label>
         </div>
         <div>
-        <label class="label">Senha do usuário
+        <label class="label">Senha do usuário<label class="label" style="color: red;">*</label>
             <input type="password" name="senha" maxlength="255" placeholder="Digite a senha do usuário">
         </label>
         </div>
         <div>
-        <label class="label">Confirme a senha
+        <label class="label">Confirme a senha<label class="label" style="color: red;">*</label>
             <input type="password" name="senhaConfirma" maxlength="255" placeholder="Confirme a senha do usuário">
         </label>
         </div>
         <div>
-            <label class="label">Nível de acesso
+            <label class="label">Nível de acesso<label class="label" style="color: red;">*</label>
                 <div></div>
-                <select name="nivel_de_acesso">
+                <select name="nivel_de_acesso" style="padding:10px; margin: 10px;">
                     <option value="administrador">Administrador</option>
                     <option value="funcionario">Funcionário</option>
                 </select>

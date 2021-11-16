@@ -28,7 +28,7 @@
 
     <form action="../classes/Categoria.php" method="POST">
         <div>
-        <label class="label">Nome
+        <label class="label">Nome<label class="label" style="color: red;">*</label>
             <input type="text" name="nome" maxlength="255" value="<?php echo $categoria[1] ?>">
         </label>
         <?php

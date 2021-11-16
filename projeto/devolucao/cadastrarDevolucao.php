@@ -28,13 +28,19 @@
         if ($resultado == 'sucesso')
         {
             echo('<div style="background-color: #b1ffb8b1;">');
-            echo('<p style="color: #1a571fb1; margin: 10px;">Cadastrado com sucesso!</p>');
+            echo('<p style="color: #1a571fb1; margin: 20px;">Cadastrado com sucesso!</p>');
+            echo('</div>');
+        }
+        else if ($resultado == 'erroquantidade')
+        {
+            echo('<div style="background-color: #ff9d9448;">');
+            echo('<p style="color: #c51d0d; margin: 20px;">Erro : A quantidade a ser vendida de um produto é maior do que a quantidade em estoque disponível!</p>');
             echo('</div>');
         }
         else
         {
             echo('<div style="background-color: #ff9d9448;">');
-            echo('<p style="color: #c51d0d; margin: 10px;">Erro : ' . $resultado . '</p>');
+            echo('<p style="color: #c51d0d; margin: 20px;">Erro : ' . $resultado . '</p>');
             echo('</div>');
         }
     }
@@ -43,7 +49,7 @@
 
     
         <label class="label" style="margin-left: 380px;">Lista de produtos</label>
-            <div style="width:800px; border-radius: 10px;" class="divProdutos">
+            <div style="width:800px; border-radius: 10px; margin-left: 20px" class="divProdutos">
             
             <table style="width: 100%">
                 <tr>
@@ -137,6 +143,7 @@
                     {
                         echo '<input type="hidden" name="lista_quantidade" value="'.$lista_quantidade.'">';
                     }
+                    echo '<input type="hidden" name="quantidadeatual" value="'.$quantidade.'">';
                     echo '</form>';
                     echo '</td>';
 
@@ -180,7 +187,7 @@
         echo implode(',', $lista_quantidade_array);
         }
         
-        ?>'" type="button">Selecionar produtos</button>
+        ?>'" type="button" style="margin-left: 20px">Selecionar produtos</button>
         </div>
         <br>
         
@@ -188,9 +195,9 @@
         </div>
 
         <form action="../classes/Devolucao.php" method="POST">
-        <input type="hidden" name="lista_id" value="<?php if(isset($_GET['lista_id'])) { echo($lista_id); }?>">
-        <input type="hidden" name="lista_quantidade" value="<?php if(isset($_GET['lista_quantidade'])) { echo($lista_quantidade); }?>">
-        <button type="submit" name="cadastrar" class="btnEnviar">Cadastrar</button>
+        <input type="hidden" name="lista_id" style="margin-left: 20px" value="<?php if(isset($_GET['lista_id'])) { echo($lista_id); }?>">
+        <input type="hidden" name="lista_quantidade" style="margin-left: 20px" value="<?php if(isset($_GET['lista_quantidade'])) { echo($lista_quantidade); }?>">
+        <button type="submit" name="cadastrar" class="btnEnviar" style="margin-left: 10px">Cadastrar</button>
         </form>
     
 </body>
