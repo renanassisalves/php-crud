@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Produto</title>
     <link rel="stylesheet" href="../style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script>
+    <script>
+
+    $('.money').mask("##0,00", {reverse: true});
+    
+    </script>
 </head>
 <body>
     <ul>
@@ -56,7 +63,7 @@ if (isset($_GET['id'])) {
             <input type="text" name="nome" value=" <?php echo $nome ?>" placeholder="Digite o nome do produto">
         </label>
         <label class="label">Preço do Produto <label class="label" style="color: red;">*</label>
-            <input type="text" name="preco" value=" <?php echo $preco ?>" placeholder="Digite o preço do produto">
+            <input type="text" name="preco" class="money" value=" <?php echo $preco ?>" placeholder="Digite o preço do produto">
         </label>
         <label class="label">Quantidade <label class="label" style="color: red;">*</label>
             <input type="text" name="quantidade" min="1" max="1000" step="1" value=" <?php echo $quantidade ?>" placeholder="Digite a quantidade do produto">

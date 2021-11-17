@@ -1,5 +1,11 @@
 <?php
 require "Banco.php";
+include_once "Log.php";
+
+if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    } 
 
 if(isset($_POST['cadastrar']))
 {
@@ -176,6 +182,8 @@ class Usuario
                 header('location:../usuario/cadastrarUsuario.php?resultado=' . mysqli_error($link));
             } else
             {
+                $log = new log($_SESSION['nome'], "Usuário", "Cadastro de novo usuário", "Nome: $nome, Login: $login, Senha: $senha, nivel_de_acesso: $nivel_de_acesso");
+                    Log::cadastrar($link, $log);
                 header('location:../usuario/cadastrarUsuario.php?resultado=sucesso');
             }
         }
@@ -193,6 +201,7 @@ class Usuario
         $novoNivelDeAcesso = Usuario::formatar($novoNivelDeAcesso);
         if(Usuario::validar($novoNome) and (Usuario::validar($novoLogin) and (Usuario::validar($novaSenha) and Usuario::validar($novoNivelDeAcesso))))
         {
+            $usuarioAtual = Usuario::pegarusuario($link, $id);
             mysqli_query($link, 'update usuario set nome = "'. $novoNome . '", login = "'.$novoLogin.'", senha="'.$novaSenha.'", nivel_de_acesso="'.$novoNivelDeAcesso.'" where id = ' . $id . ';');
             
             if (mysqli_error($link)>0)
@@ -200,6 +209,8 @@ class Usuario
                     header('location:../usuario/visualizarUsuarios.php?resultado=' . mysqli_error($link));
                 } else
                 {
+                    $log = new log($_SESSION['nome'], "Usuário", "Nome: $usuarioAtual[1], Login: $usuarioAtual[2], Senha: $usuarioAtual[3], Nivel_de_acesso: $usuarioAtual[4]", "Nome: $novoNome, Login: $novoLogin, Senha: $novaSenha, Nivel_de_acesso: $novoNivelDeAcesso");
+                    Log::cadastrar($link, $log);
                     header('location:../usuario/visualizarUsuarios.php?resultado=alteradosucesso');
                 }
         }
@@ -212,14 +223,16 @@ class Usuario
 
     public static function excluir(mysqli $link, int $id)
     {
+        $usuarioAtual = Usuario::pegarusuario($link, $id);
         mysqli_query($link, "delete from usuario where id=" . $id . ";" );
         header('location:../usuario/visualizarUsuarios.php');
-
         if (mysqli_error($link)>0)
             {
                 header('location:../usuario/visualizarUsuarios.php?resultado=' . mysqli_error($link));
             } else
             {
+                $log = new log($_SESSION['nome'], "Usuário", "Exclusão de usuário", "Nome: $usuarioAtual[1], Login: $usuarioAtual[2], Senha: $usuarioAtual[3], Nivel_de_acesso: $usuarioAtual[4]");
+                    Log::cadastrar($link, $log);
                 header('location:../usuario/visualizarUsuarios.php?resultado=excluidosucesso');
             }
     }

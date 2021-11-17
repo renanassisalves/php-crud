@@ -6,11 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Produto</title>
     <link rel="stylesheet" href="../style.css">
-    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script>
     <script>
 
-    $("#preco").mask({"mask": "(999) 999-9999"});
+    $('.money').mask("##0,00", {reverse: true});
+    
     </script>
+    
 </head>
 <body>
     <ul>
@@ -78,7 +81,7 @@
             <input type="text" name="nome" maxlength="255" <?php if(isset($_GET['nome_produto'])) { echo(' value="'.$nome_produto.'" '); } ?> placeholder="Digite o nome do produto">
         </label>
         <label class="label">Preço do Produto <label class="label" style="color: red;">*</label>
-            <input type="number" id="preco" name="preco" min="0.00" max="1000" <?php if(isset($_GET['preco_produto'])) { echo(' value="'.$preco_produto.'" '); } ?> step=".01" placeholder="Digite o preço do produto">
+            <input type="text" id="preco" name="preco" min="0.00" max="1000" class="money" <?php if(isset($_GET['preco_produto'])) { echo(' value="'.$preco_produto.'" '); } ?> step=".01" placeholder="Digite o preço do produto">
         </label>
         <label class="label">Quantidade <label class="label" style="color: red;">*</label>
             <input type="number" name="quantidade" <?php if(isset($_GET['quantidade_produto'])) { echo(' value="'.$quantidade_produto.'" '); } ?> placeholder="Digite a quantidade do produto">

@@ -1,5 +1,11 @@
 <?php
 require "Banco.php";
+include_once "Log.php";
+
+if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    } 
 
 if (isset($_POST['cadastrar'])) {
     $nome = $_POST['nome'];
@@ -115,6 +121,7 @@ class Fornecedor
         $responsavel = $this::formatar($this->responsavel);
         $tel_responsavel = $this::formatar($this->tel_responsavel);
         $id_endereco = $this::formatar($this->id_endereco);
+        $enderecoAtual = Endereco::pegarEndereco($link, $id_endereco);
 
         if ($origem == "0") {
             if ($this::validar($nome) and $this::validar($responsavel) and $this::validar($tel_responsavel) and $this::validar($id_endereco)) {
@@ -124,6 +131,8 @@ class Fornecedor
                 if (mysqli_error($link) > 0) {
                     header('location:../fornecedor/cadastrarFornecedor.php?resultado=' . mysqli_error($link));
                 } else {
+                    $log = new log($_SESSION['nome'], "Fornecedor", "Cadastro de novo fornecedor", "Nome: $nome, Responsável: $responsavel, Telefone Responsável: $tel_responsavel, Longradouro: $enderecoAtual[1], Bairro: $enderecoAtual[2], Numero: $enderecoAtual[3], CEP: $enderecoAtual[4]");
+                    Log::cadastrar($link, $log);
                     header('location:../fornecedor/cadastrarFornecedor.php?resultado=sucesso');
                 }
             } else {
@@ -143,6 +152,8 @@ class Fornecedor
                 if (mysqli_error($link) > 0) {
                     header('location: ' . $linkNovo . '&resultado='.mysqli_error($link));
                 } else {
+                    $log = new log($_SESSION['nome'], "Fornecedor", "Cadastro de novo fornecedor", "Nome: $nome, Responsável: $responsavel, Telefone Responsável: $tel_responsavel, Longradouro: $enderecoAtual[1], Bairro: $enderecoAtual[2], Numero: $enderecoAtual[3], CEP: $enderecoAtual[4]");
+                    Log::cadastrar($link, $log);
                     header('location: ' . $linkNovo . '&resultado=sucesso');
                 }
             } else {
@@ -157,7 +168,9 @@ class Fornecedor
 
     public static function alterar(mysqli $link, $idFornecedor, $idEndereco, $novoNome, $novoResponsavel, $novoTel_Responsavel, $novoLongradouro, $novoBairro, $novoNumero, $novoCep)
     {
-
+        
+        $fornecedorAtual = Fornecedor::pegarFornecedor($link, $idFornecedor);
+        $enderecoAtual = Endereco::pegarEndereco($link, $fornecedorAtual[4]);
         $novoNome = Fornecedor::formatar($novoNome);
         $novoResponsavel = Fornecedor::formatar($novoResponsavel);
         $novoTel_Responsavel = Fornecedor::formatar($novoTel_Responsavel);
@@ -165,11 +178,14 @@ class Fornecedor
         $novoBairro = Fornecedor::formatar($novoBairro);
         $novoNumero = Fornecedor::formatar($novoNumero);
         $novoCep = Fornecedor::formatar($novoCep);
+
         if (Fornecedor::validar($novoNome) and Fornecedor::validar($novoResponsavel) and Fornecedor::validar($novoTel_Responsavel)) {
             mysqli_query($link, 'update fornecedor set nome = "' . $novoNome . '", responsavel = "' . $novoResponsavel . '", tel_responsavel = "' . $novoTel_Responsavel . '" where id = ' . $idFornecedor . ';');
             if (mysqli_error($link) > 0) {
                 header('location:../fornecedor/visualizarFornecedores.php?resultado=' . mysqli_error($link));
             } else {
+                $log = new log($_SESSION['nome'], "Fornecedor", "Nome: $fornecedorAtual[1], Responsável: $fornecedorAtual[2], Telefone Responsável: $fornecedorAtual[3], Longradouro: $enderecoAtual[1], Bairro: $enderecoAtual[2], Numero: $enderecoAtual[3], CEP: $enderecoAtual[4]", "Nome: $novoNome, Responsável: $novoResponsavel, Telefone Responsável: $novoTel_Responsavel, Longradouro: $novoLongradouro, Bairro: $novoBairro, Numero: $novoNumero, CEP: $novoCep");
+                    Log::cadastrar($link, $log);
                 header('location:../fornecedor/visualizarFornecedores.php?resultado=alteradosucesso');
             }
         } else {
@@ -192,10 +208,13 @@ class Fornecedor
     {
         mysqli_query($link, "delete from fornecedor where id=" . $id . ";");
         header('location:../fornecedor/visualizarFornecedor.php');
-
+        $fornecedorAtual = Fornecedor::pegarFornecedor($link, $id);
+        $enderecoAtual = Endereco::pegarEndereco($link, $fornecedorAtual[4]);
         if (mysqli_error($link) > 0) {
             header('location:../fornecedor/visualizarFornecedores.php?resultado=' . mysqli_error($link));
         } else {
+            $log = new log($_SESSION['nome'], "Fornecedor", "Exclusão de fornecedor", "Nome: $fornecedorAtual[1], Responsável: $fornecedorAtual[2], Telefone Responsável: $fornecedorAtual[3], Longradouro: $enderecoAtual[1], Bairro: $enderecoAtual[2], Numero: $enderecoAtual[3], CEP: $enderecoAtual[4]");
+                    Log::cadastrar($link, $log);
             header('location:../fornecedor/visualizarFornecedores.php?resultado=excluidosucesso');
         }
     }
