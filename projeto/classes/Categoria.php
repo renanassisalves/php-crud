@@ -1,8 +1,11 @@
 <?php
 require "Banco.php";
-require "Log.php";
+include_once "Log.php";
 
-session_start();
+if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    } 
 
 if(isset($_POST['cadastrar']))
 {
@@ -52,15 +55,23 @@ if(isset($_POST['selecionadoproduto']))
     $preco_produto = $_POST['preco_produto'];
     $quantidade_produto = $_POST['quantidade_produto'];
     $lucro_liquido_produto = $_POST['lucro_liquido_produto'];
-    if(isset($_POST['origem']))
+
+    if(isset($_POST['alterar']))
     {
-        header('location:../produto/cadastrarProduto.php?id_categoria='.$id_categoria.'&nome_categoria='.$nome_categoria.'&nome_produto='.$nome_produto.'&preco_produto='.$preco_produto.'&quantidade_produto='.$quantidade_produto.'&lucro_liquido_produto='.$lucro_liquido_produto.'&origem='.$_POST['origem']);
+        $id_produto = $_POST['id_produto'];
+        header('location:../produto/alterarProduto.php?id_categoria='.$id_categoria.'&nome_categoria='.$nome_categoria.'&nome_produto='.$nome_produto.'&preco_produto='.$preco_produto.'&quantidade_produto='.$quantidade_produto.'&lucro_liquido_produto='.$lucro_liquido_produto.'&id='.$id_produto);
     }
-    else 
+    else
     {
-        header('location:../produto/cadastrarProduto.php?id_categoria='.$id_categoria.'&nome_categoria='.$nome_categoria.'&nome_produto='.$nome_produto.'&preco_produto='.$preco_produto.'&quantidade_produto='.$quantidade_produto.'&lucro_liquido_produto='.$lucro_liquido_produto);
+        if(isset($_POST['origem']))
+        {
+            header('location:../produto/cadastrarProduto.php?id_categoria='.$id_categoria.'&nome_categoria='.$nome_categoria.'&nome_produto='.$nome_produto.'&preco_produto='.$preco_produto.'&quantidade_produto='.$quantidade_produto.'&lucro_liquido_produto='.$lucro_liquido_produto.'&origem='.$_POST['origem']);
+        }
+        else 
+        {
+            header('location:../produto/cadastrarProduto.php?id_categoria='.$id_categoria.'&nome_categoria='.$nome_categoria.'&nome_produto='.$nome_produto.'&preco_produto='.$preco_produto.'&quantidade_produto='.$quantidade_produto.'&lucro_liquido_produto='.$lucro_liquido_produto);
+        }
     }
-    
 }
 
 class Categoria

@@ -26,7 +26,17 @@ include_once "../classes/Produto.php";
 include_once "../classes/Categoria.php";
 include_once "../classes/Banco.php";
 
+if (isset($_GET['id_categoria'])) {
+    $id_categoria = $_GET['id_categoria'];
+}
+if (isset($_GET['nome_categoria'])) {
+    $nome_categoria = $_GET['nome_categoria'];
+}
+    
+if (isset($_GET['id'])) {
     $id = $_GET['id'];
+}
+
     $produto = Produto::pegarProduto($link, $id);
 
     $nome = $produto[1];
@@ -57,15 +67,17 @@ include_once "../classes/Banco.php";
         </div>
         <div>
         <label class="label">Categoria do Produto <label class="label" style="color: red;">*</label>
-            <input type="text" name="id" disabled <?php if(isset($_GET['id'])) {echo('value="'.$id.' - '.$nome.'">');} ?>
+            <input type="text" name="id" disabled <?php if(isset($_GET['id_categoria'])) {echo('value="'.$id_categoria.' - '.$nome_categoria.'">');} ?>
         </label>
-        <button class="btnAzul">Selecionar a Categoria</button>
-        </div>
-        <?php
-        echo '<input type="hidden" name="id" value=' . $id . '>';
-        echo '<input type="hidden" name="id_categoria" value=' . $categoria[0] . '>';
+        <input type="hidden" name="id_categoria" value="<?php if(isset($_GET['id_categoria'])) { echo($id_categoria); }?>">
+        <?php if(isset($_GET['origem'])) {
+            echo '<input type="hidden" name="origem" value="'. $_GET['origem'] .'">';
+            }
+            echo '<input type="hidden" name="alteracao" value="1">';
+            echo '<input type="hidden" name="id_produto" value="'.$id.'">';
         ?>
-        <div>
+        <button class="btnAzul" name="selecionarcategoriaproduto" type="submit">Selecionar a Categoria</button>
+        </div>
         <button type="submit" name="alterarconfirma" class="btnEnviar">Cadastrar</button>
         </div>
     </form>

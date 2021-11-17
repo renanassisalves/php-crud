@@ -84,7 +84,12 @@
         $nome_produto = str_replace(' ', '%20', $nome_produto);
         $preco_produto = $_GET['preco_produto'];
         $quantidade_produto = $_GET['quantidade_produto'];
-        $lucro_liquido_produto = $_GET['lucro_liquido_produto'];
+        $lucro_liquido_produto = $_GET['lucro_liquido_produto'];     
+
+        if(isset($_GET['id_produto']))
+        {
+            $id_produto = $_GET['id_produto'];
+        }
         
         for ($i = 0; $i < count($vetor); $i++)
         {
@@ -109,7 +114,11 @@
                 echo '<input type="hidden" name="lucro_liquido_produto" value=' . $lucro_liquido_produto . '>';
                 if(isset($_GET['origem'])) {
                     echo '<input type="hidden" name="origem" value="'. $_GET['origem'] .'">';
-                    } 
+                } 
+                if (isset($_GET['alteracao'])) {
+                    echo '<input type="hidden" name="alteracao" value="1">';
+                    echo '<input type="hidden" name="id_produto" value="'.$id_produto.'">';
+                }
                 echo '</form>';
                 echo '</td>';
                 echo '</tr>';

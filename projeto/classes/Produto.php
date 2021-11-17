@@ -1,5 +1,11 @@
 <?php
 require "Banco.php";
+include_once "Log.php";
+
+if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    } 
 
 if(isset($_POST['cadastrar']))
 {
@@ -53,7 +59,7 @@ if(isset($_POST['alterar']))
 
 if(isset($_POST['alterarconfirma']))
 {
-    $id = $_POST['id'];
+    $id = $_POST['id_produto'];
     $nome = $_POST['nome'];
     $preco = $_POST['preco'];
     $quantidade = $_POST['quantidade'];
@@ -95,14 +101,23 @@ if(isset($_POST['selecionarcategoriaproduto']))
     $preco = $_POST['preco'];
     $quantidade = $_POST['quantidade'];
     $lucro_liquido = $_POST['lucro_liquido'];
-    if(isset($_POST['origem']))
+    if(isset($_POST['alteracao']))
     {
-        header('location:../categoria/selecionarCategoria.php?nome_produto='.$nome.'&preco_produto='.$preco.'&quantidade_produto='.$quantidade.'&lucro_liquido_produto='.$lucro_liquido.'&origem='.$_POST['origem']);
+        $id_produto = $_POST['id_produto'];
+            header('location:../categoria/selecionarCategoria.php?nome_produto='.$nome.'&preco_produto='.$preco.'&quantidade_produto='.$quantidade.'&lucro_liquido_produto='.$lucro_liquido.'&alteracao=1'.'&id_produto='.$id_produto);
     }
     else
     {
-        header('location:../categoria/selecionarCategoria.php?nome_produto='.$nome.'&preco_produto='.$preco.'&quantidade_produto='.$quantidade.'&lucro_liquido_produto='.$lucro_liquido);
+        if(isset($_POST['origem']))
+        {
+            header('location:../categoria/selecionarCategoria.php?nome_produto='.$nome.'&preco_produto='.$preco.'&quantidade_produto='.$quantidade.'&lucro_liquido_produto='.$lucro_liquido.'&origem='.$_POST['origem']);
+        }
+        else
+        {
+            header('location:../categoria/selecionarCategoria.php?nome_produto='.$nome.'&preco_produto='.$preco.'&quantidade_produto='.$quantidade.'&lucro_liquido_produto='.$lucro_liquido);
+        }
     }
+    
    
 }
 
@@ -171,6 +186,8 @@ class Produto
                     header('location:../produto/cadastrarProduto.php?resultado=' . mysqli_error($link));
                 } else
                 {
+                    $log = new log($_SESSION['nome'], "Produto", "Cadastro de novo produto", "Nome: $nome, Preço: $preco, Quantidade: $quantidade, Lucro Liquido: $lucro_liquido, ID_Categoria: $id_categoria");
+                    Log::cadastrar($link, $log);
                     header('location:../produto/cadastrarProduto.php?resultado=sucesso');
                 }
             }
@@ -181,6 +198,8 @@ class Produto
                     header('Location: ' . $origem . '&resultado=' . mysqli_error($link));
                 } else
                 {
+                    $log = new log($_SESSION['nome'], "Produto", "Cadastro de novo Produto", "Nome: $nome, Preço: $preco, Quantidade: $quantidade, Lucro Liquido: $lucro_liquido, ID_Categoria: $id_categoria");
+                    Log::cadastrar($link, $log);
                     header('Location: ' . $origem . '&resultado=sucesso');
                 }
             }
@@ -226,6 +245,7 @@ class Produto
 
         if (Produto::validar($nome) and Produto::validar($preco) and Produto::validar($quantidade) and Produto::validar($lucro_liquido) and Produto::validar($id_categoria))
         {
+            $produtoAtual = Produto::pegarProduto($link, $id);
             mysqli_query($link, 'update produto set nome = "'. $novoNome . '", preco = '.$novoPreco.', quantidade='.$novaQuantidade.', lucro_liquido='.$novoLucroLiquido.', id_categoria='.$novaCategoria.' where id = ' . $id . ';');
             
             
@@ -234,24 +254,29 @@ class Produto
                 header('location:../produto/visualizarProdutos.php?resultado=' . mysqli_error($link));
             } else
             {
+                $log = new log($_SESSION['nome'], "Produto", "Nome: $produtoAtual[1], Preço: $produtoAtual[2], Quantidade: $produtoAtual[3], Lucro Liquido: $produtoAtual[4], ID_Categoria: $produtoAtual[5]", "Nome: $nome, Preço: $preco, Quantidade: $quantidade, Lucro Liquido: $lucro_liquido, ID_Categoria: $id_categoria");
+                Log::cadastrar($link, $log);
                 header('location:../produto/visualizarProdutos.php?resultado=alteradosucesso');
             }
         }
         else
         {
-            header('location:../produto/cadastrarProduto.php?id='.$id.'&?resultado=Verifique todos os campos!');
+            header('location:../produto/visualizarProdutos.php?id='.$id.'&resultado=Verifique todos os campos!');
         }
         
     }
 
     public static function excluir(mysqli $link, int $id)
     {
+        $produtoAtual = Produto::pegarProduto($link, $id);
         mysqli_query($link, "delete from produto where id=" . $id . ";" );
         if (mysqli_error($link)>0)
             {
                 header('location:../produto/visualizarProdutos.php?resultado=' . mysqli_error($link));
             } else
             {
+                $log = new log($_SESSION['nome'], "Produto", "Exclusão de produto", "Nome: $produtoAtual[1], Preço: $produtoAtual[2], Quantidade: $produtoAtual[3], Lucro Liquido: $produtoAtual[4], ID_Categoria: $produtoAtual[5]");
+                    Log::cadastrar($link, $log);
                 header('location:../produto/visualizarProdutos.php?resultado=excluidosucesso');
             }
     }
