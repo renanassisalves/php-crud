@@ -186,7 +186,7 @@
     </table>
     <div>
     <button class="btnAzul" onclick="location.href='../produto/cadastrarProduto.php?origem=<?php echo $origem ?>'" type="button">Cadastrar novo produto</button>
-    <button class="btnAzul" onclick="location.href='../entrada/cadastrarEntrada.php?lista_id=<?php if(!empty($lista_id)) {echo $lista_id;} echo '&lista_quantidade='; if(!empty($lista_quantidade)) {echo $lista_quantidade;}?>'" type="button">Finalizar seleção</button>
+    <button class="btnAzul" onclick="location.href='../entrada/cadastrarEntrada.php?lista_id=<?php echo $lista_id; echo '&lista_quantidade='; echo $lista_quantidade;?>'" type="button">Finalizar seleção</button>
     </div>
     
 </body>

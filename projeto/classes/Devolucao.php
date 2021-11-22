@@ -1,5 +1,11 @@
 <?php
 require "Banco.php";
+include_once "Log.php";
+
+if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    } 
 
 if(isset($_POST['cadastrar']))
 {
@@ -215,6 +221,9 @@ class Devolucao
                 header('location:../devolucao/cadastrarDevolucao.php?resultado=' . mysqli_error($link));
                 }
                 else {
+                    $data = date("d-m-Y H:i:s");
+                    $log = new log($_SESSION['nome'], "Devolução", "Cadastro de devolução", "$data");
+                    Log::cadastrar($link, $log);
                     header('location:../devolucao/cadastrarDevolucao.php?resultado=sucesso');
                 }
         }
@@ -235,6 +244,9 @@ class Devolucao
                 header('location:../categoria/visualizarCategorias.php?resultado=' . mysqli_error($link));
             } else
             {
+                $data = date("d-m-Y H:i:s");
+                $log = new log($_SESSION['nome'], "Devolução", "Exclusão de devolução", "$data");
+                Log::cadastrar($link, $log);
                 header('location:../categoria/visualizarCategorias.php?resultado=excluidosucesso');
             }
     }

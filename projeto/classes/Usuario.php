@@ -111,7 +111,7 @@ if(isset($_POST['entrar']))
         unset ($_SESSION['login']);
         unset ($_SESSION['senha']);
         unset ($_SESSION['nivel_de_acesso']);
-        header('location:../index.php');
+        header('location:../index.php?resultado=senhaincorreta');
     }
 
 }

@@ -1,5 +1,11 @@
 <?php
 require "Banco.php";
+include_once "Log.php";
+
+if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    } 
 
 if(isset($_POST['cadastrar']))
 {
@@ -230,6 +236,9 @@ class Entrada
                 header('location:../entrada/cadastrarEntrada.php?resultado=' . mysqli_error($link));
                 }
                 else {
+                    $data = date("d-m-Y H:i:s");
+                    $log = new log($_SESSION['nome'], "Entrada", "Cadastro de nova Entrada", "$data");
+                    Log::cadastrar($link, $log);
                     header('location:../entrada/cadastrarEntrada.php?resultado=sucesso');
                 }
         }
@@ -250,6 +259,9 @@ class Entrada
                 header('location:../categoria/visualizarCategorias.php?resultado=' . mysqli_error($link));
             } else
             {
+                $data = date("d-m-Y H:i:s");
+                $log = new log($_SESSION['nome'], "Entrada", "Exclusão de entrada", "$data");
+                Log::cadastrar($link, $log);
                 header('location:../categoria/visualizarCategorias.php?resultado=excluidosucesso');
             }
     }

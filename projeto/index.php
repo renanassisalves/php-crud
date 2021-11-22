@@ -11,10 +11,27 @@
     <ul>
         <img src="img/logo.png" alt="Exemplo de logomarca" width="60" height="60" class="logo">
     </ul>
-
-
+    
     <div class="container">
     <div class="menu">
+    <?php 
+    if(isset($_GET['resultado']))
+    {
+        $resultado = $_GET['resultado'];
+        if ($resultado == 'sucesso')
+        {
+            echo('<div style="background-color: #b1ffb8b1;">');
+            echo('<p style="color: #1a571fb1; margin: 10px;">Logado com sucesso!</p>');
+            echo('</div>');
+        }
+        else if ($resultado="senhaincorreta")
+        {
+            echo('<div style="background-color: #ff9d9448;">');
+            echo('<p style="color: #c51d0d; margin: 10px;">Login ou senha incorretos!</p>');
+            echo('</div>');
+        }
+    }
+    ?>
     <form action="classes/Usuario.php" method="POST">
     <label class="label" style="color: white;">Login do usuário
             <input type="text" name="login" maxlength="255" placeholder="Digite o seu login">

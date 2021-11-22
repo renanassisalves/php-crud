@@ -58,8 +58,8 @@
                     <td class="headerListagemProdutos">ID</td>
                     <td class="headerListagemProdutos">Nome do Produto</td>
                     <td class="headerListagemProdutos">Categoria</td>
-                    <td class="headerListagemProdutos">Preço (R$)</td>
-                    <td class="headerListagemProdutos">Quantidade Estoque</td>
+                    <td class="headerListagemProdutos" style="width:150px;">Preço (R$)</td>
+                    <td class="headerListagemProdutos" style="width:150px;">Quantidade Estoque</td>
                     <td class="headerListagemProdutos">Quantidade Entrada</td>
                     <td class="headerListagemProdutos"></td>
                 </tr>
@@ -94,6 +94,9 @@
 
         if (isset($lista_array))
         {
+            $precoTotal = 0;
+            $quantidadeTotal = 0;
+            $quantidadeEntradaTotal = 0;
             for ($i = 0; $i < sizeof($lista_array); $i++)
             {
                 if (!empty($lista_array[$i]))
@@ -115,7 +118,10 @@
                 if (($index = array_search($id, $lista_array)) !== false) {
                     $quantidadeEntrada = ($lista_quantidade_array[$index]);
                 }
-
+                
+                $precoTotal = $precoTotal += ($preco*$quantidadeEntrada);
+                $quantidadeTotal = $quantidadeTotal += $quantidade;
+                $quantidadeEntradaTotal=$quantidadeEntradaTotal+=$quantidadeEntrada;
                 if ($inativado == false) {
                     echo '<tr>';
                     echo '<td>' . $id . '</td>';
@@ -170,7 +176,23 @@
             }
         }
         }
+        if (isset($_GET['lista_id']))
+        {
+
+                echo '<tr style=background-color:grey;>';
+                echo '<td></td>';
+                echo '<td></td>';
+                echo '<td></td>';
+                echo '<td></td>';
+                echo '<td>Estoque total ' . $quantidadeTotal . '</td>';
+                echo '<td>Quantidade total '.$quantidadeEntradaTotal.'</td>';
+                echo '<td>Preço total R$ ' . $precoTotal . '</td>';
+                echo '</tr>';
+            
+        }
+        
         ?>
+        
             </table>
         </tr>
         </div>

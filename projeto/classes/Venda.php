@@ -1,5 +1,11 @@
 <?php
 require "Banco.php";
+include_once "Log.php";
+
+if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    } 
 
 if(isset($_POST['cadastrar']))
 {
@@ -216,6 +222,9 @@ class Venda
                 header('location:../venda/cadastrarVenda.php?resultado=' . mysqli_error($link));
                 }
                 else {
+                    $data = date("d-m-Y H:i:s");
+                    $log = new log($_SESSION['nome'], "Venda", "Cadastro de venda", "$data");
+                    Log::cadastrar($link, $log);
                     header('location:../venda/cadastrarVenda.php?resultado=sucesso');
                 }
         }
@@ -236,6 +245,9 @@ class Venda
                 header('location:../categoria/visualizarCategorias.php?resultado=' . mysqli_error($link));
             } else
             {
+                $data = date("d-m-Y H:i:s");
+                $log = new log($_SESSION['nome'], "Venda", "Exclusão de venda", "$data");
+                Log::cadastrar($link, $log);
                 header('location:../categoria/visualizarCategorias.php?resultado=excluidosucesso');
             }
     }
