@@ -20,11 +20,11 @@ if(isset($_POST['cadastrar']))
     $nivel_de_acesso = $_POST['nivel_de_acesso'];
 
     if ($nivel_de_acesso == "administrador") {
-        $nivel_de_acesso = 1;
+        $nivel_de_acesso = 2;
     }
     else if ($nivel_de_acesso == "funcionario")
     {
-        $nivel_de_acesso = 0;
+        $nivel_de_acesso = 1;
     }
 
     if ($senha == $senhaConfirma)
@@ -172,7 +172,7 @@ class Usuario
         $login = $this::formatar($this->login);
         $senha = $this::formatar($this->senha);
         $nivel_de_acesso = $this::formatar($this->nivel_de_acesso);
-        if ($this::validar($nome) and $this::validar($login) and $this::validar($senha) and $this::validar($nivel_de_acesso))
+        if ($this::validar($nome) and $this::validar($login) and $this::validar($senha))
         {
             mysqli_query($link, "insert into usuario(nome, login, senha, nivel_de_acesso, inativado)
             values('$nome', '$login', '$senha', $nivel_de_acesso, false)");

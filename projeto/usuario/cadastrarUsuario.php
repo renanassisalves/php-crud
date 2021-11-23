@@ -25,7 +25,7 @@ if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == tru
   unset($_SESSION['login']);
   unset($_SESSION['senha']);
   header('location:../index.php');
-  }
+}
 $nome = $_SESSION['nome'];
 $login = $_SESSION['login'];
 $nivel_de_acesso = $_SESSION['nivel_de_acesso'];

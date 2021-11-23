@@ -34,7 +34,7 @@
         else if ($resultado == 'erroquantidade')
         {
             echo('<div style="background-color: #ff9d9448;">');
-            echo('<p style="color: #c51d0d; margin: 20px;">Erro : A quantidade a ser vendida de um produto é maior do que a quantidade em estoque disponível!</p>');
+            echo('<p style="color: #c51d0d; margin: 20px;">Erro : A quantidade a ser devolvida de um produto é maior do que a quantidade em estoque disponível!</p>');
             echo('</div>');
         }
         else

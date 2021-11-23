@@ -16,7 +16,14 @@
 
     <h1>Visualizar Logs</h1>
 
-    <?php 
+    <?php
+session_start();
+if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true) or ($_SESSION['nivel_de_acesso'] == 1))
+{
+  unset($_SESSION['login']);
+  unset($_SESSION['senha']);
+  header('location:../index.php');
+}
     if(isset($_GET['resultado']))
     {
         $resultado = $_GET['resultado'];
@@ -52,10 +59,10 @@
         }
     }
     ?>
- <form action="../classes/Categoria.php" method="POST" style="float: right; margin-bottom:10px; margin-right:10px;">
+ <!-- <form action="../classes/Categoria.php" method="POST" style="float: right; margin-bottom:10px; margin-right:10px;">
                     <input type="search" name="pesquisarSearch" placeholder="Pesquisar nome...">
                     <button type="submit" name="pesquisar">Pesquisar</button>
-</form>
+</form> -->
 
     <table style="width: 100%">
         <tr>
